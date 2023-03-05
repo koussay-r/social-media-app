@@ -1,7 +1,10 @@
 import React from 'react'
+import Navbar from './feedComponents/navbar'
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <>
+    <Navbar/>
+    </>
   )
 }

@@ -3,7 +3,9 @@ import {GoSearch} from "react-icons/go"
 import {BsFillSunFill,BsBellFill} from "react-icons/bs"
 import {BiMessageDetail} from "react-icons/bi"
 import {AiFillQuestionCircle} from "react-icons/ai"
+import AccountMenu from './menuButton'
 export default function Navbar() {
+  
   return (
     <div className='flex bg-white justify-between px-2 lg:px-28'>
         <div className='flex '>
@@ -20,10 +22,7 @@ export default function Navbar() {
             <BiMessageDetail className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
             <BsBellFill className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
             <AiFillQuestionCircle className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
-            <select className='cursor-pointer mt-2 rounded-md p-2'>
-                <option>user name</option>
-                <option>Log out</option>
-            </select>
+            <AccountMenu/>
         </div>
     </div>
   )
