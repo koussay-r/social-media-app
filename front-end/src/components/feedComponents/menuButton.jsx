@@ -22,11 +22,10 @@ export default function AccountMenu() {
   const hanldeProfile=()=>
   {
     setAnchorEl(null);
-    alert("behy")
   }
   return (
-    <React.Fragment className="bg-red-600">
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+    <React.Fragment >
+      <Box className="mt-1" sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
