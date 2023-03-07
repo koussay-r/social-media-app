@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthenticatedContext } from '../../App'
 import {motion} from 'framer-motion'
@@ -34,6 +34,8 @@ export default function Login() {
       else{
         setUserData(res.data)
         setAuth(true)
+        localStorage.setItem("email",res.data.email)
+        localStorage.setItem("email",res.data.password)
         navigate('/home')
         setUserAccount({...UserAccount,email:"",password:""})
       }
@@ -41,6 +43,10 @@ export default function Login() {
       console.log(err)
     }
   }
+  useEffect(()=>{
+    localStorage.getItem("email")
+    localStorage.getItem("password")
+  },[])
   const handleLackData=(e)=>{
     e.preventDefault()
     setLackData(true)

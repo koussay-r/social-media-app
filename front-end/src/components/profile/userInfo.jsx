@@ -32,7 +32,18 @@ export default function UserInfo() {
             </div>
         <Divider  />
             <div>
-
+                <div className='flex justify-between'>
+                    <p>
+                    Who's viewed you profile
+                    </p>
+                    <p>0</p>
+                </div>
+                <div className='flex justify-between mt-3'>
+                    <p>
+                    Impression of your profile
+                    </p>
+                    <p>0</p>
+                </div>
             </div>
             <div>
 
