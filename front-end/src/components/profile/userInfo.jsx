@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { AuthenticatedContext } from '../../App'
 import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
+import loader from './../../assets/loader.gif'
 import {MdWorkOutline} from 'react-icons/md'
 export default function UserInfo() {
   const [auth,setAuth,UserData,setUserData]=React.useContext(AuthenticatedContext)
@@ -10,8 +11,11 @@ export default function UserInfo() {
 
   },[])
   return (
+    <>
+    {
+        UserData.length!==0?
     <div className='rounded-md border w-[350px] bg-white'>
-        <div className='p-3 '>
+            <div className='p-3 '>
             <div className='flex mb-3'>
                 <img src={noPfp} alt="no pfp" className='rounded-full w-11 h-11'/>
                 <div className='ml-3'>
@@ -50,5 +54,9 @@ export default function UserInfo() {
             </div>
         </div>
     </div>
+    :
+    <img src={loader} alt="" className='w-[50px]'/>
+    }
+    </>
   )
 }
