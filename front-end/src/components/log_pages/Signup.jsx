@@ -11,7 +11,8 @@ const [CreateUser,SetCreateUser]=useState({
     Location:"",
     Occupation:"",
     email:"",
-    password:""
+    password:"",
+    pfp:""
 
 })
 const [userCreated,SetUserCreated]=useState({

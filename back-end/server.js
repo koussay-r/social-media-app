@@ -3,6 +3,7 @@ const mongoose=require("mongoose")
 const dotenv=require("dotenv")
 const cors=require("cors")
 const CreateUserRoute=require("./routes/CreateUserRoute.js")
+const Serachroute=require("./routes/SearchUser.js")
 dotenv.config()
 //app config
 const app=express()
@@ -21,5 +22,6 @@ app.get("/",(req,res)=>{
     res.send("works !")
 })
 app.use("/createUser",CreateUserRoute)
+app.use("/Users",Serachroute)
 //Listeners
 app.listen(port,()=>{console.log(`listening on port : ${port} `)})
