@@ -1,49 +1,28 @@
 import React from 'react'
-import {AiOutlineLine,AiOutlineSearch,AiOutlineHeart,AiOutlineUser} from "react-icons/ai"
-import {TfiReload} from "react-icons/tfi"
+import {BiSearch} from "react-icons/bi"
+import {BsTelephoneFill} from "react-icons/bs"
 export default function Navbar() {
   return (
-    <div>
-        <div className='bg-[#101920] flex px-24 pb-3 border border-transparent border-b-slate-600 justify-between'>
-            <div>
-                <p className='text-white mt-2 text-[10px]'>Free Shipping Over 100$ and Free Returns</p>
-            </div>
-            <div className='flex gap-6 justify-between'>
-                <div className='text-white mt-2 text-[12px]'>
-                    Hotline(888)4344 6000-(8888) 1338 8193
-                </div>
-                    <AiOutlineLine className='text-gray-600 transition-transform transform mt-2 rotate-90 '/>
-                <div className=' mt-[2px]'>
-                    <select className='bg-transparent text-[12px] text-white'>
-                        <option>English</option>
-                        <option>Spanish</option>
-                        <option>Francais</option>
-                    </select>
-                    <select className='ml-3  bg-transparent text-[12px] text-white'>
-                        <option>
-                            USD $
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div className='flex bg-[#101920]  px-24 pt-3 justify-between'>
-            <div className='text-white text-[34px]'>
-                Digitic.
-            </div>
-            <div className='flex mt-3'>
-                <input type='text' className='w-[700px] pl-3 rounded-r-none outline-none rounded h-[38px]' placeholder='Search Product here...'/>
-                <div className='bg-[#ffbb6e] rounded mb-[0px] rounded-l-none '>
-                    <AiOutlineSearch size={'22'} className='text-black mx-[14px] cursor-pointer mt-[9px]'/>
-                </div>
-            </div>
-            <div>
+    <div className='flex bg-[#020230] justify-between p-4'>
+        <p className='text-[26px] font-bold text-white'>
+            HOSTIT
+        </p>
+        <div className=' hidden lg:flex pt-2 gap-10'>
+            <ul className='flex text-white gap-16'>
+                <li className='cursor-pointer'>HOME</li>
+                <li className='cursor-pointer'>ABOUT</li>
+                <li className='cursor-pointer'>SERVICE</li>
+                <li className='cursor-pointer'>PRICING</li>
+                <li className='cursor-pointer'>CONTACT US</li>
+            </ul>
+            <BiSearch color='white' size={"22"} className='mt-1 cursor-pointer'/>
+            <div className='flex text-white gap-2'>
 
+            <BsTelephoneFill className='text-white mt-1'/>
+           <p className='text-white'>Call : +01 123455678990 </p> 
             </div>
         </div>
-        <div>
-
-        </div>
+        
     </div>
   )
 }
