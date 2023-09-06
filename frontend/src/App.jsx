@@ -8,6 +8,7 @@ export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
   const [UserData,setUserData]=useState()
+
   return (
     <>
     <BrowserRouter>

@@ -3,8 +3,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthenticatedContext } from '../../App'
 import {motion} from 'framer-motion'
+import Cookies from "js-cookie"
 
 export default function Login() {
+ 
   const [UserExist,SetUserExist]=useState(true)
   const [auth,setAuth,UserData,setUserData]=useContext(AuthenticatedContext)
   const [lackData,setLackData]=useState(false)
@@ -13,6 +15,8 @@ export default function Login() {
     email:"",
     password:""
   })
+  const cookies=useState(Cookies.get("account"))
+  console.log(cookies)
   const handleEmail=(e)=>{
     setUserAccount({...UserAccount,email:e.target.value})
   }
@@ -20,6 +24,10 @@ export default function Login() {
     setUserAccount({...UserAccount,password:e.target.value})
   }
   const handleLogin=async(e)=>{
+    const cookies=confirm("do you want to allways stay loged in?");
+    if(cookies&&UserAccount.email.length!==0){
+      Cookies.set("account",UserAccount)
+    }
     e.preventDefault()
     try{
       const res=await axios.post("http://localhost:9000/createUser/login",UserAccount)
