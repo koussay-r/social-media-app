@@ -19,7 +19,7 @@ export default function Mainprofile() {
       }
     }
     handleFetchingPostst();
-    console.log(UserData)
+
   },[UserData])
   return (
     <div className='md:flex block mx-auto  gap-16 md:justify-center mt-5 mw-28'>
