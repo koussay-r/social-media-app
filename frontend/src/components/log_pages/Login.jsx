@@ -21,14 +21,6 @@ export default function Login() {
     setUserAccount({...UserAccount,password:e.target.value})
   }
   const handleLogin=async(e)=>{
-    console.log(accountSaved)
-    if(accountSaved===null){
-      const cookies=confirm("do you want to allways stay loged in?");
-      if(cookies&&UserAccount.email.length!==0){
-        const accountdata=JSON.stringify(UserAccount)      
-        localStorage.setItem("account",accountdata)
-      }
-    }
     e.preventDefault()
     try{
       const res=await axios.post("http://localhost:9000/createUser/login",UserAccount)
@@ -36,11 +28,18 @@ export default function Login() {
         SetUserExist(false)
         const timer=()=>{setTimeout(()=>{
           SetUserExist(true)
-      },1500)}
-      timer()
-      clearTimeout(timer)
+        },1500)}
+        timer()
+        clearTimeout(timer)
       }
       else{
+        if(accountSaved===null){
+          const cookies=confirm("do you want to allways stay loged in?");
+          if(cookies&&UserAccount.email.length!==0){
+            const accountdata=JSON.stringify(UserAccount)      
+            localStorage.setItem("account",accountdata)
+          }
+        }
         setUserData(res.data[0])
         setAuth(true)
         navigate('/home')
@@ -50,6 +49,14 @@ export default function Login() {
       console.log(err)
     }
   }
+  useEffect(()=>{
+    console.log(accountSaved)
+    if(accountSaved!==null){
+
+      setUserAccount({...UserAccount,email:accountSaved.email,password:accountSaved.password})
+      handleLogin
+    }
+  },[])
   const handleLackData=(e)=>{
     e.preventDefault()
     setLackData(true)

@@ -1,9 +1,10 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import Login from './components/log_pages/Login'
 import Signup from './components/log_pages/Signup'
-import {BrowserRouter ,Route,Routes} from 'react-router-dom'
+import {BrowserRouter ,Route,Routes, useNavigate} from 'react-router-dom'
 import Home from './components/Home/Home'
 import {Toaster} from 'react-hot-toast'
+import axios from 'axios'
 export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
