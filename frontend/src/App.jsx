@@ -9,7 +9,23 @@ export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
   const [UserData,setUserData]=useState()
-
+  const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
+  useEffect(()=>{
+    const loginIn=async()=>{
+      if(accountExistCookies){
+        const savedData=JSON.parse(localStorage.getItem("account"))
+        try{
+          const res=await axios.post("http://localhost:9000/createUser/login",{email:savedData.email,password:savedData.password})
+          setUserData(res.data[0])
+          setAuth(true)
+        }
+        catch(err){
+          console.log(err)
+        }
+      }
+    }
+    loginIn()
+  },[])
   return (
     <>
     <BrowserRouter>
@@ -20,7 +36,10 @@ export default function App() {
   reverseOrder={false}
 />
     <Routes>
-       <Route path='/' index element={<Login/>}/>
+      {
+        accountExistCookies?<Route path='/' index element={auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
+      }
+       
        <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={auth&&<Home/>}/>
        </Routes>

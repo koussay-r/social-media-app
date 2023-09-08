@@ -49,14 +49,6 @@ export default function Login() {
       console.log(err)
     }
   }
-  useEffect(()=>{
-    console.log(accountSaved)
-    if(accountSaved!==null){
-
-      setUserAccount({...UserAccount,email:accountSaved.email,password:accountSaved.password})
-      handleLogin
-    }
-  },[])
   const handleLackData=(e)=>{
     e.preventDefault()
     setLackData(true)
