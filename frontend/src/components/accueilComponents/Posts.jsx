@@ -15,8 +15,7 @@ export default function Posts(props) {
   const [likesnumber,setLikesNumber]=useState(props.likes)
   const [Makecomment,setMakeComment]=useState("")
   const [comments,setComments]=useState(props.comments)
-  const userData=React.useContext(AuthenticatedContext);
-  const UserData=userData[2]
+    const [auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   const handlecomment=(e)=>{
     setMakeComment(e.target.value)
   }
@@ -46,6 +45,17 @@ export default function Posts(props) {
   const focusToComment=()=>{
     document.getElementById(props._id).focus()
   }
+  const handleGoToProfile=async()=>{
+    try{
+      const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
+      const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:UserData._id})
+      /*lena me tanssach tbadel userData lely bch todekhl lel profile ta3u*/
+      setPosts(res.data)
+  }
+  catch(err){
+      console.log(err)
+  }
+  }
   return (
     <motion.div 
     initial={"hidden"}
@@ -60,7 +70,7 @@ export default function Posts(props) {
       <div className='flex gap-2'>
         <img src={props.pfp===''?nopfp:props.pfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
         <div>
-          <p className='text-md font-bold text-black/70 '>{props.name}</p>
+          <p onClick={handleGoToProfile} className='text-md cursor-pointer font-bold text-black/70 '>{props.name}</p>
           <p className='text-[12px] text-gray-500/80 font-bold ml-1'>{props.Location}</p>
         </div>
       </div>

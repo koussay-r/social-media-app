@@ -36,10 +36,18 @@ route.put("/Likes/:symbole",async(req,res)=>{
     console.log(err)
   }
 })
-route.get("/",async(req,res)=>{
+route.post("/",async(req,res)=>{
   try{
-    const ress=await postModel.find()
-    res.status(200).send(ress)
+    if(req.body.userId=="0"){
+      const ress=await postModel.find()
+      res.status(200).send(ress)
+    }
+    else{
+      const ress=await postModel.find({userId:req.body.userId})
+      res.status(200).send(ress)
+
+    }
+    
   }catch(err){
     coneole.log(err)
   }

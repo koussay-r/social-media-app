@@ -8,12 +8,15 @@ import {BsMenuButtonWide} from 'react-icons/bs'
 import {IoMdCloseCircleOutline} from 'react-icons/io'
 import axios from 'axios'
 import UserInSearch from './userInSearch'
+import { AuthenticatedContext } from '../../App'
 export default function Navbar() {
   const [menu,setMenu]=useState(true)
   const [usersSerach,setUsersSeach]=useState([])
   const handlemenu=()=>{
     setMenu(!menu)
   }
+  const [auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
+
   const handleSerachValue=async(e)=>{
     try{
       const res=await axios.post("http://localhost:9000/Users/serach",{name:e.target.value})
@@ -31,11 +34,19 @@ export default function Navbar() {
       console.log(err)
     }
   }
- 
+ const handleReturnToFeed=async()=>{
+  try{
+    const res=await axios.post(`http://localhost:9000/posts/`,{userId:"0"})
+    setPosts(res.data)
+    console.log(res.data)
+  }catch(err){
+    console.log(err)
+  }
+ }
   return (
     <div className='md:flex bg-white  h-[60px] justify-between px-2 lg:px-28'>
         <div className='flex justify-between md:px-0 px-5'>
-        <p className='font-bold text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
+        <p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
             Sociopedia
         </p>
           <div>

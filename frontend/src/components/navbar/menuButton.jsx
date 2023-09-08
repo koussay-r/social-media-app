@@ -7,7 +7,7 @@ import { BiLogOut } from 'react-icons/bi';
 import { AuthenticatedContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 export default function AccountMenu() {
-  const [auth,setAuth]=React.useContext(AuthenticatedContext)
+  const [auth,setAuth,UserData,setUserData,accountExistCookies,setAccountExistCookies]=React.useContext(AuthenticatedContext)
   const navigate=useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -16,6 +16,7 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAuth(false)
+    setAccountExistCookies(false)
     navigate("/")
     
   };

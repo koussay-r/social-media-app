@@ -6,10 +6,19 @@ import {HiOutlineLocationMarker} from 'react-icons/hi'
 import loader from './../../assets/loader.gif'
 import {MdWorkOutline} from 'react-icons/md'
 import { useLocation  } from 'react-router-dom'
+import axios from 'axios'
 export default function UserInfo() {
     const location=useLocation ()
-  const UserDataa=React.useContext(AuthenticatedContext)
-  const UserData=UserDataa[2]
+ const [auth, setAuth, UserData, setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
+  const HandleProfile=async()=>{
+    try{
+        const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
+        setPosts(res.data)
+    }
+    catch(err){
+        console.log(err)
+    }
+  }
   return (
     <>
     {
@@ -19,7 +28,7 @@ export default function UserInfo() {
             <div className='flex mb-3'>
                 <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
                 <div className=' ml-3'>
-                    <p className='text-black/80  hover:text-gray-600 cursor-pointer font-[600]'>{UserData.name} {UserData.LastName}</p>
+                    <p onClick={HandleProfile} className='text-black/80  hover:text-gray-600 cursor-pointer font-[600]'>{UserData.name} {UserData.LastName}</p>
                     <p className='text-gray-600 font-WorkSans font-[600] text-[11px] ml-2'> {UserData.friendsList.length} friends</p>
                 </div>
             </div>

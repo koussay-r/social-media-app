@@ -68,4 +68,13 @@ route.post("/AcceptRequest/:id",async(req,res)=>{
     console.log(err)
   }
 })
+route.post("/findUserById",async(req,res)=>{
+  try{
+  const ress=await userModel.find({_id:req.body._id})
+  res.status(200).send(ress)
+  }
+  catch(err){
+      console.log(err)
+  }
+  })
 module.exports = route;

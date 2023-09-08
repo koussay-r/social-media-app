@@ -7,13 +7,13 @@ import pfp from './../../assets/pfp1.jpg'
 import { AuthenticatedContext } from '../../App'
 import axios from 'axios'
 export default function Mainprofile() {
-  const [auth, setAuth, UserData, setUserData] =React.useContext(AuthenticatedContext);
-  const [posts,setPosts]=useState([])
+  const [auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   useEffect(() => {
     const handleFetchingPostst=async()=>{
       try{
-        const res=await axios.get(`http://localhost:9000/posts/`)
+        const res=await axios.post(`http://localhost:9000/posts/`,{userId:"0"})
         setPosts(res.data)
+        console.log(res.data)
       }catch(err){
         console.log(err)
       }
