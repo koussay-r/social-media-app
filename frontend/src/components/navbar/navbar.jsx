@@ -37,8 +37,9 @@ export default function Navbar() {
  const handleReturnToFeed=async()=>{
   try{
     const res=await axios.post(`http://localhost:9000/posts/`,{userId:"0"})
+    const ress=await axios.post("http://localhost:9000/createUser/CurrentUser",{_id:JSON.parse(localStorage.getItem("userID"))})
+    setUserData(ress.data[0])
     setPosts(res.data)
-    console.log(res.data)
   }catch(err){
     console.log(err)
   }

@@ -38,5 +38,12 @@ CreateUserRoute.post("/login",async(req,res)=>{
         console.log(err)
     }
 })
-
+CreateUserRoute.post("/CurrentUser",async(req,res)=>{
+    try{
+        const ress=await CreateUsermodel.find({_id:req.body._id})
+        res.status(200).send(ress)
+    }catch(err){
+        console.log(err)
+    }
+})
 module.exports=CreateUserRoute

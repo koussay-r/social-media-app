@@ -5,10 +5,12 @@ import Tooltip from '@mui/material/Tooltip';
 import {Menu,MenuItem,Divider,ListItemIcon,IconButton} from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
 import { AuthenticatedContext } from '../../App';
+import { toast } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
 export default function AccountMenu() {
   const [auth,setAuth,UserData,setUserData,accountExistCookies,setAccountExistCookies]=React.useContext(AuthenticatedContext)
   const navigate=useNavigate()
+  const [AccountSaved,setaccountSaved]=React.useState(localStorage.getItem("account"))
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -16,13 +18,21 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAuth(false)
+    localStorage.removeItem("userID")
     setAccountExistCookies(false)
     navigate("/")
+    window.location.reload();
     
   };
   const hanldeProfile=()=>
   {
     setAnchorEl(null);
+  }
+  const handleRemoveAcc=()=>{
+    localStorage.removeItem("account")
+    setaccountSaved(null)
+    toast.success('Account Removed Successfully!')
+
   }
   return (
     <React.Fragment >
@@ -77,6 +87,12 @@ export default function AccountMenu() {
           <Avatar /> Profile
         </MenuItem>
         <Divider />
+        <p className={`${AccountSaved===null?"hidden":"block"}`}>
+        <MenuItem  onClick={handleRemoveAcc}>
+        Remove Acc
+        </MenuItem>
+        </p>
+        <Divider className={`${AccountSaved===null?"hidden":"block"}`} />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <BiLogOut  />
