@@ -47,9 +47,10 @@ export default function Posts(props) {
   }
   const handleGoToProfile=async()=>{
     try{
-      const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
-      const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:UserData._id})
-      /*lena me tanssach tbadel userData lely bch todekhl lel profile ta3u*/
+      const res=await axios.post(`http://localhost:9000/posts/`,{userId:props.userId})
+      console.log(res.data)
+      const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:props.userId})
+      setUserData(res2.data[0])
       setPosts(res.data)
   }
   catch(err){
