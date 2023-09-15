@@ -9,6 +9,7 @@ import {IoMdCloseCircleOutline} from 'react-icons/io'
 import axios from 'axios'
 import UserInSearch from './userInSearch'
 import { AuthenticatedContext } from '../../App'
+import { Link } from 'react-router-dom'
 export default function Navbar() {
   const [menu,setMenu]=useState(true)
   const [usersSerach,setUsersSeach]=useState([])
@@ -47,9 +48,9 @@ export default function Navbar() {
   return (
     <div className='md:flex bg-white  h-[60px] justify-between px-2 lg:px-28'>
         <div className='flex justify-between md:px-0 px-5'>
-        <p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
+       <Link to={"/home"} ><p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
             Sociopedia
-        </p>
+        </p></Link>
           <div>
 
         <div className='hidden bg-gray-200 mt-[14px] rounded-md pr-5   ml-5 w-fit h-fit md:flex'>

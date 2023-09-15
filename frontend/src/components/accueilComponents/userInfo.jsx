@@ -5,7 +5,7 @@ import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import loader from './../../assets/loader.gif'
 import {MdWorkOutline} from 'react-icons/md'
-import { useLocation  } from 'react-router-dom'
+import { Link, useLocation  } from 'react-router-dom'
 import axios from 'axios'
 export default function UserInfo() {
     const location=useLocation ()
@@ -28,7 +28,7 @@ export default function UserInfo() {
             <div className='flex mb-3'>
                 <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
                 <div className=' ml-3'>
-                    <p onClick={HandleProfile} className='text-black/80  hover:text-gray-600 cursor-pointer font-[600]'>{UserData.name} {UserData.LastName}</p>
+                    <Link to={"/profile"}><p onClick={HandleProfile} className='text-black/80  hover:text-gray-600 cursor-pointer font-[600]'>{UserData.name} {UserData.LastName}</p></Link> 
                     <p className='text-gray-600 font-WorkSans font-[600] text-[11px] ml-2'> {UserData.friendsList.length} friends</p>
                 </div>
             </div>

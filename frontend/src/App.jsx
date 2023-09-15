@@ -5,6 +5,7 @@ import {BrowserRouter ,Route,Routes, useNavigate} from 'react-router-dom'
 import Home from './components/Home/Home'
 import {Toaster} from 'react-hot-toast'
 import axios from 'axios'
+import UserProfile from './components/profile/UserProfile'
 export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
@@ -43,6 +44,7 @@ export default function App() {
        
        <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={auth&&<Home/>}/>
+       <Route path='/profile' element={<UserProfile/>}/>
        </Routes>
         </AuthenticatedContext.Provider>
     </BrowserRouter>  

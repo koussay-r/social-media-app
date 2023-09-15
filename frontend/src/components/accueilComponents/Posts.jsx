@@ -9,6 +9,7 @@ import axios from 'axios'
 import { AuthenticatedContext } from '../../App'
 import { FiSend } from 'react-icons/fi'
 import { toast } from "react-hot-toast";
+import { Link } from 'react-router-dom'
 
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
@@ -71,7 +72,7 @@ export default function Posts(props) {
       <div className='flex gap-2'>
         <img src={props.pfp===''?nopfp:props.pfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
         <div>
-          <p onClick={handleGoToProfile} className='text-md cursor-pointer font-bold text-black/70 '>{props.name}</p>
+         <Link to={"/profile"}> <p onClick={handleGoToProfile} className='text-md cursor-pointer font-bold text-black/70 '>{props.name}</p></Link>
           <p className='text-[12px] text-gray-500/80 font-bold ml-1'>{props.Location}</p>
         </div>
       </div>
