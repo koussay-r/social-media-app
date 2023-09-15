@@ -20,6 +20,7 @@ export default function Mainprofile() {
     handleFetchingPostst();
   },[UserData])
   return (
+    <>
     <div className='md:flex block mx-auto  gap-16 md:justify-center mt-5 mw-28'>
       <div id="userInfoComponent">
     <UserInfo/>    
@@ -39,5 +40,6 @@ export default function Mainprofile() {
       <FriendsRequestsList/>
     </div>
     </div>
+    </>
   )
 }

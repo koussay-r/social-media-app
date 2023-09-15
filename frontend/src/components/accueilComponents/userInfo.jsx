@@ -7,6 +7,7 @@ import loader from './../../assets/loader.gif'
 import {MdWorkOutline} from 'react-icons/md'
 import { Link, useLocation  } from 'react-router-dom'
 import axios from 'axios'
+
 export default function UserInfo() {
     const location=useLocation ()
  const [auth, setAuth, UserData, setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
@@ -47,7 +48,7 @@ export default function UserInfo() {
             <div>
                 <div className='flex justify-between'>
                     <p>
-                    Who's viewed you profile
+                    Who viewed you profile
                     </p>
                     <p>0</p>
                 </div>
