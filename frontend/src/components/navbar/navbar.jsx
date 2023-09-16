@@ -10,6 +10,7 @@ import axios from 'axios'
 import UserInSearch from './userInSearch'
 import { AuthenticatedContext } from '../../App'
 import { Link } from 'react-router-dom'
+import {FaMoon} from "react-icons/fa"
 export default function Navbar() {
   const [menu,setMenu]=useState(true)
   const [usersSerach,setUsersSeach]=useState([])
@@ -88,10 +89,15 @@ export default function Navbar() {
         </div>
         </div>
         <div className='md:flex hidden mb-2 gap-7'>
-            <BsFillSunFill onClick={hanldeNightMode} className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
-            <BiMessageDetail className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
-            <BsBellFill className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
-            <AiFillQuestionCircle className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
+          {
+            nightDayMode===false?
+            <FaMoon onClick={hanldeNightMode} className='text-black/80 mt-4 cursor-pointer' size={"21"}/>:
+
+            <BsFillSunFill onClick={hanldeNightMode} className='text-white/80 mt-4 cursor-pointer' size={"21"}/>
+          }
+            <BiMessageDetail className={` ${nightDayMode===false?"bg-text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
+            <BsBellFill className={` ${nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
+            <AiFillQuestionCircle className={` ${nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
             <AccountMenu/>
         </div>
         

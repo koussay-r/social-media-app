@@ -24,7 +24,7 @@ export default function UserInfo() {
     <>
     {
         UserData.length!==0?
-    <div id='' className={`rounded-lg  shadow-sm border ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${nightDayMode===true?"bg-[#242526]":"bg-white "}`}>
+    <div id='' className={`rounded-lg  shadow-sm  ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
                 <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>

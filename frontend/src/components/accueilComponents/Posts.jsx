@@ -72,7 +72,7 @@ export default function Posts(props) {
       <div className='flex gap-2'>
         <img src={props.pfp===''?nopfp:props.pfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
         <div>
-         <Link to={"/profile"}> <p onClick={handleGoToProfile} className={`'text-md cursor-pointer font-bold text-black/70 ${nightDayMode===true?"text-[white]":"text-black "} '`}>{props.name}</p></Link>
+         <Link to={"/profile"}> <p onClick={handleGoToProfile} className={`text-md cursor-pointer font-bold text-black/70 ${nightDayMode===true?"text-white":"text-black "} `}>{props.name}</p></Link>
           <p className={`'text-[12px] text-gray-500/80 font-bold ${nightDayMode===true?"text-[white]":"text-black "} ml-1'`}>{props.Location}</p>
         </div>
       </div>
@@ -96,12 +96,12 @@ export default function Posts(props) {
           <AiFillHeart className='mt-[2px] mr-1 text-red-500' size={25}  />
           :
           <AiOutlineHeart className={`' ${nightDayMode===true?"text-[white]":"text-black "} mr-1 mt-[2px]'`} size={25}  />          
-        }<p className={`'ml-1 text-black/80 ${nightDayMode===true?"text-[white]":"text-black "} font-bold text-lg'`}>Love</p>
+        }<p className={`'ml-1 text-black/80 ${nightDayMode===true?"text-white":"text-black "} font-bold text-lg'`}>Love</p>
         </div>
         </div>
         <div className={` rounded-lg ${nightDayMode===true?"hover:bg-white/10":"hover:bg-gray-100 "} w-full`}>
         <div onClick={focusToComment} className='flex justify-center p-1 cursor-pointer'>
-          <FaRegComment  className={`${nightDayMode===true?"text-[white]":"text-black "} mt-[2px]`} size={25}/><p className={`ml-1 ${nightDayMode===true?"text-[white]":"text-black "} text-black/80 font-bold text-lg`}>Comment</p>
+          <FaRegComment  className={`${nightDayMode===true?"text-[white]":"text-black "} mt-[2px]`} size={25}/><p className={`ml-1 ${nightDayMode===true?"text-white":"text-black "} text-black/80 font-bold text-lg`}>Comment</p>
         </div>
         </div>
       </div>
