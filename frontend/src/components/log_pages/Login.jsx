@@ -6,7 +6,7 @@ import {motion} from 'framer-motion'
 
 export default function Login() {
   const [UserExist,SetUserExist]=useState(true)
-  const [auth,setAuth,UserData,setUserData]=useContext(AuthenticatedContext)
+  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData]=useContext(AuthenticatedContext)
   const [lackData,setLackData]=useState(false)
   const [accountSaved,SetAccountSaved]=useState(localStorage.getItem("account"))
   const navigate=useNavigate()

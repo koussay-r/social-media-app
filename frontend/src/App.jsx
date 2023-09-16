@@ -11,6 +11,7 @@ export default function App() {
   const [auth,setAuth]=useState(false)
   const [UserData,setUserData]=useState()
   const [posts,setPosts]=useState([])
+  const [nightDayMode,setNightDayMode]=useState(JSON.parse(localStorage.getItem("mode")))
   const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
   useEffect(()=>{
     const loginIn=async()=>{
@@ -32,7 +33,7 @@ export default function App() {
     <>
     <BrowserRouter>
     
-      <AuthenticatedContext.Provider value={[auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies]}>
+      <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies]}>
     <Toaster
   position="top-center"
   reverseOrder={false}

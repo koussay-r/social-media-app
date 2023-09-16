@@ -16,7 +16,7 @@ export default function Navbar() {
   const handlemenu=()=>{
     setMenu(!menu)
   }
-  const [auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
+  const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
 
   const handleSerachValue=async(e)=>{
     try{
@@ -46,21 +46,30 @@ export default function Navbar() {
     console.log(err)
   }
  }
+ const hanldeNightMode=()=>{
+   if(nightDayMode===true){
+     document.body.style.backgroundColor="#f3f3f3"
+    }else{
+      document.body.style.backgroundColor="#0d0b0e"
+    }
+    setNightDayMode(!nightDayMode)
+  localStorage.setItem("mode",JSON.stringify(!nightDayMode))
+ }
   return (
-    <div className='md:flex bg-white  h-[60px] justify-between px-2 lg:px-28'>
+    <div className={`md:flex ${nightDayMode===true?"bg-[#181818]":"bg-white "} h-[60px] justify-between px-2 lg:px-28`}>
         <div className='flex justify-between md:px-0 px-5'>
        <Link to={"/home"} ><p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
             Sociopedia
         </p></Link>
           <div>
 
-        <div className='hidden bg-gray-200 mt-[14px] rounded-md pr-5   ml-5 w-fit h-fit md:flex'>
-        <input onChange={handleSerachValue} type={"text"} placeholder="Search..." className="h-[30px] outline-none py-[16px] bg-transparent pr-2 w-[220px] pl-5 rounded-md " />
+        <div className={`hidden ${nightDayMode===true?"bg-[#2f2d30]":"bg-gray-200 "}  mt-[14px] rounded-md pr-5   ml-5 w-fit h-fit md:flex`}>
+        <input onChange={handleSerachValue} type={"text"} placeholder="Search..." className={` ${nightDayMode===true?"text-[white]":"text-black "} h-[30px] outline-none py-[16px] bg-transparent pr-2 w-[220px] pl-5 rounded-md  `}/>
         <GoSearch color='gray' className='mt-[9px] cursor-pointer'/>
         </div>
         {
           usersSerach.length!==0&&
-          <div className='rounded ml-5 max-h-[150px] overflow-y-auto z-[100] hidden md:block border-t-transparent border  bg-white mt-3 w-[256px]'>
+          <div className={`rounded ml-5 max-h-[150px] overflow-y-auto z-[100] hidden md:block   ${nightDayMode===true?"bg-[#181818] border-[#04d0fa] border-t-transparent  border":"bg-white border-t-transparent border "} mt-3 w-[256px]`}>
            { usersSerach.map(item=>{
             return(
               <UserInSearch key={item._id} _id={item._id} pfp={item.pfp} name={item.name} Occupation={item.Occupation} friendsListIds={item.friendsListIds} freindRequest={item.freindRequest} />
@@ -79,7 +88,7 @@ export default function Navbar() {
         </div>
         </div>
         <div className='md:flex hidden mb-2 gap-7'>
-            <BsFillSunFill className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
+            <BsFillSunFill onClick={hanldeNightMode} className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
             <BiMessageDetail className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
             <BsBellFill className='text-black/80 mt-4 cursor-pointer' size={"21"}/>
             <AiFillQuestionCircle className='text-black/80 mt-4 cursor-pointer' size={"21"}/>

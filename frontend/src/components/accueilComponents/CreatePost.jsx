@@ -8,8 +8,7 @@ import { AiFillAudio } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 export default function CreatePost() {
-  const [auth, setAuth, UserData, setUserData] =
-    React.useContext(AuthenticatedContext);
+  const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [postdata, setPostData] = useState({
     userId: UserData._id,
@@ -54,7 +53,7 @@ export default function CreatePost() {
       }
   };
   return (
-    <div className="bg-white px-3  block mx-auto md:mx-0 shadow-sm w-full rounded-lg">
+    <div className={`${nightDayMode===true?"bg-[#181818]":"bg-white "} px-3  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
           src={UserData.pfp === "" ? noPfp : UserData.pfp}
@@ -64,7 +63,7 @@ export default function CreatePost() {
         <input
           type={"text"}
           placeholder="What's on your mind?"
-          className="bg-gray-200 pl-4 rounded-3xl w-[85%]"
+          className={`${nightDayMode===true?"bg-[#2f2d30]":"bg-gray-200 "}  pl-4 rounded-3xl w-[85%]`}
           value={postdata.caption}
           onChange={handleCaption}
         />

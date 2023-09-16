@@ -8,7 +8,7 @@ import { AuthenticatedContext } from '../../App';
 import { toast } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
 export default function AccountMenu() {
-  const [auth,setAuth,UserData,setUserData,accountExistCookies,setAccountExistCookies]=React.useContext(AuthenticatedContext)
+  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,accountExistCookies,setAccountExistCookies]=React.useContext(AuthenticatedContext)
   const navigate=useNavigate()
   const [AccountSaved,setaccountSaved]=React.useState(localStorage.getItem("account"))
   const [anchorEl, setAnchorEl] = React.useState(null);

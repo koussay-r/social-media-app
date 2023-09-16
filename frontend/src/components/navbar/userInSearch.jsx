@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 export default function UserInSearch(item) {
-  const [auth,setAuth,UserData,setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
+  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
   const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(UserData._id))
   const hanldeSendRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)
@@ -43,16 +43,16 @@ export default function UserInSearch(item) {
                   <div className='flex'>
                 <img src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
                 <div className=''>
-                <Link to={"/profile"}><p onClick={handleGoToProfile} className='cursor-pointer hover:text-gray-600'>{item.name}</p></Link>
-                <p className='text-sm'>{item.Occupation}</p>
+                <Link to={"/profile"}><p onClick={handleGoToProfile} className={`cursor-pointer ${nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
+                <p className={`text-sm ${nightDayMode===true?"text-white":"text-black "}`}>{item.Occupation}</p>
                 </div>
                   </div>
                   {
                     !item.friendsListIds.includes(UserData._id)&&
                     (changeIconSendRequest?
-                <IoPersonRemoveSharp onClick={()=>hanldeRemoveRequest(item._id)}  size={'20'} className={`mt-[10px] cursor-pointer text-[#04d0fa] mr-3`}/>
+                <IoPersonRemoveSharp onClick={()=>hanldeRemoveRequest(item._id)}  size={'20'} className={`mt-[10px] cursor-pointer  text-[#04d0fa] mr-3`}/>
                     :
-                <IoPersonAddSharp onClick={()=>hanldeSendRequest(item._id)} size={'20'} className={`mt-[10px] cursor-pointer text-[#04d0fa] mr-3`}/>
+                <IoPersonAddSharp onClick={()=>hanldeSendRequest(item._id)} size={'20'} className={`mt-[10px] cursor-pointer  text-[#04d0fa] mr-3`}/>
             ) }
             </div>
   )

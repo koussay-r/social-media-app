@@ -8,7 +8,7 @@ import { AuthenticatedContext } from '../../App'
 import axios from 'axios'
 import Navbar from '../navbar/navbar'
 export default function UserProfile() {
-    const [auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
+    const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
     return (
         <>
         <Navbar/>

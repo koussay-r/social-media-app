@@ -10,7 +10,7 @@ import axios from 'axios'
 
 export default function UserInfo() {
     const location=useLocation ()
- const [auth, setAuth, UserData, setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
+ const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
   const HandleProfile=async()=>{
     try{
         const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
@@ -24,7 +24,7 @@ export default function UserInfo() {
     <>
     {
         UserData.length!==0?
-    <div id='' className={`rounded-lg  shadow-sm border ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  bg-white`}>
+    <div id='' className={`rounded-lg  shadow-sm border ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${nightDayMode===true?"bg-[#181818]":"bg-white "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
                 <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>

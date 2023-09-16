@@ -7,7 +7,7 @@ import pfp from './../../assets/pfp1.jpg'
 import { AuthenticatedContext } from '../../App'
 import axios from 'axios'
 export default function Mainprofile() {
-  const [auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
+  const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   useEffect(() => {
     const handleFetchingPostst=async()=>{
       try{

@@ -8,9 +8,8 @@ import { IoCloseSharp } from 'react-icons/io5'
 export default function FriendsRequestsList() {
     const [list,setList]=useState([])
     const [loading,setLoading]=useState(false)
-    const UserDataa=React.useContext(AuthenticatedContext)
-  const UserData=UserDataa[2]
-  const setUserData=UserDataa[3]
+    const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
+
     useEffect(() => {
         const handleFetchList=async()=>{
             try{
