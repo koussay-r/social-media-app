@@ -14,7 +14,8 @@ CreateUserRoute.post("/",async(req,res)=>{
             Occupation:req.body.Occupation,
             email:req.body.email,
             password:req.body.password,
-            pfp:req.body.pfp
+            pfp:req.body.pfp,
+            likeCount:0
           });
         res.status(201).send(ress)
     }

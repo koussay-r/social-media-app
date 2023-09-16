@@ -1,14 +1,10 @@
 const express=require("express")
 const postModel=require('./../models/postmodel.js')
+const userModel=require("./../models/CreateUserModel.js")
 const route=express.Router()
 const cloudinary = require('cloudinary').v2;
 const dotenv=require("dotenv");
 dotenv.config()
-cloudinary.config({
-    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
-    api_key:process.env.CLOUDINARY_API_KEY,
-    api_secret:process.env.CLOUDINARY_API_SECRET
-  });
 route.post("/create",async(req,res)=>{
   try {
     const createPost= await postModel.create(req.body)
@@ -21,17 +17,22 @@ route.post("/create",async(req,res)=>{
 route.put("/Likes/:symbole",async(req,res)=>{
   try{
     const doc=await postModel.findById({_id:req.body._id})
+    const userLikesCount=await userModel.find({_id:req.body.userId})
     if(req.params.symbole==0){
       doc.likes--;
+      userLikesCount[0].likeCount--
       const indexToRemove = doc.UsersLikes.indexOf(req.body.userId);
       doc.UsersLikes.splice(indexToRemove, 1);
     }
     else{
       doc.likes++;
+      userLikesCount[0].likeCount++
       doc.UsersLikes.push(req.body.userId)
     }
     await doc.save()
+    const ress=await userModel.findByIdAndUpdate({_id:req.body.userId},{likeCount:userLikesCount[0].likeCount})
     res.status(200).send(doc)
+    res.status(200).send(ress)
   }catch(err){
     console.log(err)
   }

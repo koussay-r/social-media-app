@@ -56,7 +56,7 @@ export default function UserInfo() {
                     <p>
                     Impression of your profile
                     </p>
-                    <p>0</p>
+                    <p>{UserData.likeCount}</p>
                 </div>
             </div>
             <div>

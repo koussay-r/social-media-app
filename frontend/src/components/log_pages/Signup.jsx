@@ -12,8 +12,8 @@ const [CreateUser,SetCreateUser]=useState({
     Occupation:"",
     email:"",
     password:"",
-    pfp:""
-
+    pfp:"",
+    likeCount:0
 })
 const [userCreated,SetUserCreated]=useState({
     succes:false,
@@ -88,7 +88,6 @@ const handleCreateUser=async(e)=>{
 }
   return (
     <div className='mx-auto block'>
-      
         <header className='text-center font-bold text-[#04d0fa] bg-white w-full pb-3 shadow-sm pt-3 text-4xl'>
             Sociopedia
         </header>
