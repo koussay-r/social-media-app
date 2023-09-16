@@ -56,14 +56,14 @@ export default function Navbar() {
   localStorage.setItem("mode",JSON.stringify(!nightDayMode))
  }
   return (
-    <div className={`md:flex ${nightDayMode===true?"bg-[#181818]":"bg-white "} h-[60px] justify-between px-2 lg:px-28`}>
+    <div className={`md:flex ${nightDayMode===true?"bg-[#242526]":"bg-white "} h-[60px] justify-between px-2 lg:px-28`}>
         <div className='flex justify-between md:px-0 px-5'>
        <Link to={"/home"} ><p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
             Sociopedia
         </p></Link>
           <div>
 
-        <div className={`hidden ${nightDayMode===true?"bg-[#2f2d30]":"bg-gray-200 "}  mt-[14px] rounded-md pr-5   ml-5 w-fit h-fit md:flex`}>
+        <div className={`hidden ${nightDayMode===true?"bg-[#3a3b3c]":"bg-gray-200 "}  mt-[14px] rounded-md pr-5   ml-5 w-fit h-fit md:flex`}>
         <input onChange={handleSerachValue} type={"text"} placeholder="Search..." className={` ${nightDayMode===true?"text-[white]":"text-black "} h-[30px] outline-none py-[16px] bg-transparent pr-2 w-[220px] pl-5 rounded-md  `}/>
         <GoSearch color='gray' className='mt-[9px] cursor-pointer'/>
         </div>

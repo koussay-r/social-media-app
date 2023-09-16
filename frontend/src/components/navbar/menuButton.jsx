@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 export default function AccountMenu() {
   const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,accountExistCookies,setAccountExistCookies]=React.useContext(AuthenticatedContext)
   const navigate=useNavigate()
-  const [AccountSaved,setaccountSaved]=React.useState(localStorage.getItem("account"))
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -21,18 +20,15 @@ export default function AccountMenu() {
     localStorage.removeItem("userID")
     setAccountExistCookies(false)
     navigate("/")
+    localStorage.removeItem("account")
+    document.body.style.backgroundColor="#f3f3f3"
+    setaccountSaved(null)
     window.location.reload();
     
   };
   const hanldeProfile=()=>
   {
     setAnchorEl(null);
-  }
-  const handleRemoveAcc=()=>{
-    localStorage.removeItem("account")
-    setaccountSaved(null)
-    toast.success('Account Removed Successfully!')
-
   }
   return (
     <React.Fragment >
@@ -87,12 +83,6 @@ export default function AccountMenu() {
           <Avatar /> Profile
         </MenuItem>
         <Divider />
-        <p className={`${AccountSaved===null?"hidden":"block"}`}>
-        <MenuItem  onClick={handleRemoveAcc}>
-        Remove Acc
-        </MenuItem>
-        </p>
-        <Divider className={`${AccountSaved===null?"hidden":"block"}`} />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <BiLogOut  />

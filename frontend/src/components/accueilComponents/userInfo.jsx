@@ -24,35 +24,35 @@ export default function UserInfo() {
     <>
     {
         UserData.length!==0?
-    <div id='' className={`rounded-lg  shadow-sm border ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${nightDayMode===true?"bg-[#181818]":"bg-white "}`}>
+    <div id='' className={`rounded-lg  shadow-sm border ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${nightDayMode===true?"bg-[#242526]":"bg-white "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
                 <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
                 <div className=' ml-3'>
-                    <Link to={"/profile"}><p onClick={HandleProfile} className='text-black/80  hover:text-gray-600 cursor-pointer font-[600]'>{UserData.name} {UserData.LastName}</p></Link> 
-                    <p className='text-gray-600 font-WorkSans font-[600] text-[11px] ml-2'> {UserData.friendsList.length} friends</p>
+                    <Link to={"/profile"}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
+                    <p className={` ${nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {UserData.friendsList.length} friends</p>
                 </div>
             </div>
         <Divider  />
             <div className='mt-2 mb-3'>
                 <div className='flex '>
-                    <HiOutlineLocationMarker className='mt-1 ' size={20} color={"rgb(0 0 0 / 0.8)"} />
-                    <p className='ml-3 font-[600]  text-gray-600/70'>{UserData.Location}</p>
+                    <HiOutlineLocationMarker className='mt-1 ' size={20} color={ `${nightDayMode===true?"white":"rgb(0 0 0 / 0.8)"} `}  />
+                    <p className={`ml-3 font-[600] ${nightDayMode===true?"text-[white]":"text-gray-600/70 "}`}>{UserData.Location}</p>
                 </div>
                 <div className='flex mt-1'>
-                    <MdWorkOutline size={20} className='mt-1 ' color={"rgb(0 0 0 / 0.8)"} />
-                    <p className='ml-3 font-[600] text-gray-600/70'>{UserData.Occupation}</p>
+                    <MdWorkOutline size={20} className='mt-1 ' color={ `${nightDayMode===true?"white":"rgb(0 0 0 / 0.8)"} `} />
+                    <p className={`ml-3 font-[600] ${nightDayMode===true?"text-[white]":"text-gray-600/70 "}`}>{UserData.Occupation}</p>
                 </div>
             </div>
         <Divider  />
             <div>
-                <div className='flex justify-between'>
+                <div className={`flex ${nightDayMode===true?"text-[white]":"text-gray-600/70 "} justify-between`}>
                     <p>
                     Who viewed you profile
                     </p>
                     <p>0</p>
                 </div>
-                <div className='flex justify-between mt-3'>
+                <div className={`flex ${nightDayMode===true?"text-[white]":"text-gray-600/70 "} justify-between mt-3`}>
                     <p>
                     Impression of your profile
                     </p>

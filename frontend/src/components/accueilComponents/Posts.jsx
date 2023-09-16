@@ -67,7 +67,7 @@ export default function Posts(props) {
     variants={{
         hidden:{opacity:0,y:20},
         visible:{opacity:1,y:0}
-    }} className={`${nightDayMode===true?"bg-[#181818]":"bg-white "} px-3 mt-4 p-3  block mx-auto md:mx-0 shadow w-full rounded-lg`}>
+    }} className={`${nightDayMode===true?"bg-[#242526]":"bg-white "} px-3 mt-4 p-3  block mx-auto md:mx-0 shadow w-full rounded-lg`}>
       <div className='flex justify-between'>
       <div className='flex gap-2'>
         <img src={props.pfp===''?nopfp:props.pfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>

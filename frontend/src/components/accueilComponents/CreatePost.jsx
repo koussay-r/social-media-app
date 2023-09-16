@@ -53,7 +53,7 @@ export default function CreatePost() {
       }
   };
   return (
-    <div className={`${nightDayMode===true?"bg-[#181818]":"bg-white "} px-3  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
+    <div className={`${nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
           src={UserData.pfp === "" ? noPfp : UserData.pfp}
@@ -63,7 +63,7 @@ export default function CreatePost() {
         <input
           type={"text"}
           placeholder="What's on your mind?"
-          className={`${nightDayMode===true?"bg-[#2f2d30]":"bg-gray-200 "}  pl-4 rounded-3xl w-[85%]`}
+          className={`${nightDayMode===true?"bg-[#3a3b3c]":"bg-gray-200 "}  pl-4 rounded-3xl w-[85%]`}
           value={postdata.caption}
           onChange={handleCaption}
         />
