@@ -13,7 +13,12 @@ const connectUrl=`mongodb+srv://admin:${process.env.PASSWORD}@cluster0.yde1grw.m
 //MiddleWares
 app.use(express.json())
 mongoose.set('strictQuery', true)
-app.use(cors())
+const corsOptions = {
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    maxBodyLength: '10mb', // Set the maximum body length allowed
+  };
+app.use(cors(corsOptions))
 //db conifg 
 mongoose.connect(connectUrl,{
     useNewUrlParser:true

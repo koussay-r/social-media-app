@@ -21,8 +21,9 @@ export default function CreatePost() {
     comments:[]
   });
 
-  const handleFileInputChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleFileInputChange = async(event) => {
+    const base64=await ConvertToBase64(event.target.files[0])
+    setPostData({...postdata,picture:base64})
   };
   const handleCaption = (e) => {
     setPostData({
@@ -33,15 +34,9 @@ export default function CreatePost() {
   // cloudinary
   
   const handleUploadClick = async() => {
-      const reader = new FileReader();
-      reader.addEventListener("load",  () => {
-        setPostData({
-          ...postdata,
-          picture: reader.result,
-        });
-      });
-      if(postdata.caption!==""){
-        const res = await axios.post(
+    console.log(postdata.picture)
+      if(postdata.caption!==""||postdata.picture.length!==0){
+         await axios.post(
           "http://localhost:9000/posts/create",
           postdata
           );
@@ -63,7 +58,7 @@ export default function CreatePost() {
         <input
           type={"text"}
           placeholder="What's on your mind?"
-          className={`${nightDayMode===true?"bg-[#3a3b3c]":"bg-gray-200 "}  pl-4 rounded-3xl w-[85%]`}
+          className={`${nightDayMode===true?"bg-[#3a3b3c] text-white":"bg-gray-200 text-black "}  pl-4 rounded-3xl w-[85%]`}
           value={postdata.caption}
           onChange={handleCaption}
         />
@@ -104,4 +99,16 @@ export default function CreatePost() {
       </div>
     </div>
   );
+}
+function ConvertToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const fileReader=new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload=()=>{
+      resolve(fileReader.result)
+    }
+    fileReader.onerror=(err)=>{
+      reject(err)
+    }
+  })
 }
