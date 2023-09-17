@@ -2,6 +2,7 @@ const express=require("express")
 const mongoose=require("mongoose")
 const dotenv=require("dotenv")
 const cors=require("cors")
+const bodyParser=require("body-parser")
 const CreateUserRoute=require("./routes/CreateUserRoute.js")
 const Serachroute=require("./routes/SearchUser.js")
 const postsRoute=require("./routes/posts.js")
@@ -13,13 +14,11 @@ const connectUrl=`mongodb+srv://admin:${process.env.PASSWORD}@cluster0.yde1grw.m
 //MiddleWares
 app.use(express.json())
 mongoose.set('strictQuery', true)
-const corsOptions = {
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    maxBodyLength: '10mb', // Set the maximum body length allowed
-  };
-app.use(cors(corsOptions))
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cors());
 //db conifg 
+
 mongoose.connect(connectUrl,{
     useNewUrlParser:true
 })
