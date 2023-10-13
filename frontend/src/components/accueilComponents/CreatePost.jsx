@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 export default function CreatePost() {
   const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [loader, setLoader] = useState(false);
   const [postdata, setPostData] = useState({
     userId: UserData._id,
     user:UserData.name,
@@ -36,11 +36,13 @@ export default function CreatePost() {
   const handleUploadClick = async() => {
     console.log(postdata.picture)
       if(postdata.caption!==""||postdata.picture.length!==0){
+        setLoader(true)
          await axios.post(
           "http://localhost:9000/posts/create",
           postdata
           );
-          setPostData({...postdata,caption:""})
+          setLoader(false)
+          setPostData({...postdata,caption:"",picture:""})
           toast.success('Successfully Created Post!')
       }
       else{
@@ -90,12 +92,20 @@ export default function CreatePost() {
           <AiFillAudio className="mt-[5px]" />
           Audio
         </button>
-        <button
+        {
+          loader===false?
+          <button
           onClick={handleUploadClick}
           className="rounded-xl text-white bg-[#04d0fa] px-3 py-[3px] text-sm "
         >
           Post
+        </button>:
+        <button
+          className="rounded-xl text-white bg-[#04d0fa] bg-opacity-50 px-3 py-[3px] text-sm "
+        >
+          Posting...
         </button>
+        }
       </div>
     </div>
   );

@@ -46,10 +46,10 @@ export default function FriendsRequestsList() {
         }
       }
   return (
-    <div className={`rounded-lg ${list.length==0? "hidden":"lg:block"} shadow-sm border px-4 hidden   w-[250px]  bg-white`}>
+    <div className={`rounded-lg ${list.length==0? "hidden":"lg:block"} shadow-sm  px-4 hidden   w-[250px]  ${nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
         <div className='flex justify-between pb-2 '>
-        <p>Friendship requests</p>
-        <p>{list.length}</p>
+        <p className={`${nightDayMode===true?"text-white":"text-black "}`}>Friendship requests</p>
+        <p className={`${nightDayMode===true?"text-white":"text-black "}`}>{list.length}</p>
         </div> 
         <Divider/>
         {
@@ -63,8 +63,8 @@ export default function FriendsRequestsList() {
                   <div className='flex'>
                 <img src={item[0].pfp!==""?item[0].pfp:nopfp} alt="" className='w-[32px] cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
                 <div className=''>
-                <p className='cursor-pointer hover:text-gray-600'>{item[0].name}</p>
-                <p className='text-sm'>{item[0].Occupation}</p>
+                <p className={`cursor-pointer ${nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item[0].name}</p>
+                <p className={`text-sm ${nightDayMode===true?"text-white":"text-black "}`}>{item[0].Occupation}</p>
                 </div>
                   </div>
                   <div className='flex'>

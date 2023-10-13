@@ -79,7 +79,10 @@ export default function Posts(props) {
       <BsThreeDots size={23} className={`${nightDayMode===true?"text-[white]":"text-black "} mt-[10px] cursor-pointer`}/>
       </div>
       <p className={`'ml-1 mt-2 pb-3 font-[600] font-quicksand ${nightDayMode===true?"text-[white]":"text-black "} '`}>{props.caption}</p>
-      <img src={props.pfp} alt="" className='rounded-md mb-3'/>
+      {
+        props.picture!==""&&
+        <img src={props.picture} alt="" className='rounded-md object-cover mb-3'/>
+      }
       {
         likesnumber===0?
         <p className={`'flex text-md font-semibold ${nightDayMode===true?"text-[white]":"text-black "} pb-2'`}>Be the First to like this Post !</p>
