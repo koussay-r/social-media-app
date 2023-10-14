@@ -13,8 +13,7 @@ export default function Mainprofile() {
   useEffect(() => {
     const handleFetchingPostst=async()=>{
       try{
-        const res=await axios.post(`http://localhost:9000/posts/`,{userId:"0"})
-        console.log(res.data);
+        const res=await axios.post(`http://localhost:9000/posts`,{userId:"0"})
         setPosts(res.data)
       }catch(err){
         console.log(err)
@@ -41,7 +40,7 @@ export default function Mainprofile() {
       posts.length!==0
       ?(posts.map(item=>{
         return(
-          <Posts key={item._id} comments={item.comments} picture={item.picture} currentUser={UserData._id} UsersLikes={item.UsersLikes} userId={item.userId} pfp={pfp} likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
+          <Posts key={item._id} comments={item.comments} picture={item.picture} currentUser={UserData._id} UsersLikes={item.UsersLikes} userId={item.userId} pfp={item.userPfp} likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
         )
       })):
       loader.map(item => (

@@ -50,7 +50,7 @@ route.post("/",async(req,res)=>{
     }
     
   }catch(err){
-    coneole.log(err)
+    console.log(err)
   }
 })
 route.post("/makeComment",async(req,res)=>{

@@ -129,7 +129,7 @@ export default function Posts(props) {
 
         <div className='flex mt-1'>
         <img src={UserData.pfp?UserData.pfp:nopfp} alt="" className='rounded-full mt-[7px] w-7 h-7'/>
-        <input id={props._id} value={Makecomment} onChange={handlecomment} type="text" placeholder='Write a Comment !' className='w-full rounded-xl h-7 border border-gray-500 focus:border-transparent pl-3 mt-2 mx-2'/>
+        <input id={props._id} value={Makecomment} onChange={handlecomment} type="text" placeholder='Write a Comment !' className={`w-full rounded-xl h-7 ${nightDayMode===true?"bg-[#3a3b3c] text-white":"bg-gray-200 border border-gray-500 text-black "}  focus:border-transparent pl-3 mt-2 mx-2`}/>
         <FiSend onClick={hanldeMakeComment} size={22} color={"#04d0fa"} className='mt-[12px] cursor-pointer'/>
         </div>
         </form>

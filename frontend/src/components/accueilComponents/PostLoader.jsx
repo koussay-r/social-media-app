@@ -8,7 +8,7 @@ export default function PostLoader() {
     <div className={`${nightDayMode===true?"bg-[#242526]":"bg-white "} px-3 mt-4 p-3 h-[300px] block mx-auto md:mx-0 shadow w-full rounded-lg`}>
     <div className='panel-effect'>
       <div className={`fake-effect ${nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-0`}></div>
-      <div className={`fake-effect ${nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-1`}></div>
+      <div className={`fake-effect ${nightDayMode===true?"bg-[#242526]":"bg-white "}   fe-1`}></div>
       <div className={`fake-effect ${nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-2`}></div>
       <div className={`fake-effect ${nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-3`}></div>
       <div className={`fake-effect ${nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-4`}></div>

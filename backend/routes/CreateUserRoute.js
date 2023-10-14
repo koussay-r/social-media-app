@@ -1,6 +1,7 @@
 const express=require("express")
 const dotenv=require("dotenv")
 const CreateUsermodel=require("./../models/CreateUserModel.js")
+const postModel=require('./../models/postmodel.js')
 dotenv.config()
 
 
@@ -54,7 +55,16 @@ CreateUserRoute.post("/updatePfp/:_id",async(req,res)=>{
             res.send({message:false})
         }
         else{
-            res.status(200).send({message:true})
+            try {
+                const response =await postModel.findOne({userId:req.params._id})
+                for (let index = 0; index < response.length; index++) {
+                    response[index].userPfp=req.body.pfp
+                }
+                response.save()
+                res.status(200).send({message:true})
+            } catch (error) {
+                res.status(500).send(error.message)
+            }
         }
     } catch (error) {
         
