@@ -22,7 +22,6 @@ export default function Navbar() {
   const handleSerachValue=async(e)=>{
     try{
       const res=await axios.post("http://localhost:9000/Users/serach",{name:e.target.value})
-      console.log(res)
       if(e.target.value.length===0){
       setUsersSeach([])
       document.getElementById("userInfoComponent").style.zIndex="0"

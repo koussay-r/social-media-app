@@ -3,13 +3,13 @@ import CreatePost from './CreatePost'
 import FriendsRequestsList from './FriendsRequestsList'
 import UserInfo from './userInfo'
 import Posts from './Posts'
-import pfp from './../../assets/pfp1.jpg'
 import { AuthenticatedContext } from '../../App'
 import axios from 'axios'
 import PostLoader from './PostLoader'
 export default function Mainprofile() {
   const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   const loader = [1, 2];
+  
   useEffect(() => {
     const handleFetchingPostst=async()=>{
       try{

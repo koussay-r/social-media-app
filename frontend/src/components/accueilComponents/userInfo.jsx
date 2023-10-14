@@ -1,9 +1,8 @@
 import { Divider } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { AuthenticatedContext } from '../../App'
 import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
-import loader from './../../assets/loader.gif'
 import {MdWorkOutline} from 'react-icons/md'
 import { Link, useLocation  } from 'react-router-dom'
 import axios from 'axios'
@@ -11,13 +10,33 @@ import axios from 'axios'
 export default function UserInfo() {
     const location=useLocation ()
  const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
-  const HandleProfile=async()=>{
+ const [loader,SetLoader]=useState(false) 
+
+ const HandleProfile=async()=>{
     try{
         const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
         setPosts(res.data)
     }
     catch(err){
         console.log(err)
+    }
+  }
+  const handleChangePfp=async(event)=>{
+    const base64=await ConvertToBase64(event.target.files[0])
+    setUserData({...UserData,pfp:base64})
+    try {
+        SetLoader(true)
+        const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${UserData._id}`,{pfp:base64})
+        SetLoader(false)
+        if(res.message===true){
+            toast.success('Your profile picture have been Successfully updated !')
+        }
+        else{
+            toast.error('Something went wrong while updating your profile picture')
+        }
+        
+    } catch (error) {
+        
     }
   }
   return (
@@ -27,7 +46,25 @@ export default function UserInfo() {
     <div id='' className={`rounded-lg  shadow-sm  ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
-                <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
+                {
+                    (location.pathname==='/profile')?
+                    <div>
+                        <label
+              htmlFor="file-upload"
+            >
+                        <img  src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full cursor-pointer w-11 h-11'/>
+            </label>
+            <input
+              id="file-upload"
+              onChange={handleChangePfp}
+              accept="image/*"
+              className=" hidden "
+              type="file"
+            />
+                        </div>
+                    :
+                    <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
+                }
                 <div className=' ml-3'>
                     <Link to={"/profile"}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
                     <p className={` ${nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {UserData.friendsList.length} friends</p>
@@ -70,3 +107,15 @@ export default function UserInfo() {
     </>
   )
 }
+function ConvertToBase64(file){
+    return new Promise((resolve,reject)=>{
+      const fileReader=new FileReader()
+      fileReader.readAsDataURL(file)
+      fileReader.onload=()=>{
+        resolve(fileReader.result)
+      }
+      fileReader.onerror=(err)=>{
+        reject(err)
+      }
+    })
+  }

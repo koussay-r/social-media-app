@@ -6,10 +6,12 @@ import Home from './components/Home/Home'
 import {Toaster} from 'react-hot-toast'
 import axios from 'axios'
 import UserProfile from './components/profile/UserProfile'
+import MainLoader from './components/MainLoader'
 export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
   const [UserData,setUserData]=useState()
+  const [LoadingUSerData,setLoadingUSerData]=useState(false)
   const [posts,setPosts]=useState([])
   const [nightDayMode,setNightDayMode]=useState(JSON.parse(localStorage.getItem("mode")))
   const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
@@ -19,6 +21,7 @@ export default function App() {
         const savedData=JSON.parse(localStorage.getItem("account"))
         try{
           const res=await axios.post("http://localhost:9000/createUser/login",{email:savedData.email,password:savedData.password})
+          setLoadingUSerData(true)
           setUserData(res.data[0])
           setAuth(true)
         }
@@ -31,6 +34,8 @@ export default function App() {
   },[])
   return (
     <>
+    {
+      LoadingUSerData===true?
     <BrowserRouter>
     
       <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies]}>
@@ -48,7 +53,9 @@ export default function App() {
        <Route path='/profile' element={<UserProfile/>}/>
        </Routes>
         </AuthenticatedContext.Provider>
-    </BrowserRouter>  
+    </BrowserRouter>  :
+    <MainLoader/>
+    }
     </>
   )
 }

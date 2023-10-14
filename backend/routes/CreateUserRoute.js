@@ -47,4 +47,17 @@ CreateUserRoute.post("/CurrentUser",async(req,res)=>{
         console.log(err)
     }
 })
+CreateUserRoute.post("/updatePfp/:_id",async(req,res)=>{
+    try {
+        const ress=await CreateUsermodel.findOneAndUpdate({_id:req.params._id},{pfp:req.body.pfp},{new:true})
+        if(!ress){
+            res.send({message:false})
+        }
+        else{
+            res.status(200).send({message:true})
+        }
+    } catch (error) {
+        
+    }
+})
 module.exports=CreateUserRoute
