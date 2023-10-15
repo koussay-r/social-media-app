@@ -24,6 +24,7 @@ export default function Posts(props) {
     setPostLiked(!postliked)
     try{
       const res=await axios.put(`http://localhost:9000/posts/Likes/${postliked?0:1}`,{_id:props._id,userId:props.userId})
+      console.log(res)
       setLikesNumber(res.data.likes)
       
     }catch(err){
@@ -32,6 +33,7 @@ export default function Posts(props) {
   }
   const hanldeMakeComment=async(e)=>{
     e.preventDefault()
+    
     try{
       if(Makecomment!==""){
         const res=await axios.post("http://localhost:9000/posts/makeComment",{_id:props._id,userId:UserData._id,name:UserData.name,comment:Makecomment,picture:UserData.pfp})

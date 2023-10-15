@@ -17,6 +17,7 @@ export default function App() {
   const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
   useEffect(()=>{
     const loginIn=async()=>{
+      console.log(accountExistCookies)
       if(accountExistCookies){
         const savedData=JSON.parse(localStorage.getItem("account"))
         try{
@@ -35,7 +36,7 @@ export default function App() {
   return (
     <>
     {
-      LoadingUSerData===true?
+      (LoadingUSerData===true||accountExistCookies===false)?
     <BrowserRouter>
     
       <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies]}>

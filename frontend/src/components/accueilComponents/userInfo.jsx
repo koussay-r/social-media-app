@@ -47,7 +47,7 @@ export default function UserInfo() {
             <div className='p-3 '>
             <div className='flex mb-3'>
                 {
-                    (location.pathname==='/profile')?
+                    (location.pathname==='/profile'&&UserData._id===JSON.parse(localStorage.getItem("userID")))?
                     <div>
                         <label
               htmlFor="file-upload"
