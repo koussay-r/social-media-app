@@ -49,8 +49,11 @@ export default function CreatePost() {
         toast.error("Can't create a post without a Caption or a Picture")
       }
   };
+  const handleRemovePicture=()=>{
+    setPostData({...postdata,picture:""})
+  }
   return (
-    <div className={`${nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
+    <div className={`${nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  transition-all duration-200 ${postdata.picture.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
           src={UserData.pfp === "" ? noPfp : UserData.pfp}
@@ -107,6 +110,12 @@ export default function CreatePost() {
         </button>
         }
       </div>
+      {
+        postdata.picture.length!==0&&
+          <div className="w-[300px] h-[180px] mt-[3%] overflow-hidden rounded border-2 border-dotted  border-cyan-500 ">
+            <img onClick={handleRemovePicture} src={postdata.picture} className=' p-2 w-[300px] h-[180px]  object-cover hover:brightness-50 hover:cursor-pointer  mx-auto' alt='Loading'/>
+          </div>
+      }
     </div>
   );
 }
