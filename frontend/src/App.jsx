@@ -17,7 +17,6 @@ export default function App() {
   const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
   useEffect(()=>{
     const loginIn=async()=>{
-      console.log(accountExistCookies)
       if(accountExistCookies){
         const savedData=JSON.parse(localStorage.getItem("account"))
         try{

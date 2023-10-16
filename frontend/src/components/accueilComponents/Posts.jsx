@@ -19,26 +19,29 @@ export default function Posts(props) {
     const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   const handlecomment=(e)=>{
     setMakeComment(e.target.value)
+
   }
   const handleAddLikes=async()=>{
     setPostLiked(!postliked)
+    if(postliked){
+      setLikesNumber(likesnumber-1)
+    }
+    else{
+      setLikesNumber(likesnumber+1)
+    } 
     try{
-      const res=await axios.put(`http://localhost:9000/posts/Likes/${postliked?0:1}`,{_id:props._id,userId:props.userId})
-      console.log(res)
-      setLikesNumber(res.data.likes)
-      
+      await axios.put(`http://localhost:9000/posts/Likes/${postliked?0:1}`,{_id:props._id,userId:props.userId})
     }catch(err){
       console.log(err)
     }
   }
   const hanldeMakeComment=async(e)=>{
     e.preventDefault()
-    
+    comments.push(Makecomment)
+    setMakeComment("")
     try{
       if(Makecomment!==""){
         const res=await axios.post("http://localhost:9000/posts/makeComment",{_id:props._id,userId:UserData._id,name:UserData.name,comment:Makecomment,picture:UserData.pfp})
-        setComments(res.data.comments)
-        setMakeComment("")
         toast.success('Comment added Successfully !')
       }
     }catch(err){
