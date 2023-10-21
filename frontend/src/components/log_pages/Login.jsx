@@ -41,6 +41,7 @@ export default function Login() {
           }
         }
         setUserData(res.data[0])
+        console.log(res.data[0])
         localStorage.setItem("userID",JSON.stringify(res.data[0]._id))
         setAuth(true)
         navigate('/home')

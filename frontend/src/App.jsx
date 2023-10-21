@@ -20,11 +20,11 @@ export default function App() {
     const loginIn=async()=>{
       if(accountExistCookies){
         const savedData=JSON.parse(localStorage.getItem("account"))
+        console.log(1)
         try{
           const res=await axios.post("http://localhost:9000/createUser/login",{email:savedData.email,password:savedData.password})
           setLoadingUSerData(true)
           setUserData(res.data[0])
-          console.log(res.data[0])
           setAuth(true)
         }
         catch(err){
@@ -34,6 +34,7 @@ export default function App() {
     }
     loginIn()
   },[])
+  /* tham mochkel lena ta3 ki tabda mch mssajel compte ta3ek fy cookies mch te tt3ada */
   return (
     <>
     {
