@@ -1,5 +1,7 @@
 const express=require("express")
 const dotenv=require("dotenv")
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const CreateUsermodel=require("./../models/CreateUserModel.js")
 const postModel=require('./../models/postmodel.js')
 dotenv.config()
@@ -8,21 +10,30 @@ dotenv.config()
 const CreateUserRoute=express.Router()
 
 CreateUserRoute.post("/",async(req,res)=>{
-    try{
-        const ress=await CreateUsermodel.create({
-            name:req.body.name+" "+req.body.LastName,
-            Location:req.body.Location,
-            Occupation:req.body.Occupation,
-            email:req.body.email,
-            password:req.body.password,
-            pfp:req.body.pfp,
-            likeCount:0
-          });
-        res.status(201).send(ress)
-    }
-    catch(err){
+    const plainTextPassword = req.body.password;
+bcrypt.hash(plainTextPassword, saltRounds, async(err, hash)=> {
+    if (err) {
         console.log(err)
+    } else {
+        // Store 'hash' in your database
+        try{
+            const ress=await CreateUsermodel.create({
+                name:req.body.name+" "+req.body.LastName,
+                Location:req.body.Location,
+                Occupation:req.body.Occupation,
+                email:req.body.email,
+                password:hash,
+                pfp:req.body.pfp,
+                likeCount:0
+              });
+            res.status(201).send(ress)
+        }
+        catch(err){
+            console.log(err)
+        }
+        console.log(hash);
     }
+});
 })
 CreateUserRoute.post("/exist",async(req,res)=>{
     try{
@@ -33,12 +44,21 @@ CreateUserRoute.post("/exist",async(req,res)=>{
     }
 })
 CreateUserRoute.post("/login",async(req,res)=>{
-    try{
-        const ress=await CreateUsermodel.find({$and:[{email:req.body.email},{password:req.body.password}]})
-        res.status(200).send(ress)
-    }catch(err){
-        console.log(err)
+    const plainTextPassword = req.body.password;
+
+bcrypt.hash(plainTextPassword, saltRounds, async(err, hash)=> {
+    if (err) {
+        xonsole.log(err)
+    } else {
+        // Store 'hash' in your database
+        try{
+            const ress=await CreateUsermodel.find({$and:[{email:req.body.email},{password:hash}]})
+            res.status(200).send(ress)
+        }catch(err){
+            console.log(err)
+        }
     }
+});
 })
 CreateUserRoute.post("/CurrentUser",async(req,res)=>{
     try{

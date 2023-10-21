@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AuthenticatedContext } from '../../App'
 import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
@@ -9,22 +9,21 @@ import axios from 'axios'
 
 export default function UserInfo() {
     const location=useLocation ()
- const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
+ const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts,profileUser,setProfileUser]=React.useContext(AuthenticatedContext)
  const [loader,SetLoader]=useState(false) 
-
  const HandleProfile=async()=>{
-    try{
-        const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
-        setPosts(res.data)
+     try{
+         const res=await axios.post(`http://localhost:9000/posts/`,{userId:UserData._id})
+         setPosts(res.data)
+        }
+        catch(err){
+            console.log(err)
+        }
     }
-    catch(err){
-        console.log(err)
-    }
-  }
-  const handleChangePfp=async(event)=>{
-    const base64=await ConvertToBase64(event.target.files[0])
-    setUserData({...UserData,pfp:base64})
-    try {
+    const handleChangePfp=async(event)=>{
+        const base64=await ConvertToBase64(event.target.files[0])
+        setUserData({...UserData,pfp:base64})
+        try {
         SetLoader(true)
         const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${UserData._id}`,{pfp:base64})
         SetLoader(false)
@@ -38,8 +37,11 @@ export default function UserInfo() {
     } catch (error) {
         
     }
-  }
-  return (
+}
+useEffect(()=>{
+    setProfileUser(UserData.name)
+},[])
+return (
     <>
     {
         UserData.length!==0?
@@ -47,7 +49,7 @@ export default function UserInfo() {
             <div className='p-3 '>
             <div className='flex mb-3'>
                 {
-                    (location.pathname==='/profile'&&UserData._id===JSON.parse(localStorage.getItem("userID")))?
+                    (location.pathname===`/profile/${UserData.name}`&&UserData._id===JSON.parse(localStorage.getItem("userID")))?
                     <div>
                         <label
               htmlFor="file-upload"
@@ -66,7 +68,7 @@ export default function UserInfo() {
                     <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
                 }
                 <div className=' ml-3'>
-                    <Link to={"/profile"}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
+                    <Link to={`/profile/${UserData.name}`}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
                     <p className={` ${nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {UserData.friendsList.length} friends</p>
                 </div>
             </div>

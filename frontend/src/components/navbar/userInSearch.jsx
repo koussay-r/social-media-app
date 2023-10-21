@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 export default function UserInSearch(item) {
-  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts]=React.useContext(AuthenticatedContext)
+  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,profileUser,setProfileUser]=React.useContext(AuthenticatedContext)
   const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(UserData._id))
   const hanldeSendRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)
@@ -27,6 +27,7 @@ export default function UserInSearch(item) {
     }
   }
   const handleGoToProfile=async()=>{
+    setProfileUser(UserData.name)
     try{
       const res=await axios.post(`http://localhost:9000/posts/`,{userId:item._id})
       console.log(res.data)
@@ -43,7 +44,7 @@ export default function UserInSearch(item) {
                   <div className='flex'>
                 <img src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
                 <div className=''>
-                <Link to={"/profile"}><p onClick={handleGoToProfile} className={`cursor-pointer ${nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
+                <Link to={`/profile/${item.name}`}><p onClick={handleGoToProfile} className={`cursor-pointer ${nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
                 <p className={`text-sm ${nightDayMode===true?"text-white":"text-black "}`}>{item.Occupation}</p>
                 </div>
                   </div>

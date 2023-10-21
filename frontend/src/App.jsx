@@ -15,6 +15,7 @@ export default function App() {
   const [posts,setPosts]=useState([])
   const [nightDayMode,setNightDayMode]=useState(JSON.parse(localStorage.getItem("mode")))
   const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
+  const [profileUser,setProfileUser]=useState("")
   useEffect(()=>{
     const loginIn=async()=>{
       if(accountExistCookies){
@@ -23,6 +24,7 @@ export default function App() {
           const res=await axios.post("http://localhost:9000/createUser/login",{email:savedData.email,password:savedData.password})
           setLoadingUSerData(true)
           setUserData(res.data[0])
+          console.log(res.data[0])
           setAuth(true)
         }
         catch(err){
@@ -38,7 +40,7 @@ export default function App() {
       (LoadingUSerData===true||accountExistCookies===false)?
     <BrowserRouter>
     
-      <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies]}>
+      <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser]}>
     <Toaster
   position="top-center"
   reverseOrder={false}
@@ -50,7 +52,7 @@ export default function App() {
        
        <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={auth&&<Home/>}/>
-       <Route path='/profile' element={<UserProfile/>}/>
+       <Route path={`/profile/${profileUser}`} element={<UserProfile/>}/>
        </Routes>
         </AuthenticatedContext.Provider>
     </BrowserRouter>  :
