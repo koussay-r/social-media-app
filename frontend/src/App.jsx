@@ -7,6 +7,7 @@ import {Toaster} from 'react-hot-toast'
 import axios from 'axios'
 import UserProfile from './components/profile/UserProfile'
 import MainLoader from './components/MainLoader'
+import FindAccount from './components/log_pages/FindAccount'
 export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
@@ -33,12 +34,13 @@ export default function App() {
       }
     }
     loginIn()
+    console.log(UserData)
   },[])
   /* tham mochkel lena ta3 ki tabda mch mssajel compte ta3ek fy cookies mch te tt3ada */
   return (
     <>
     {
-      (LoadingUSerData===true||accountExistCookies===false)?
+      (LoadingUSerData===true||accountExistCookies===false||UserData)?
     <BrowserRouter>
     
       <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser]}>
@@ -50,7 +52,7 @@ export default function App() {
       {
         accountExistCookies?<Route path='/' index element={auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
       }
-       
+       <Route path="/findAccount" element={<FindAccount/>}/>
        <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={auth&&<Home/>}/>
        <Route path={`/profile/${profileUser}`} element={<UserProfile/>}/>

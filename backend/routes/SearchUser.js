@@ -77,4 +77,23 @@ route.post("/findUserById",async(req,res)=>{
       console.log(err)
   }
   })
+  route.post("/findLostAccount",async(req,res)=>{
+    const userFound={
+      pfp:"",
+      name:""
+    }
+    try {
+      const ress=await userModel.find({email:req.body.email})
+      if(ress.length==0){
+        res.send(false)
+      }
+      else{
+        userFound.pfp=ress[0].pfp
+        userFound.name=ress[0].name
+        res.status(200).send(userFound)
+      }
+    } catch (error) {
+      console.log();
+    }
+  })
 module.exports = route;

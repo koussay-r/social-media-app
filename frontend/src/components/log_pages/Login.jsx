@@ -61,7 +61,7 @@ export default function Login() {
   clearTimeout(timer)
   }
   return (
-    <div className='mx-auto block'>
+    <div className='mx-auto bg-[#e9ebee] h-[100vh] block'>
       
         <header className='text-center font-bold text-[#04d0fa] bg-white w-full pb-3 shadow-sm pt-3 text-4xl'>
             Sociopedia
@@ -85,7 +85,10 @@ export default function Login() {
             <p className={`${(lackData&&UserAccount.password.length===0)?"text-red-600":"text-gray-900"} font-[600] px-[1px] bg-white w-fit translate-y-[17px] translate-x-[6px] `}>Password</p>
             <input value={UserAccount.password} onChange={handlePassword} type={'password'} className="focus:border-[#04d0fa] py-5 shadow-sm border rounded focus:bg-gray-100 border-gray-300 pl-3 w-full h-8 mt-2"/>
             <button onClick={(UserAccount.email.length!==0&&UserAccount.password.length!==0)?handleLogin:handleLackData} className='mt-4 bg-[#04d0fa] rounded-md py-2 text-white block mx-auto w-full'>Login</button>
+              <div className='flex justify-between'>
             <Link to='/signup'><p className='mt-2 w-fit text-blue-700 hover:text-blue-400 cursor-pointer underline'>Don't have an account yet? sign up here</p></Link>
+            <Link to='/findAccount'><p className='mt-2 w-fit text-blue-700 hover:text-blue-400 cursor-pointer underline'>Forgot password?</p></Link>
+              </div>
         </form>
     </div>
   )
