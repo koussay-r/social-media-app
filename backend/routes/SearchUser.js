@@ -3,8 +3,15 @@ const mongoose=require("mongoose")
 const userModel = require("./../models/CreateUserModel.js");
 const route = express.Router();
 const dotenv=require("dotenv")
+const nodemailer = require('nodemailer');
 dotenv.config()
-
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'koussayrouissi72@gmail.com',
+    pass: process.env.APP_PASSOWORD,
+  },
+});
 route.post("/serach", async (req, res) => {
   try {
     const ress = await userModel.find({ name: new RegExp(req.body.name, "i") });
@@ -96,4 +103,25 @@ route.post("/findUserById",async(req,res)=>{
       console.log();
     }
   })
-module.exports = route;
+route.post("/resetPassword",(req,res)=>{
+  const random_code=Math.floor(Math.random()*9999)+1;
+  const mailOptions = {
+    from: 'koussayrouissi72@gmail.com',
+    to: req.body.email, // User's email
+    subject: 'Password Reset Code',
+    text: 'Your password reset code is: ' +random_code ,
+  };
+  transporter.sendMail(mailOptions, async (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+      try {
+        const ress=await userModel.findOne({email:req.body.email})
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  });
+})
+module.exports = rouerror
