@@ -8,6 +8,7 @@ import axios from 'axios'
 import UserProfile from './components/profile/UserProfile'
 import MainLoader from './components/MainLoader'
 import FindAccount from './components/log_pages/FindAccount'
+import ResetPassword from './components/log_pages/ResetPassword'
 export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
@@ -52,6 +53,7 @@ export default function App() {
       {
         accountExistCookies?<Route path='/' index element={auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
       }
+       <Route path='/ResetPassword' element={<ResetPassword/>}/>
        <Route path="/findAccount" element={<FindAccount/>}/>
        <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={auth&&<Home/>}/>

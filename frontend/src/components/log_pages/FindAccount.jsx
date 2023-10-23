@@ -67,7 +67,7 @@ export default function FindAccount() {
                         <p className='text-[12px]'>Sociomedia user</p>
                     </div>
                 </div>
-                <button className='bg-[#e4e6eb] lg:text-[16px] text-[14px]  text-slate-800 rounded-lg p-3 font-semibold'>This Is My Account</button>
+               <Link to="/ResetPassword"><p onClick={(e)=>e.preventDefault()} className='bg-[#e4e6eb] lg:text-[16px] text-[14px]  text-slate-800 rounded-lg p-3 font-semibold'>This Is My Account</p></Link> 
             </div>
             </div>
             }
