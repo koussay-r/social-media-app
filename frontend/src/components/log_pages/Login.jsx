@@ -78,7 +78,7 @@ export default function Login() {
          className={`py-1 block bg-red-500   font-[600] rounded-md  text-black mb-2 text-sm font-quicksand md:text-xl mx-auto w-[60%] md:w-[40%] text-center`}>
         Account not found
         </motion.div >
-        <form className='block mx-auto bg-white px-3 py-3 rounded-lg shadow-md mt-8 w-[80%] md:w-[70%] md:mt-10'>
+        <form className='block mx-auto bg-white px-3 py-3 rounded-lg shadow-md mt-8 w-[80%] lg:w-[70%] md:mt-10'>
             <p className='text-black/90 font-[600]'>Welcome to Sociopedia, the plateform for sociopaths</p>
             <p className={` ${(lackData&&UserAccount.email.length===0)?"text-red-600":"text-gray-900"} font-[600] px-[1px] h-fit translate-y-[18px] translate-x-[6px] bg-white w-fit`}>Email</p>
             <input type={'text'} value={UserAccount.email} onChange={handleEmail} className=" py-5 focus:border-[#04d0fa] shadow-sm border rounded focus:bg-gray-100 border-gray-300 pl-3 w-full h-8 mt-2"/>

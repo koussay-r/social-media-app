@@ -1,14 +1,18 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import noPfp from "./../../assets/noPfp.png"
 export default function FindAccount() {
     const [fillInputFiled,setFillInputFiled] =useState(false)
     const [accountNotfound,setAccountNotfound]=useState(false)
     const [input,SetInput]=useState("")
-    const [accountFound,setAccountFound]=useState({})
+    const [accountFound,setAccountFound]=useState(null)
+
     const handleInput=(e)=>{
         SetInput(e.target.value)
+        if(fillInputFiled===true){
+            setFillInputFiled(false)
+        }
     }
     const handleFindAccount=async(e)=>{
         if(accountNotfound===true){
@@ -36,8 +40,10 @@ export default function FindAccount() {
         <header className='text-center font-bold text-[#04d0fa] bg-white w-full pb-3 shadow-sm pt-3 text-4xl'>
             Sociopedia
         </header>
-        <form className='block mx-auto bg-white pt-3 pb-1  rounded-lg shadow-md mt-[50%] w-[90%] md:w-[40%] md:mt-24'>
+        <form className='block mx-auto bg-white pt-3 pb-1  rounded-lg shadow-md mt-[50%] w-[90%] lg:w-[40%] md:mt-24'>
             <p className='font-bold p-3 text-[20px]'>Find your account</p>
+            {
+                accountFound===null?
             <div className='border border-gray-500 px-5 border-l-transparent border-r-transparent py-4'>
                 <div className={`bg-[#ffebe8] border ${fillInputFiled===false?"hidden":"block"} border-[#e04b23] px-3  mb-3 py-2`}>
                     <p className='font-semibold'>Please fill in at least one field</p>
@@ -50,10 +56,32 @@ export default function FindAccount() {
                 <p className=' text-black/80 font-semibold text-[18px]'>Please enter your email or mobile number to search for your account.</p>
                 <input  onChange={handleInput} className='border p-[14px] rounded w-full mt-4 block focus:border-[#04d0fa] border-gray-400  mx-auto' type='text' placeholder="Enter your email..."/>
             </div>
-            <div className='flex gap-2 p-3 justify-end'>
-               <Link to="/"><button className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>Cancel</button></Link>
-                <button onClick={handleFindAccount} className='bg-[#1877f2] hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Search</button>
+            :
+            <div className='border border-gray-500 px-5 border-l-transparent border-r-transparent py-4'>
+            <p className='font-semibold text-md'>This account matched your search.</p>
+            <div className='flex mt-5 justify-between'>
+                <div className='flex gap-4'>
+                    <img src={accountFound.pfp===""?noPfp:accountFound.pfp} className='rounded-full cursor-pointer w-11 h-11'/>
+                    <div>
+                        <p className='font-semibold text-black/80'>{accountFound.name}</p>
+                        <p className='text-[12px]'>Sociomedia user</p>
+                    </div>
+                </div>
+                <button className='bg-[#e4e6eb] lg:text-[16px] text-[14px]  text-slate-800 rounded-lg p-3 font-semibold'>This Is My Account</button>
             </div>
+            </div>
+            }
+                {
+                    accountFound===null?
+            <div className='flex gap-2 p-3 justify-end'>
+                    <Link to="/"><button className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>Cancel</button></Link>
+                     <button onClick={handleFindAccount} className='bg-[#1877f2] hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Search</button>
+            </div>
+                     :
+                     <div className='flex gap-2 p-3 justify-end'>
+                    <Link to="/"><button className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>back</button></Link>
+                    </div>
+                }
         </form>
     </div>
   )

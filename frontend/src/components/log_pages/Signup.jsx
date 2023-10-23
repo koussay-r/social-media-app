@@ -111,7 +111,7 @@ const handleCreateUser=async(e)=>{
             User already exists
             </>}
         </motion.div >
-        <form className='block mx-auto bg-white px-6 py-3 rounded-lg shadow-md mt-10 w-[80%] md:w-[70%] md:mt-7'>
+        <form className='block mx-auto bg-white px-6 py-3 rounded-lg shadow-md mt-10 w-[80%] lg:w-[70%] md:mt-7'>
             <p className='text-black/90 font-[600]'>Welcome to Sociopedia, the plateform for sociopaths</p>
             <div className='flex w-full justify-center gap-3'>
             <div className='w-full'>
