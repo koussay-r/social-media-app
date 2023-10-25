@@ -13,6 +13,7 @@ export const AuthenticatedContext=createContext()
 export default function App() {
   const [auth,setAuth]=useState(false)
   const [UserData,setUserData]=useState()
+  const [emailRecoverPassword,setEmailRcoverPassword]=useState("")
   const [LoadingUSerData,setLoadingUSerData]=useState(false)
   const [posts,setPosts]=useState([])
   const [nightDayMode,setNightDayMode]=useState(JSON.parse(localStorage.getItem("mode")))
@@ -37,14 +38,13 @@ export default function App() {
     loginIn()
     console.log(UserData)
   },[])
-  /* tham mochkel lena ta3 ki tabda mch mssajel compte ta3ek fy cookies mch te tt3ada */
   return (
     <>
     {
       (LoadingUSerData===true||accountExistCookies===false||UserData)?
     <BrowserRouter>
     
-      <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser]}>
+      <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser,emailRecoverPassword,setEmailRcoverPassword]}>
     <Toaster
   position="top-center"
   reverseOrder={false}

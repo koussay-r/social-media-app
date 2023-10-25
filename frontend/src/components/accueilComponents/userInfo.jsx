@@ -49,7 +49,7 @@ return (
             <div className='p-3 '>
             <div className='flex mb-3'>
                 {
-                    (location.pathname===`/profile/${UserData.name}`&&UserData._id===JSON.parse(localStorage.getItem("userID")))?
+                    (location.pathname===`/profile`&&UserData._id===JSON.parse(localStorage.getItem("userID")))?
                     <div>
                         <label
               htmlFor="file-upload"
@@ -68,7 +68,7 @@ return (
                     <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
                 }
                 <div className=' ml-3'>
-                    <Link to={`/profile/${UserData.name}`}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
+                    <Link to={`/profile/`}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
                     <p className={` ${nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {UserData.friendsList.length} friends</p>
                 </div>
             </div>

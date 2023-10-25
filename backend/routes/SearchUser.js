@@ -100,28 +100,25 @@ route.post("/findUserById",async(req,res)=>{
         res.status(200).send(userFound)
       }
     } catch (error) {
-      console.log();
+      console.log(error);
     }
   })
-route.post("/resetPassword",(req,res)=>{
-  const random_code=Math.floor(Math.random()*9999)+1;
+let recovery_code=0;
+route.post("/resetPassword/:random_code",(req,res)=>{
+  recovery_code=req.params.random_code
+  console.log(recovery_code)
   const mailOptions = {
     from: 'koussayrouissi72@gmail.com',
     to: req.body.email, // User's email
     subject: 'Password Reset Code',
-    text: 'Your password reset code is: ' +random_code ,
+    text: 'Your password reset code is: ' +req.params.random_code ,
   };
   transporter.sendMail(mailOptions, async (error, info) => {
     if (error) {
       console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-      try {
-        const ress=await userModel.findOne({email:req.body.email})
-      } catch (error) {
-        console.log(error)
-      }
+    }else{
+      res.send(recovery_code)
     }
   });
 })
-module.exports = rouerror
+module.exports = route

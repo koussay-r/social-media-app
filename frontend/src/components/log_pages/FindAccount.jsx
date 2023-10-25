@@ -2,11 +2,14 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import noPfp from "./../../assets/noPfp.png"
+import { toast } from 'react-hot-toast'
+import { AuthenticatedContext } from '../../App'
 export default function FindAccount() {
     const [fillInputFiled,setFillInputFiled] =useState(false)
     const [accountNotfound,setAccountNotfound]=useState(false)
     const [input,SetInput]=useState("")
     const [accountFound,setAccountFound]=useState(null)
+    const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser,emailRecoverPassword,setEmailRcoverPassword]=React.useContext(AuthenticatedContext);
 
     const handleInput=(e)=>{
         SetInput(e.target.value)
@@ -33,6 +36,18 @@ export default function FindAccount() {
             } catch (error) {
                 console.log(error)
             }
+        }
+    }
+    const handleSendEmailforPAsswordRecovery=async()=>{
+        try {
+            const random_code=Math.floor(Math.random()*9999)+1;
+            const result = await toast.promise(await axios.post(`http://localhost:9000/Users/resetPassword/${random_code}`,{email:emailRecoverPassword}), {
+                loading: 'Sending Recovery Code...',
+                success: <b>Recovery code has been sent successfully!</b>,
+                error: <b>Failed to send Recovery code Try again1.</b>,
+            });
+        } catch (error) {
+            console.log(error)
         }
     }
   return (
@@ -67,7 +82,7 @@ export default function FindAccount() {
                         <p className='text-[12px]'>Sociomedia user</p>
                     </div>
                 </div>
-               <Link to="/ResetPassword"><p onClick={(e)=>e.preventDefault()} className='bg-[#e4e6eb] lg:text-[16px] text-[14px]  text-slate-800 rounded-lg p-3 font-semibold'>This Is My Account</p></Link> 
+               <Link to="/ResetPassword"><button onClick={handleSendEmailforPAsswordRecovery}  className='bg-[#e4e6eb] lg:text-[16px] text-[14px]  text-slate-800 rounded-lg p-3 font-semibold'>This Is My Account</button></Link> 
             </div>
             </div>
             }

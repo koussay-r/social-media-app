@@ -31,7 +31,6 @@ bcrypt.hash(plainTextPassword, saltRounds, async(err, hash)=> {
         catch(err){
             console.log(err)
         }
-        console.log(hash);
     }
 });
 })
@@ -54,7 +53,6 @@ CreateUserRoute.post("/login",async(req,res)=>{
                 // Allow the user to log in
                 try{
                     const ress=await CreateUsermodel.find({email:req.body.email})
-                    console.log(ress)
                     res.status(200).send(ress)
                 }catch(err){
                     console.log(err)
