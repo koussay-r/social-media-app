@@ -45,24 +45,30 @@ CreateUserRoute.post("/exist",async(req,res)=>{
 CreateUserRoute.post("/login",async(req,res)=>{
     try {
         const password=await CreateUsermodel.find({email:req.body.email})
-        const storedHashedPassword = password[0].password; // Retrieve the stored hashed password from your database
-        const loginPassword = req.body.password; // User's login input
-        bcrypt.compare(loginPassword, storedHashedPassword, async(err, result) =>{
-            if (result === true) {
-                // Passwords match
-                // Allow the user to log in
-                try{
-                    const ress=await CreateUsermodel.find({email:req.body.email})
-                    res.status(200).send(ress)
-                }catch(err){
-                    console.log(err)
+        if(password.length==0){
+            res.send(password);
+        }
+        else{
+            const storedHashedPassword = password[0].password; // Retrieve the stored hashed password from your database
+            const loginPassword = req.body.password; // User's login input
+            bcrypt.compare(loginPassword, storedHashedPassword, async(err, result) =>{
+                if (result === true) {
+                    // Passwords match
+                    // Allow the user to log in
+                    try{
+                        const ress=await CreateUsermodel.find({email:req.body.email})
+                        res.status(200).send(ress)
+                    }catch(err){
+                        console.log(err)
+                    }
+                } else {
+                    // Passwords don't match
+                    // Deny the login attempt
+                    res.send([])
+                    console.log("password don't match")
                 }
-            } else {
-                // Passwords don't match
-                // Deny the login attempt
-                console.log("error heere")
-            }
-        });
+            });
+        }
     } catch (error) {
         console.log(error)
     }
