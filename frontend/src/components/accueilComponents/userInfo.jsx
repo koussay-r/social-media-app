@@ -65,10 +65,10 @@ return (
             />
                         </div>
                     :
-                    <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full w-11 h-11'/>
+                    <img src={UserData.pfp===""?noPfp:UserData.pfp} alt="no pfp" className='rounded-full object-cover w-11 h-11'/>
                 }
                 <div className=' ml-3'>
-                    <Link to={`/profile/`}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
+                    <Link to={`/profile`}><p onClick={HandleProfile} className={`${nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{UserData.name} {UserData.LastName}</p></Link> 
                     <p className={` ${nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {UserData.friendsList.length} friends</p>
                 </div>
             </div>

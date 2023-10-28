@@ -37,6 +37,10 @@ export default function Posts(props) {
   }
   const hanldeMakeComment=async(e)=>{
     e.preventDefault()
+    if(Makecomment===""){
+      toast.error("make a Comment !!")
+    }
+    else{
     comments.push(Makecomment)
     setMakeComment("")
     try{
@@ -46,7 +50,7 @@ export default function Posts(props) {
       }
     }catch(err){
       console.log(err)
-    }
+    }}
   }
   const focusToComment=()=>{
     document.getElementById(props._id).focus()

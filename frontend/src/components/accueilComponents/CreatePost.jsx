@@ -58,7 +58,7 @@ export default function CreatePost() {
         <img
           src={UserData.pfp === "" ? noPfp : UserData.pfp}
           alt=""
-          className="rounded-full w-11 h-11"
+          className="rounded-full object-cover w-11 h-11"
         />
         <input
           type={"text"}

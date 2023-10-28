@@ -8,6 +8,7 @@ export default function FindAccount() {
     const [fillInputFiled,setFillInputFiled] =useState(false)
     const [accountNotfound,setAccountNotfound]=useState(false)
     const [input,SetInput]=useState("")
+    const [loader,setLoader] = useState(false)
     const [accountFound,setAccountFound]=useState(null)
     const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser,emailRecoverPassword,setEmailRcoverPassword]=React.useContext(AuthenticatedContext);
 
@@ -26,7 +27,9 @@ export default function FindAccount() {
             setFillInputFiled(true)
         }else{
             try {
+                setLoader(true)
                 const ress=await axios.post("http://localhost:9000/Users/findLostAccount",{email:input})
+                setLoader(false)
                 if(ress.data===false){
                     setAccountNotfound(true)
                 }
@@ -49,6 +52,9 @@ export default function FindAccount() {
         } catch (error) {
             console.log(error)
         }
+    }
+    const handleGetBackTosearchUser=()=>{
+        setAccountFound(null)
     }
   return (
     <div className='mx-auto bg-[#e9ebee] h-[100vh] block'>
@@ -76,7 +82,7 @@ export default function FindAccount() {
             <p className='font-semibold text-md'>This account matched your search.</p>
             <div className='flex mt-5 justify-between'>
                 <div className='flex gap-4'>
-                    <img src={accountFound.pfp===""?noPfp:accountFound.pfp} className='rounded-full cursor-pointer w-11 h-11'/>
+                    <img src={accountFound.pfp===""?noPfp:accountFound.pfp} className='rounded-full object-cover cursor-pointer w-11 h-11'/>
                     <div>
                         <p className='font-semibold text-black/80'>{accountFound.name}</p>
                         <p className='text-[12px]'>Sociomedia user</p>
@@ -90,11 +96,17 @@ export default function FindAccount() {
                     accountFound===null?
             <div className='flex gap-2 p-3 justify-end'>
                     <Link to="/"><button className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>Cancel</button></Link>
-                     <button onClick={handleFindAccount} className='bg-[#1877f2] hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Search</button>
+                    {
+                        loader?
+                        <button  className='bg-[#1877f2] bg-opacity-70 hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Searching...</button>
+                        :
+                        <button onClick={handleFindAccount} className='bg-[#1877f2] hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Search</button>
+
+                    }
             </div>
                      :
                      <div className='flex gap-2 p-3 justify-end'>
-                    <Link to="/"><button className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>back</button></Link>
+                    <button onClick={handleGetBackTosearchUser} className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>back</button>
                     </div>
                 }
         </form>

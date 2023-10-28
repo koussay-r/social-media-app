@@ -57,7 +57,7 @@ export default function App() {
        <Route path="/findAccount" element={<FindAccount/>}/>
        <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={auth&&<Home/>}/>
-       <Route path={`/profile/${profileUser}`} element={<UserProfile/>}/>
+       <Route path={`/profile${profileUser}`} element={<UserProfile/>}/>
        </Routes>
         </AuthenticatedContext.Provider>
     </BrowserRouter>  :
