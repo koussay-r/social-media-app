@@ -37,7 +37,8 @@ export default function FindAccount() {
                     setAccountFound(ress.data)
                 }
             } catch (error) {
-                console.log(error)
+                toast.error(error.message+" Try Again !!")
+                setLoader(false)
             }
         }
     }
@@ -82,7 +83,7 @@ export default function FindAccount() {
             <p className='font-semibold text-md'>This account matched your search.</p>
             <div className='flex mt-5 justify-between'>
                 <div className='flex gap-4'>
-                    <img src={accountFound.pfp===""?noPfp:accountFound.pfp} className='rounded-full object-cover cursor-pointer w-11 h-11'/>
+                    <img src={accountFound.pfp===""?noPfp:accountFound.pfp} loading='lazy' className='rounded-full object-cover cursor-pointer w-11 h-11'/>
                     <div>
                         <p className='font-semibold text-black/80'>{accountFound.name}</p>
                         <p className='text-[12px]'>Sociomedia user</p>
