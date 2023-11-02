@@ -1,23 +1,24 @@
 import { Divider } from "@mui/material";
 import React, { useState } from "react";
-import { AuthenticatedContext } from "../../App";
 import noPfp from "./../../assets/noPfp.png";
 import { FiImage } from "react-icons/fi";
 import { MdOutlineKeyboardVoice, MdAttachFile } from "react-icons/md";
 import { AiFillAudio } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 export default function CreatePost() {
-  const [nightDayMode,setNightDayMode,auth, setAuth, UserData, setUserData,posts,setPosts] =React.useContext(AuthenticatedContext);
   const [loader, setLoader] = useState(false);
+  const state=useSelector((state)=>state.user.value)
+  const dispatch=useDispatch()
   const [postdata, setPostData] = useState({
-    userId: UserData._id,
-    user:UserData.name,
+    userId: state.UserData._id,
+    user:state.UserData.name,
     caption: "",
     picture: "",
-    userPfp:UserData.pfp,
+    userPfp:state.UserData.pfp,
     likes:0,
-    Location:UserData.Location,
+    Location:state.UserData.Location,
     comments:[]
   });
 
@@ -53,17 +54,17 @@ export default function CreatePost() {
     setPostData({...postdata,picture:""})
   }
   return (
-    <div className={`${nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  transition-all duration-200 ${postdata.picture.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
+    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  transition-all duration-200 ${postdata.picture.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
-          src={UserData.pfp === "" ? noPfp : UserData.pfp}
+          src={state.UserData.pfp === "" ? noPfp : state.UserData.pfp}
           alt=""
           className="rounded-full object-cover w-11 h-11"
         />
         <input
           type={"text"}
           placeholder="What's on your mind?"
-          className={`${nightDayMode===true?"bg-[#3a3b3c] text-white":"bg-gray-200 text-black "}  pl-4 rounded-3xl w-[85%]`}
+          className={`${state.nightDayMode===true?"bg-[#3a3b3c] text-white":"bg-gray-200 text-black "}  pl-4 rounded-3xl w-[85%]`}
           value={postdata.caption}
           onChange={handleCaption}
         />

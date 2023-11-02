@@ -3,15 +3,14 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import noPfp from "./../../assets/noPfp.png"
 import { toast } from 'react-hot-toast'
-import { AuthenticatedContext } from '../../App'
+import { useSelector } from 'react-redux'
 export default function FindAccount() {
     const [fillInputFiled,setFillInputFiled] =useState(false)
     const [accountNotfound,setAccountNotfound]=useState(false)
     const [input,SetInput]=useState("")
     const [loader,setLoader] = useState(false)
     const [accountFound,setAccountFound]=useState(null)
-    const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser,emailRecoverPassword,setEmailRcoverPassword]=React.useContext(AuthenticatedContext);
-
+    const state=useSelector((state)=>state.user.value)
     const handleInput=(e)=>{
         SetInput(e.target.value)
         if(fillInputFiled===true){
@@ -45,13 +44,9 @@ export default function FindAccount() {
     const handleSendEmailforPAsswordRecovery=async()=>{
         try {
             const random_code=Math.floor(Math.random()*9999)+1;
-            const result = await toast.promise(await axios.post(`http://localhost:9000/Users/resetPassword/${random_code}`,{email:emailRecoverPassword}), {
-                loading: 'Sending Recovery Code...',
-                success: <b>Recovery code has been sent successfully!</b>,
-                error: <b>Failed to send Recovery code Try again1.</b>,
-            });
+            await axios.post(`http://localhost:9000/Users/resetPassword/${random_code}`,{email:state.emailRecoverPassword})
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
     }
     const handleGetBackTosearchUser=()=>{
@@ -96,18 +91,18 @@ export default function FindAccount() {
                 {
                     accountFound===null?
             <div className='flex gap-2 p-3 justify-end'>
-                    <Link to="/"><button className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>Cancel</button></Link>
+                    <Link to="/"><button type='reset' className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>Cancel</button></Link>
                     {
                         loader?
                         <button  className='bg-[#1877f2] bg-opacity-70 hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Searching...</button>
                         :
-                        <button onClick={handleFindAccount} className='bg-[#1877f2] hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Search</button>
+                        <button type='submit' onClick={handleFindAccount} className='bg-[#1877f2] hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Search</button>
 
                     }
             </div>
                      :
                      <div className='flex gap-2 p-3 justify-end'>
-                    <button onClick={handleGetBackTosearchUser} className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>back</button>
+                    <button type='reeset' onClick={handleGetBackTosearchUser} className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>back</button>
                     </div>
                 }
         </form>

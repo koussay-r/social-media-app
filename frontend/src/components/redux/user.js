@@ -1,13 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const userSlice=createSlice({
-    name:"user",
-    initialState:{ value:{email:"",name:""}},
-    reducers:{
-        login:(state,action)=>{
-            state.value=action.payload
-        }
+// Function to get the initial state with the required dynamic logic
+const getInitialState = () => {
+  const nightDayMode = JSON.parse(localStorage.getItem("mode"));
+  const accountExistCookies = localStorage.getItem("account") === null ? false : true;
+
+  return {
+    auth: false,
+    UserData: {},
+    emailRecoverPassword: "",
+    posts:[],
+    LoadingUSerData: false,
+    nightDayMode,
+    accountExistCookies,
+    profileUser: "",
+    recoveryCode: 0
+  };
+};
+
+export const userSlice = createSlice({
+  name: "user",
+  initialState: {
+    value: getInitialState() // Use a function to get the initial state
+  },
+  reducers: {
+    data: (state, action) => {
+      state.value = action.payload;
     }
-})
-export const  {login}=userSlice.actions
-export default  userSlice.reducer
+  }
+});
+
+export const { data } = userSlice.actions;
+export default userSlice.reducer;

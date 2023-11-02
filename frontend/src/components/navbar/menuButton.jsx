@@ -4,21 +4,23 @@ import { Avatar } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import {Menu,MenuItem,Divider,ListItemIcon,IconButton} from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
-import { AuthenticatedContext } from '../../App';
-import { toast } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { data } from '../redux/user';
 export default function AccountMenu() {
-  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,accountExistCookies,setAccountExistCookies]=React.useContext(AuthenticatedContext)
   const navigate=useNavigate()
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setAuth(false)
     localStorage.removeItem("userID")
-    setAccountExistCookies(false)
+    dispatch(data({
+      accountExistCookies:false,
+      auth:false
+    }))
     navigate("/")
     localStorage.removeItem("account")
     document.body.style.backgroundColor="#f3f3f3"

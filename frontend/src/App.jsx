@@ -1,5 +1,7 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, {  useEffect } from 'react'
+import {useDispatch, useSelector } from 'react-redux'
 import Login from './components/log_pages/Login'
+import {data} from "./components/redux/user"
 import Signup from './components/log_pages/Signup'
 import {BrowserRouter ,Route,Routes, useNavigate} from 'react-router-dom'
 import Home from './components/Home/Home'
@@ -9,26 +11,20 @@ import UserProfile from './components/profile/UserProfile'
 import MainLoader from './components/MainLoader'
 import FindAccount from './components/log_pages/FindAccount'
 import ResetPassword from './components/log_pages/ResetPassword'
-export const AuthenticatedContext=createContext()
 export default function App() {
-  const [auth,setAuth]=useState(false)
-  const [UserData,setUserData]=useState()
-  const [emailRecoverPassword,setEmailRcoverPassword]=useState("")
-  const [LoadingUSerData,setLoadingUSerData]=useState(false)
-  const [posts,setPosts]=useState([])
-  const [nightDayMode,setNightDayMode]=useState(JSON.parse(localStorage.getItem("mode")))
-  const [accountExistCookies,setAccountExistCookies]=useState(localStorage.getItem("account")===null?false:true)
-  const [profileUser,setProfileUser]=useState("")
+  const state=useSelector((state)=>state.user.value)
+  const dispatch=useDispatch()
   useEffect(()=>{
     const loginIn=async()=>{
-      if(accountExistCookies){
+      if(state.accountExistCookies){
         const savedData=JSON.parse(localStorage.getItem("account"))
-        console.log(1)
         try{
           const res=await axios.post("http://localhost:9000/createUser/login",{email:savedData.email,password:savedData.password})
-          setLoadingUSerData(true)
-          setUserData(res.data[0])
-          setAuth(true)
+          dispatch(data({
+            LoadingUSerData:true,
+            UserData:res.data[0],
+            auth:true
+          }))
         }
         catch(err){
           console.log(err)
@@ -36,30 +32,27 @@ export default function App() {
       }
     }
     loginIn()
-    console.log(UserData)
   },[])
   return (
     <>
     {
-      (LoadingUSerData===true||accountExistCookies===false||UserData)?
+      (state.LoadingUSerData===true||state.accountExistCookies===false||state.UserData)?
     <BrowserRouter>
     
-      <AuthenticatedContext.Provider value={[nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData,posts,setPosts,accountExistCookies,setAccountExistCookies,profileUser,setProfileUser,emailRecoverPassword,setEmailRcoverPassword]}>
     <Toaster
   position="top-center"
   reverseOrder={false}
 />
     <Routes>
       {
-        accountExistCookies?<Route path='/' index element={auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
+        state.accountExistCookies?<Route path='/' index element={state.auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
       }
        <Route path='/ResetPassword' element={<ResetPassword/>}/>
        <Route path="/findAccount" element={<FindAccount/>}/>
        <Route path="/signup" element={<Signup/>}/>
-       <Route path='/home' element={auth&&<Home/>}/>
-       <Route path={`/profile${profileUser}`} element={<UserProfile/>}/>
+       <Route path='/home' element={state.auth&&<Home/>}/>
+       <Route path={`/profile`} element={<UserProfile/>}/>
        </Routes>
-        </AuthenticatedContext.Provider>
     </BrowserRouter>  :
     <MainLoader/>
     }

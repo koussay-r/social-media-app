@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { AuthenticatedContext } from '../../App'
 import {motion} from 'framer-motion'
+import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { data } from '../redux/user'
 
 export default function Login() {
   const [UserExist,SetUserExist]=useState(true)
-  const [nightDayMode,setNightDayMode,auth,setAuth,UserData,setUserData]=useContext(AuthenticatedContext)
   const [lackData,setLackData]=useState(false)
   const [accountSaved,SetAccountSaved]=useState(localStorage.getItem("account"))
   const navigate=useNavigate()
@@ -14,6 +15,7 @@ export default function Login() {
     email:"",
     password:""
   })
+  const dispatch=useDispatch()
   const handleEmail=(e)=>{
     setUserAccount({...UserAccount,email:e.target.value})
   }
@@ -40,15 +42,16 @@ export default function Login() {
             localStorage.setItem("account",accountdata)
           }
         }
-        setUserData(res.data[0])
-        console.log(res.data[0])
         localStorage.setItem("userID",JSON.stringify(res.data[0]._id))
-        setAuth(true)
+        dispatch(data({
+          auth:true,
+          UserData:res.data[0]
+        }))
         navigate('/home')
         setUserAccount({...UserAccount,email:"",password:""})
       }
     }catch(err){
-      console.log(err)
+      toast.error(err.message+" try again !!")
     }
   }
   const handleLackData=(e)=>{
