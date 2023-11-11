@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {motion} from 'framer-motion'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { data } from '../redux/user'
 
 export default function Login() {
@@ -16,6 +16,7 @@ export default function Login() {
     password:""
   })
   const dispatch=useDispatch()
+  const state=useSelector((state)=>state.user.value)
   const handleEmail=(e)=>{
     setUserAccount({...UserAccount,email:e.target.value})
   }
@@ -47,6 +48,7 @@ export default function Login() {
           auth:true,
           UserData:res.data[0]
         }))
+        console.log(state.auth)
         navigate('/home')
         setUserAccount({...UserAccount,email:"",password:""})
       }

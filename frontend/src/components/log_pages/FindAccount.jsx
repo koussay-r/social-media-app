@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import noPfp from "./../../assets/noPfp.png"
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { data } from '../redux/user'
+import {  data } from '../redux/user'
+import { useContext } from 'react'
+import { recoveryCodeContext } from '../../App'
 export default function FindAccount() {
     const [fillInputFiled,setFillInputFiled] =useState(false)
     const [accountNotfound,setAccountNotfound]=useState(false)
@@ -13,6 +15,7 @@ export default function FindAccount() {
     const [accountFound,setAccountFound]=useState(null)
     const state=useSelector((state)=>state.user.value)
     const dispatch=useDispatch()
+    const [recoveryCode,setRecoveryCode]=useContext(recoveryCodeContext)
     const handleInput=(e)=>{
         SetInput(e.target.value)
         if(fillInputFiled===true){
@@ -46,9 +49,7 @@ export default function FindAccount() {
     const handleSendEmailforPAsswordRecovery=async()=>{
         try {
             const random_code=Math.floor(Math.random()*9999)+1;
-            dispatch(data({
-                recoveryCode:random_code
-            }))
+            setRecoveryCode(random_code)
             await axios.post(`http://localhost:9000/Users/resetPassword/${random_code}`,{email:state.emailRecoverPassword})
         } catch (error) {
             console.log(error.message)

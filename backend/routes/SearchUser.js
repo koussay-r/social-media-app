@@ -103,10 +103,7 @@ route.post("/findUserById",async(req,res)=>{
       console.log(error);
     }
   })
-let recovery_code=0;
 route.post("/resetPassword/:random_code",(req,res)=>{
-  recovery_code=req.params.random_code
-  console.log(recovery_code)
   const mailOptions = {
     from: 'koussayrouissi72@gmail.com',
     to: req.body.email, // User's email
@@ -117,8 +114,18 @@ route.post("/resetPassword/:random_code",(req,res)=>{
     if (error) {
       console.log(error);
     }else{
-      res.send(recovery_code)
+      res.send(req.params.random_code)
     }
   });
+})
+/*kamel hna */
+route.put("/resetPasswordDone",async(req, res)=>{
+  try{
+    const ress=await userModel.findOne({email:req.body.email});
+    res.status(201).send(ress)
+  }
+  catch(err){
+    console.log(err.message)
+  }
 })
 module.exports = route
