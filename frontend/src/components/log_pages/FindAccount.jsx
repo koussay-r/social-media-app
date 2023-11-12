@@ -50,6 +50,7 @@ export default function FindAccount() {
         try {
             const random_code=Math.floor(Math.random()*9999)+1;
             setRecoveryCode(random_code)
+            console.log(state.emailRecoverPassword)
             await axios.post(`http://localhost:9000/Users/resetPassword/${random_code}`,{email:state.emailRecoverPassword})
         } catch (error) {
             console.log(error.message)

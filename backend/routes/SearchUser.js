@@ -3,6 +3,7 @@ const mongoose=require("mongoose")
 const userModel = require("./../models/CreateUserModel.js");
 const route = express.Router();
 const dotenv=require("dotenv")
+const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 dotenv.config()
 const transporter = nodemailer.createTransport({
@@ -112,17 +113,32 @@ route.post("/resetPassword/:random_code",(req,res)=>{
   };
   transporter.sendMail(mailOptions, async (error, info) => {
     if (error) {
-      console.log(error);
+      console.log(error.message);
     }else{
-      res.send(req.params.random_code)
+      console.log(req.params.random_code)
     }
   });
 })
 /*kamel hna */
 route.put("/resetPasswordDone",async(req, res)=>{
   try{
-    const ress=await userModel.findOne({email:req.body.email});
-    res.status(201).send(ress)
+    const plainTextPassword = req.body.password;
+    bcrypt.hash(plainTextPassword, saltRounds, async(err, hash)=> {
+      if (err) {
+        console.log(err.message)
+      } else {
+        // Store 'hash' in your database
+        try{ 
+          const ress=await userModel.findOne({email:req.body.email});
+          ress.password=hash;
+          ress.save()
+          res.status(201).send(true)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+});
   }
   catch(err){
     console.log(err.message)

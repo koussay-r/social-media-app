@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { recoveryCodeContext } from '../../App'
 import axios from 'axios'
-
+import { toast } from "react-hot-toast";
 export default function ResetPassword() {
   const [recoveryCode,setRecoveryCode,email,setEmail]=useContext(recoveryCodeContext)
   const [fillInputFiled,setFillInputFiled] =useState(false)
@@ -10,8 +10,10 @@ export default function ResetPassword() {
   const [wrongCode,setWrongCode]=useState(false)
   const [checkDone,setCheckdone] = useState(false)
   const [loader,setLoader]=useState(false)
+  const [password,setPassword]=useState("")
   const handleInput=(e)=>{
     setInput(e.target.value)
+    console.log(recoveryCode)
     if(fillInputFiled===true||wrongCode===true){
         setFillInputFiled(false)
         setWrongCode(false)
@@ -21,19 +23,33 @@ export default function ResetPassword() {
         setCheckdone(true)
       }
       else{
+        console.log("hey")
         setWrongCode(true)
         setFillInputFiled("")
       }
     }
 }
 
-  const fillField=()=>{
+  const fillField=(e)=>{
+    e.preventDefault()
   setFillInputFiled(true)
 }
-  const handleChangePassword=async()=>{
+  const handlePassordInput=(e)=>{
+    setPassword(e.target.value)
+  }
+  const handleChangePassword=async(e)=>{
+    e.preventDefault()
     try{
       setLoader(true)
-      const res=await axios.post("http://localhost:")
+      const res=await axios.post("http://localhost:9000/Users/resetPasswordDone",{email:email,password:password})
+      setLoader(false)
+      if(res===true){
+        toast.success("Your password has been changed successfully.")
+      }
+      else{
+        toast.error("Something went wrong try again!")
+        setPassword("")
+      }
     }
     catch(err){
       console.log(err.message)
@@ -78,7 +94,7 @@ export default function ResetPassword() {
                    {
                     !checkDone?
                     input.length===4?
-                    <button   className='bg-[#1877f2] bg-opacity-70 hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submiting...</button>
+                    <button onClick={(e)=>e.preventDefault()}  className='bg-[#1877f2] bg-opacity-70 hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submiting...</button>
                     :  
                     <button onClick={fillField}  className='bg-[#1877f2]  hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submit</button>
                   :
