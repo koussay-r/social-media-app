@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {motion} from 'framer-motion'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { data } from '../redux/user'
+import { changeAuth,changeUserData } from '../redux/user'
 
 export default function Login() {
   const [UserExist,SetUserExist]=useState(true)
@@ -44,16 +44,14 @@ export default function Login() {
           }
         }
         localStorage.setItem("userID",JSON.stringify(res.data[0]._id))
-        dispatch(data({
-          auth:true,
-          UserData:res.data[0]
-        }))
+        dispatch(changeAuth(true))
+        dispatch(changeUserData(res.data[0]))
         console.log(state.auth)
         navigate('/home')
         setUserAccount({...UserAccount,email:"",password:""})
       }
     }catch(err){
-      toast.error(err.message+" try again !!")
+      toast.error(err.message+" try again !")
     }
   }
   const handleLackData=(e)=>{
