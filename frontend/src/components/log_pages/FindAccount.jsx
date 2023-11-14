@@ -8,18 +8,17 @@ import {  data } from '../redux/user'
 import { useContext } from 'react'
 import { recoveryCodeContext } from '../../App'
 export default function FindAccount() {
-    const [fillInputFiled,setFillInputFiled] =useState(false)
+    const [fillInputFiled,setFillInputField] =useState(false)
     const [accountNotfound,setAccountNotfound]=useState(false)
-    const [input,SetInput]=useState("")
     const [loader,setLoader] = useState(false)
     const [accountFound,setAccountFound]=useState(null)
     const state=useSelector((state)=>state.user.value)
     const dispatch=useDispatch()
-    const [recoveryCode,setRecoveryCode]=useContext(recoveryCodeContext)
+    const [recoveryCode,setRecoveryCode,email,setEmail]=useContext(recoveryCodeContext)
     const handleInput=(e)=>{
-        SetInput(e.target.value)
+        setEmail(e.target.value)
         if(fillInputFiled===true){
-            setFillInputFiled(false)
+            setFillInputField(false)
         }
     }
     const handleFindAccount=async(e)=>{
@@ -27,12 +26,12 @@ export default function FindAccount() {
             setAccountNotfound(!accountNotfound)
         }
         e.preventDefault()
-        if(input.length===0){
-            setFillInputFiled(true)
+        if(email.length===0){
+            setFillInputField(true)
         }else{
             try {
                 setLoader(true)
-                const ress=await axios.post("http://localhost:9000/Users/findLostAccount",{email:input})
+                const ress=await axios.post("http://localhost:9000/Users/findLostAccount",{email:email})
                 setLoader(false)
                 if(ress.data===false){
                     setAccountNotfound(true)
@@ -48,10 +47,7 @@ export default function FindAccount() {
     }
     const handleSendEmailforPAsswordRecovery=async()=>{
         try {
-            const random_code=Math.floor(Math.random()*9999)+1;
-            setRecoveryCode(random_code)
-            console.log(state.emailRecoverPassword)
-            await axios.post(`http://localhost:9000/Users/resetPassword/${random_code}`,{email:state.emailRecoverPassword})
+            await axios.post(`http://localhost:9000/Users/resetPassword/${recoveryCode}`,{email:email})
         } catch (error) {
             console.log(error.message)
         }

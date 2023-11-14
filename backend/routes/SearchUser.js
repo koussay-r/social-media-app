@@ -3,6 +3,7 @@ const mongoose=require("mongoose")
 const userModel = require("./../models/CreateUserModel.js");
 const route = express.Router();
 const dotenv=require("dotenv")
+const saltRounds = 10;
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 dotenv.config()
@@ -132,6 +133,7 @@ route.put("/resetPasswordDone",async(req, res)=>{
           const ress=await userModel.findOne({email:req.body.email});
           ress.password=hash;
           ress.save()
+          console.log("done")
           res.status(201).send(true)
         }
         catch(err){

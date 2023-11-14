@@ -13,10 +13,9 @@ import ResetPassword from './components/log_pages/ResetPassword'
 import { createContext } from 'react'
 export const recoveryCodeContext=createContext()
 export default function App() {
-  const [recoveryCode,setRecoveryCode]=useState(0)
+  const [recoveryCode,setRecoveryCode]=useState(Math.floor(Math.random()*9999)+1)
   const [email,setEmail] = useState("")
   const state=useSelector((state)=>state.user.value)
-  console.log(state)
   const dispatch=useDispatch()
   useEffect(()=>{
     const loginIn=async()=>{

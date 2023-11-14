@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { recoveryCodeContext } from '../../App'
 import axios from 'axios'
@@ -13,26 +13,21 @@ export default function ResetPassword() {
   const [password,setPassword]=useState("")
   const handleInput=(e)=>{
     setInput(e.target.value)
-    console.log(recoveryCode)
     if(fillInputFiled===true||wrongCode===true){
         setFillInputFiled(false)
         setWrongCode(false)
-    }
-    if(input.length===4){
-      if(input===recoveryCode){
-        setCheckdone(true)
-      }
-      else{
-        console.log("hey")
-        setWrongCode(true)
-        setFillInputFiled("")
       }
     }
-}
-
-  const fillField=(e)=>{
+  const handlesubmitRecoveryCode=(e)=>{
     e.preventDefault()
-  setFillInputFiled(true)
+    if(recoveryCode===parseInt(input)){
+      console.log("done")
+      setCheckdone(true)
+      set
+    }
+    else{
+      console.log("chy")
+    }
 }
   const handlePassordInput=(e)=>{
     setPassword(e.target.value)
@@ -41,8 +36,9 @@ export default function ResetPassword() {
     e.preventDefault()
     try{
       setLoader(true)
-      const res=await axios.post("http://localhost:9000/Users/resetPasswordDone",{email:email,password:password})
+      const res=await axios.put("http://localhost:9000/Users/resetPasswordDone",{email:email,password:password})
       setLoader(false)
+      console.log(res)
       if(res===true){
         toast.success("Your password has been changed successfully.")
       }
@@ -93,11 +89,13 @@ export default function ResetPassword() {
                     <Link to="/"><button type='reset' className='bg-[#e4e6eb] rounded-lg p-3 font-semibold'>Cancel</button></Link>
                    {
                     !checkDone?
-                    input.length===4?
-                    <button onClick={(e)=>e.preventDefault()}  className='bg-[#1877f2] bg-opacity-70 hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submiting...</button>
-                    :  
-                    <button onClick={fillField}  className='bg-[#1877f2]  hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submit</button>
+                  <button onClick={handlesubmitRecoveryCode}  className='bg-[#1877f2]  hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submit</button>   
                   :
+                  loader?
+                  <button  className='bg-[#1877f2] bg-opacity-70  hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submiting...</button>
+
+                  :
+
                   <button onClick={handleChangePassword}  className='bg-[#1877f2]  hover:bg-opacity-80 text-white rounded-lg p-3 font-semibold'>Submit</button>
 
                   }
