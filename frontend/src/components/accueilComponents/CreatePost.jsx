@@ -6,11 +6,10 @@ import { MdOutlineKeyboardVoice, MdAttachFile } from "react-icons/md";
 import { AiFillAudio } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 export default function CreatePost() {
   const [loader, setLoader] = useState(false);
   const state=useSelector((state)=>state.user.value)
-  const dispatch=useDispatch()
   const [postdata, setPostData] = useState({
     userId: state.UserData._id,
     user:state.UserData.name,

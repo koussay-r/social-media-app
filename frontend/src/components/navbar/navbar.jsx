@@ -11,14 +11,15 @@ import UserInSearch from './userInSearch'
 import { Link } from 'react-router-dom'
 import {FaMoon} from "react-icons/fa"
 import { useDispatch, useSelector } from 'react-redux'
-import { data } from '../redux/user'
+import { fetchPosts } from '../redux/postsSlice'
+import {changeNightDayMode} from '../redux/user'
 export default function Navbar() {
   const [menu,setMenu]=useState(true)
   const [usersSerach,setUsersSeach]=useState([])
+  const state=useSelector(state=>state.user.value)
   const handlemenu=()=>{
     setMenu(!menu)
   }
-  const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
   const handleSerachValue=async(e)=>{
     try{
@@ -39,12 +40,8 @@ export default function Navbar() {
   }
  const handleReturnToFeed=async()=>{
   try{
-    const res=await axios.post(`http://localhost:9000/posts/`,{userId:"0"})
-    const ress=await axios.post("http://localhost:9000/createUser/CurrentUser",{_id:JSON.parse(localStorage.getItem("userID"))})
-    dispatch(data({
-      UserData:ress.data[0],
-      posts:res.data
-    }))
+    dispatch(fetchPosts())
+    dispatch(fetchCurrentUserData())
   }catch(err){
     console.log(err)
   }
@@ -55,7 +52,7 @@ export default function Navbar() {
     }else{
       document.body.style.backgroundColor="#0d0b0e"
     }
-    dispatch(data({nightDayMode:!state.nightDayMode}))
+    dispatch(changeNightDayMode(!state.nightDayMode))
   localStorage.setItem("mode",JSON.stringify(!state.nightDayMode))
  }
   return (

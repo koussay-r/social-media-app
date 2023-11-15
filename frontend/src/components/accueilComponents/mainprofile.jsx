@@ -11,15 +11,11 @@ export default function Mainprofile() {
   const loader = [1, 2];
   const dispatch=useDispatch()
   const state=useSelector((state)=>state.user.value)
-                                            
+  const PostsState=useSelector(state=>state.posts.value)                                    
   useEffect(() => {
-    const handleFetchingPostst=async()=>{
+    const handleFetchingPostst=()=>{
       try{
-        const res=await axios.post(`http://localhost:9000/posts`,{userId:"0"})
-        console.log(res.data)
-        dispatch(data({
-          posts: res.data
-        }))
+        dispatch(fetchPosts())
       }catch(err){
         console.log(err)
       }
@@ -42,8 +38,8 @@ export default function Mainprofile() {
     <div  id='userInfoComponent1'  className=' w-[350px] block mx-auto pb-5 md:mx-0 md:mt-0 mt-5 md:w-[40%]'>
     <CreatePost/>
     {
-      state.posts
-      ?(state.posts.map(item=>{
+      PostsState.posts
+      ?(PostsState.posts.map(item=>{
         return(
           <Posts key={item._id} comments={item.comments} picture={item.picture} currentUser={state.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId} pfp={item.userPfp} likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
         )

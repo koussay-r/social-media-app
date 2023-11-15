@@ -6,7 +6,8 @@ import Posts from './../accueilComponents/Posts'
 import Navbar from '../navbar/navbar'
 import { useSelector } from 'react-redux'
 export default function UserProfile() {
-    const state=useSelector((state)=>state.user.value)
+    const state=useSelector((state)=>state.posts.value)
+    const Userstate=useSelector(state=>state.user.value)
     return (
         <>
         <Navbar/>
@@ -20,7 +21,7 @@ export default function UserProfile() {
         state.posts.length!==0
         &&(state.posts.map(item=>{
           return(
-            <Posts key={item._id} comments={item.comments} picture={item.picture} currentUser={state.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId} pfp={item.userPfp} likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
+            <Posts key={item._id} comments={item.comments} picture={item.picture} currentUser={Userstate.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId} pfp={item.userPfp} likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
           )
         }))
       }

@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import nopfp from './../../assets/noPfp.png'
 import {IoPersonAddSharp,IoPersonRemoveSharp} from 'react-icons/io5'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { data } from '../redux/user'
-
+import { data, fetchCurrentUserData } from '../redux/user'
+import {changeUserData,changeItem,changeProfileUser} from "./../redux/user"
+import {fetchThisUSerPosts} from "./../redux/postsSlice"
 export default function UserInSearch(item) {
   const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(state.UserData._id))
   const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
+  useEffect(()=>{
+    dispatch(changeItem(item))
+  },[])
   const hanldeSendRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)
-    dispatch(data({
-      UserData:state.UserData
-    }))
+    dispatch(changeUserData(state.UserData))
+
     try{
       await axios.put("http://localhost:9000/Users/sendRequest",{_id:state.UserData._id,UserSentToId:idUserSentto})
     }catch(err){
@@ -23,9 +26,7 @@ export default function UserInSearch(item) {
   }
   const hanldeRemoveRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)
-    dispatch(data({
-      UserData:state.UserData
-    }))
+    dispatch(changeUserData(state.UserData))
     try{
       await axios.put("http://localhost:9000/Users/removeRequest",{id:state.UserData._id,UserSentToId:idUserSentto})
     }catch(err){
@@ -33,17 +34,10 @@ export default function UserInSearch(item) {
     }
   }
   const handleGoToProfile=async()=>{
-    dispatch(data({
-      profileUser:state.UserData.name
-    }))
+    dispatch(changeProfileUser(state.UserData.name))
     try{
-      const res=await axios.post(`http://localhost:9000/posts/`,{userId:item._id})
-      console.log(res.data)
-      const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:item._id})
-      dispatch(data({
-        UserData:res2.data[0],
-        posts:res.data
-      }))
+      dispatch(fetchCurrentUserData())
+      dispatch(fetchThisUSerPosts())
   }
   catch(err){
       console.log(err)
@@ -54,7 +48,7 @@ export default function UserInSearch(item) {
                   <div className='flex'>
                 <img src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
                 <div className=''>
-                <Link to={`/profile/${item.name}`}><p onClick={handleGoToProfile} className={`cursor-pointer ${state.nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
+                <Link to={`/profile`}><p onClick={handleGoToProfile} className={`cursor-pointer ${state.nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
                 <p className={`text-sm ${state.nightDayMode===true?"text-white":"text-black "}`}>{item.Occupation}</p>
                 </div>
                   </div>
