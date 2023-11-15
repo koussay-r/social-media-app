@@ -11,7 +11,7 @@ export default function Mainprofile() {
   const loader = [1, 2];
   const dispatch=useDispatch()
   const state=useSelector((state)=>state.user.value)
-  console.log(state.yo)
+                                            
   useEffect(() => {
     const handleFetchingPostst=async()=>{
       try{

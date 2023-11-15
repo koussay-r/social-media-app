@@ -116,11 +116,10 @@ route.post("/resetPassword/:random_code",(req,res)=>{
     if (error) {
       console.log(error.message);
     }else{
-      console.log(req.params.random_code)
+      console.log("code is sent successfully")
     }
   });
 })
-/*kamel hna */
 route.put("/resetPasswordDone",async(req, res)=>{
   try{
     const plainTextPassword = req.body.password;
@@ -133,7 +132,6 @@ route.put("/resetPasswordDone",async(req, res)=>{
           const ress=await userModel.findOne({email:req.body.email});
           ress.password=hash;
           ress.save()
-          console.log("done")
           res.status(201).send(true)
         }
         catch(err){

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { recoveryCodeContext } from '../../App'
 import axios from 'axios'
 import { toast } from "react-hot-toast";
@@ -11,6 +11,7 @@ export default function ResetPassword() {
   const [checkDone,setCheckdone] = useState(false)
   const [loader,setLoader]=useState(false)
   const [password,setPassword]=useState("")
+  const navigate=useNavigate()
   const handleInput=(e)=>{
     setInput(e.target.value)
     if(fillInputFiled===true||wrongCode===true){
@@ -22,8 +23,8 @@ export default function ResetPassword() {
     e.preventDefault()
     if(recoveryCode===parseInt(input)){
       console.log("done")
+      setInput("")
       setCheckdone(true)
-      set
     }
     else{
       console.log("chy")
@@ -39,8 +40,9 @@ export default function ResetPassword() {
       const res=await axios.put("http://localhost:9000/Users/resetPasswordDone",{email:email,password:password})
       setLoader(false)
       console.log(res)
-      if(res===true){
+      if(res.data===true){
         toast.success("Your password has been changed successfully.")
+        navigate('/')
       }
       else{
         toast.error("Something went wrong try again!")
@@ -82,7 +84,7 @@ export default function ResetPassword() {
                   checkDone?
                 <input onChange={handlePassordInput}  className='border p-[14px] rounded w-full mt-4 block focus:border-[#04d0fa] border-gray-400  mx-auto' type='text' placeholder="Enter New Password..."/>
                   :
-                  <input onChange={handleInput}  className='border p-[14px] px-[100px] text-bold text-[25px] rounded w-[50%] mt-4 block focus:border-[#04d0fa] border-gray-400 tracking-widest mx-auto'  placeholder="####"/>
+                  <input onChange={handleInput}  className='border p-[14px] px-[100px] text-bold text-[25px] rounded w-[50%] mt-4 block focus:border-[#04d0fa] border-gray-400 tracking-widest mx-auto' type='text'  placeholder="####"/>
                 }
             </div>
             <div className='flex gap-2 p-3 justify-end'>
