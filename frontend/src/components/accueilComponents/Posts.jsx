@@ -21,7 +21,6 @@ export default function Posts(props) {
   const dispatch=useDispatch()
     const handlecomment=(e)=>{
     setMakeComment(e.target.value)
-
   }
   const handleAddLikes=async()=>{
     setPostLiked(!postliked)
