@@ -13,9 +13,9 @@ export const fetchPosts=createAsyncThunk("fetchPosts",async()=>{
     const res=await axios.post(`http://localhost:9000/posts/`,{userId:"0"})
     return res.data
 })
-export const fetchThisUSerPosts=createAsyncThunk("fetchThisUSerPosts",async()=>{
+export const fetchThisUSerPosts=createAsyncThunk("fetchThisUSerPosts",async(_id)=>{
     try{
-        const res=await axios.post(`http://localhost:9000/posts/`,{userId:state.item._id})
+        const res=await axios.post(`http://localhost:9000/posts/`,{userId:_id})
         return res.data
     }catch(err){
         console.log(err.message)

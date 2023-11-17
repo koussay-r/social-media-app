@@ -11,7 +11,6 @@ const getInitialState = () => {
     accountExistCookies,
     error:false,
     nightDayMode:false,
-    item:{},
     profileUser:""
   };
 };
@@ -32,10 +31,8 @@ export const fetchCurrentUserData = createAsyncThunk("fetchCurrentUserData",asyn
   }
 })
 
-export const fetchFindUserById=createAsyncThunk("fetchFindUserById",async()=>{
+export const fetchFindUserById=createAsyncThunk("fetchFindUserById",async(itemId)=>{
   try{
-    const state = thunkAPI.getState();
-      const itemId = state.LoginDataSlice.item._id;
     const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:itemId})
     return res2.data[0]
   }catch(Err){

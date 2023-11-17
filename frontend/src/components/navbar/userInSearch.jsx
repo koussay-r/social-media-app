@@ -11,9 +11,6 @@ export default function UserInSearch(item) {
   const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(state.UserData._id))
   const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
-  useEffect(()=>{
-    dispatch(changeItem(item))
-  },[])
   const hanldeSendRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)
     dispatch(changeUserData(state.UserData))
@@ -37,7 +34,7 @@ export default function UserInSearch(item) {
     dispatch(changeProfileUser(state.UserData.name))
     try{
       dispatch(fetchCurrentUserData())
-      dispatch(fetchThisUSerPosts())
+      dispatch(fetchThisUSerPosts(item._id))
   }
   catch(err){
       console.log(err)
