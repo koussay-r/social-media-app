@@ -7,7 +7,8 @@ import { Link, useLocation  } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { data } from '../redux/user'
-
+import {changeProfileUser} from "./../redux/user"
+import {fetchThisUSerPosts} from "./../redux/postsSlice"
 export default function UserInfo() {
     const location=useLocation ()
  const [loader,SetLoader]=useState(false) 
@@ -15,10 +16,7 @@ export default function UserInfo() {
  const dispatch=useDispatch()
  const HandleProfile=async()=>{
      try{
-         const res=await axios.post(`http://localhost:9000/posts/`,{userId:state.UserData._id})
-         dispatch(data({
-            posts:res.data
-         }))
+         dispatch(fetchThisUSerPosts(state.UserData._id))
         }
         catch(err){
             console.log(err)
@@ -26,11 +24,6 @@ export default function UserInfo() {
     }
     const handleChangePfp=async(event)=>{
         const base64=await ConvertToBase64(event.target.files[0])
-        const setData = (userData) => ({
-            type: 'SET_USER_DATA',
-            payload: userData,
-          });
-        dispatch(setData(setData({ pfp: base64 })))
         try {
         SetLoader(true)
         const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${state.UserData._id}`,{pfp:base64})
@@ -47,9 +40,7 @@ export default function UserInfo() {
     }
 }
 useEffect(()=>{
-    dispatch(data({
-        profileUser: state.UserData.name
-    }))
+    dispatch(changeProfileUser(state.UserData.name))
 },[])
 return (
     <>

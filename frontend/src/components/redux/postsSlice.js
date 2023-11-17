@@ -1,8 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { useSelector } from 'react-redux'
-const state=useSelector(state.user.value)
 import axios from "axios";
-import { useSelector } from "react-redux";
 const initialState=()=>{
     return({
         posts: [],

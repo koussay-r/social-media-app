@@ -10,8 +10,8 @@ import { FiSend } from 'react-icons/fi'
 import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { data } from '../redux/user'
-
+import {fetchThisUSerPosts} from "./../redux/postsSlice"
+import {fetchFindUserById} from "./../redux/user"
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
   const [likesnumber,setLikesNumber]=useState(props.likes)
@@ -46,7 +46,7 @@ export default function Posts(props) {
     setMakeComment("")
     try{
       if(Makecomment!==""){
-        const res=await axios.post("http://localhost:9000/posts/makeComment",{_id:props._id,userId:state.UserData._id,name:state.UserData.name,comment:Makecomment,picture:state.UserData.pfp})
+        await axios.post("http://localhost:9000/posts/makeComment",{_id:props._id,userId:state.UserData._id,name:state.UserData.name,comment:Makecomment,picture:state.UserData.pfp})
         toast.success('Comment added Successfully !')
       }
     }catch(err){
@@ -58,13 +58,8 @@ export default function Posts(props) {
   }
   const handleGoToProfile=async()=>{
     try{
-      const res=await axios.post(`http://localhost:9000/posts/`,{userId:props.userId})
-      console.log(res.data)
-      const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:props.userId})
-      dispatch(data({
-        UserData:res2.data[0],
-        posts:res.data
-      }))
+      dispatch(fetchThisUSerPosts(props.userId))
+      dispatch(fetchFindUserById(props.userId))
   }
   catch(err){
       console.log(err)
