@@ -20,14 +20,16 @@ export const fetchThisUSerPosts=createAsyncThunk("fetchThisUSerPosts",async(_id)
 })
 export const postsSlice=createSlice({
     name:"postsSlice",
-    initialState:initialState,
-    extraReducers:(builder)=>{
-        builder.addCase(fetchPosts.fulfilled,(state,action)=>{
-            state.posts=action.payload;
-        })
-        builder.addCase(fetchThisUSerPosts.fulfilled,(state,action)=>{
-            state.posts=action.payload
-        })
-    }
+    initialState:{
+        value: initialState() // Use a function to get the initial state
+      },
+      extraReducers: (builder) => {
+        builder.addCase(fetchPosts.fulfilled, (state, action) => {
+          state.value.posts = action.payload;
+        });
+        builder.addCase(fetchThisUSerPosts.fulfilled, (state, action) => {
+          state.value.posts = action.payload; // Update a different field for user-specific posts
+        });
+      },
 })
-export default fetchPosts.reducer;
+export default postsSlice.reducer;

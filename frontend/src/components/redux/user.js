@@ -83,9 +83,6 @@ export const LoginDataSlice = createSlice({
     builder.addCase(fetchCurrentUserData.fulfilled,(state,action)=>{
       state.UserData=action.payload
     })
-    builder.addCase(fetchCurrentUserData.fulfilled,(state,action)=>{
-      state.UserData=action.payload
-    })
   }
 });
 
