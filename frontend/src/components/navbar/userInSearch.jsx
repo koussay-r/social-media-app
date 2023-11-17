@@ -4,12 +4,12 @@ import {IoPersonAddSharp,IoPersonRemoveSharp} from 'react-icons/io5'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { data, fetchCurrentUserData } from '../redux/user'
-import {changeUserData,changeItem,changeProfileUser} from "./../redux/user"
+import {  fetchCurrentUserData } from '../redux/user'
+import {changeUserData,changeProfileUser} from "./../redux/user"
 import {fetchThisUSerPosts} from "./../redux/postsSlice"
 export default function UserInSearch(item) {
-  const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(state.UserData._id))
   const state=useSelector((state)=>state.user.value)
+  const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(state.UserData._id))
   const dispatch=useDispatch()
   const hanldeSendRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {motion} from 'framer-motion'
 import toast from 'react-hot-toast'
@@ -46,8 +46,7 @@ export default function Login() {
         localStorage.setItem("userID",JSON.stringify(res.data[0]._id))
         dispatch(changeAuth(true))
         dispatch(changeUserData(res.data[0]))
-        console.log(state.auth)
-        navigate('/home')
+        navigate("/home")
         setUserAccount({...UserAccount,email:"",password:""})
       }
     }catch(err){

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import noPfp from "./../../assets/noPfp.png"
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import {  data } from '../redux/user'
 import { useContext } from 'react'
 import { recoveryCodeContext } from '../../App'
 export default function FindAccount() {
@@ -12,8 +11,6 @@ export default function FindAccount() {
     const [accountNotfound,setAccountNotfound]=useState(false)
     const [loader,setLoader] = useState(false)
     const [accountFound,setAccountFound]=useState(null)
-    const state=useSelector((state)=>state.user.value)
-    const dispatch=useDispatch()
     const [recoveryCode,setRecoveryCode,email,setEmail]=useContext(recoveryCodeContext)
     const handleInput=(e)=>{
         setEmail(e.target.value)

@@ -1,8 +1,8 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 // Function to get the initial state with the required dynamic logic
-const nightDayMode = JSON.parse(localStorage.getItem("mode"));
 const getInitialState = () => {
+  const nightDayMode = JSON.parse(localStorage.getItem("mode"));
   const accountExistCookies = localStorage.getItem("account") === null ? false : true;
   return {
     auth: false,
@@ -10,7 +10,7 @@ const getInitialState = () => {
     LoadingUSerData: false,
     accountExistCookies,
     error:false,
-    nightDayMode:false,
+    nightDayMode,
     profileUser:""
   };
 };
@@ -19,7 +19,6 @@ export const fetchLoginData =createAsyncThunk("fetchLoginData",async()=>{
   if(accountExistCookies){
     const account=JSON.parse(localStorage.getItem("account"));
     const data = await axios.post("http://localhost:9000/createUser/login",{email:account.email,password:account.password})
-    console.log(data.data[0]);
   return data.data[0]}
 })
 export const fetchCurrentUserData = createAsyncThunk("fetchCurrentUserData",async()=>{
@@ -46,25 +45,22 @@ export const LoginDataSlice = createSlice({
   },
   reducers: {
     changeAuth:(state,action)=>{
-      state.auth=action.payload
+      state.value.auth=action.payload
     },
     changeUserData:(state,action)=>{
-      state.UserData=action.payload
+      state.value.UserData=action.payload
     },
     changeLoadingUSerData:(state,action)=>{
-      state.LoadingUSerData=!state.LoadingUSerData
+      state.value.LoadingUSerData=!state.LoadingUSerData
     },
     changeAccountExistCookies:(state,action)=>{
-      state.accountExistCookies=!state.accountExistCookies
+      state.value.accountExistCookies=!state.accountExistCookies
     },
     changeNightDayMode:(state,action)=>{
-      state.nightDayMode=action.payload
-    },
-    changeItem:(state,action)=>{
-      state.item=action.payload
+      state.value.nightDayMode=action.payload
     },
     changeProfileUser:(state,action)=>{
-      state.profileUser=action.payload
+      state.value.profileUser=action.payload
     }
   },
   extraReducers:(builder)=>{
@@ -86,5 +82,5 @@ export const LoginDataSlice = createSlice({
   }
 });
 
-export const { data,changeProfileUser,changeAuth,changeUserData,changeLoadingUSerData,changeItem,changeAccountExistCookies,changeNightDayMode } = LoginDataSlice.actions;
+export const { changeProfileUser,changeAuth,changeUserData,changeLoadingUSerData,changeAccountExistCookies,changeNightDayMode } = LoginDataSlice.actions;
 export default LoginDataSlice.reducer;

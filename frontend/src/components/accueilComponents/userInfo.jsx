@@ -6,7 +6,6 @@ import {MdWorkOutline} from 'react-icons/md'
 import { Link, useLocation  } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { data } from '../redux/user'
 import {changeProfileUser} from "./../redux/user"
 import {fetchThisUSerPosts} from "./../redux/postsSlice"
 export default function UserInfo() {

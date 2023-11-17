@@ -10,7 +10,7 @@ import UserProfile from './components/profile/UserProfile'
 import MainLoader from './components/MainLoader'
 import FindAccount from './components/log_pages/FindAccount'
 import ResetPassword from './components/log_pages/ResetPassword'
-import { createContext } from 'react'
+import {changeAuth} from "./components/redux/user"
 export const recoveryCodeContext=createContext()
 export default function App() {
   const [recoveryCode,setRecoveryCode]=useState(Math.floor(Math.random()*9999)+1)
@@ -22,6 +22,7 @@ export default function App() {
       if(state.accountExistCookies){
         try{
           dispatch(fetchLoginData())
+          dispatch(changeAuth(true))
         }
         catch(err){
           console.log(err)
@@ -29,7 +30,6 @@ export default function App() {
       }
     }
     loginIn()
-    console.log(state.auth)
   },[])
   return (
     <>

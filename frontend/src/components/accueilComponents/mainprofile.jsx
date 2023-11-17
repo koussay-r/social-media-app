@@ -6,6 +6,7 @@ import Posts from './Posts'
 import axios from 'axios'
 import PostLoader from './PostLoader'
 import { useDispatch, useSelector } from 'react-redux'
+import {fetchPosts} from "./../redux/postsSlice"
 export default function Mainprofile() {
   const loader = [1, 2];
   const dispatch=useDispatch()
