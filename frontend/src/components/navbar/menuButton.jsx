@@ -5,12 +5,13 @@ import Tooltip from '@mui/material/Tooltip';
 import {Menu,MenuItem,Divider,ListItemIcon,IconButton} from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {changeAuth,changeAccountExistCookies} from '../redux/user'
 export default function AccountMenu() {
   const navigate=useNavigate()
   const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const state=useSelector((state)=>state.user.value)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,7 +43,8 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+            
+            <img src={state.UserData.pfp} className='w-[32px] rounded-full h-[32px]'/>
           </IconButton>
         </Tooltip>
       </Box>
@@ -79,8 +81,8 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={hanldeProfile}>
-          <Avatar /> Profile
+        <MenuItem className='flex gap-1' onClick={hanldeProfile}>
+        <img src={state.UserData.pfp} className='w-[32px] rounded-full h-[32px]'/> <p>Profile</p>
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

@@ -41,7 +41,6 @@ route.post("/",async(req,res)=>{
   try{
     if(req.body.userId=="0"){
       const ress=await postModel.find()
-      console.log(ress)
       res.status(200).send(ress)
     }
     else{

@@ -65,19 +65,19 @@ export const LoginDataSlice = createSlice({
   },
   extraReducers:(builder)=>{
     builder.addCase(fetchLoginData.pending,(state,action)=>{
-      state.LoadingUSerData=true;
+      state.value.LoadingUSerData=true;
     });
     builder.addCase(fetchLoginData.fulfilled,(state,action)=>{
-      state.LoadingUSerData=false;
-      state.UserData=action.payload
-      state.auth=true
+      state.value.LoadingUSerData=false;
+      state.value.UserData=action.payload
+      state.value.auth=true
     });
     builder.addCase(fetchLoginData.rejected,(state,action)=>{
-      state.LoadingUSerData=false;
-      state.error=true
+      state.value.LoadingUSerData=false;
+      state.value.error=true
     })
     builder.addCase(fetchCurrentUserData.fulfilled,(state,action)=>{
-      state.UserData=action.payload
+      state.value.UserData=action.payload
     })
   }
 });

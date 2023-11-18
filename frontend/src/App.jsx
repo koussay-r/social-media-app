@@ -11,6 +11,7 @@ import MainLoader from './components/MainLoader'
 import FindAccount from './components/log_pages/FindAccount'
 import ResetPassword from './components/log_pages/ResetPassword'
 import {changeAuth} from "./components/redux/user"
+import { createContext } from 'react'
 export const recoveryCodeContext=createContext()
 export default function App() {
   const [recoveryCode,setRecoveryCode]=useState(Math.floor(Math.random()*9999)+1)
@@ -34,7 +35,7 @@ export default function App() {
   return (
     <>
     {
-      (state.LoadingUSerData===true||state.accountExistCookies===false||state.UserData)?
+      (state.LoadingUSerData===false||state.accountExistCookies===false)?
     <recoveryCodeContext.Provider value={[recoveryCode,setRecoveryCode,email,setEmail]}>
       <BrowserRouter>
     
