@@ -18,12 +18,11 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     localStorage.removeItem("userID")
-    dispatch(changeAccountExistCookies)
-    dispatch(changeAuth)
+    dispatch(changeAccountExistCookies())
+    dispatch(changeAuth())
     navigate("/")
     localStorage.removeItem("account")
     document.body.style.backgroundColor="#f3f3f3"
-    setaccountSaved(null)
     window.location.reload();
     
   };

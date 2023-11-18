@@ -14,16 +14,14 @@ export default function CreatePost() {
     userId: state.UserData._id,
     user:state.UserData.name,
     caption: "",
-    picture: "",
-    userPfp:state.UserData.pfp,
     likes:0,
     Location:state.UserData.Location,
     comments:[]
   });
-
+  const [pictureData,setPictureData]=useState("")
   const handleFileInputChange = async(event) => {
     const base64=await ConvertToBase64(event.target.files[0])
-    setPostData({...postdata,picture:base64})
+    setPictureData(base64)
   };
   const handleCaption = (e) => {
     setPostData({
@@ -38,8 +36,7 @@ export default function CreatePost() {
       if(postdata.caption!==""||postdata.picture.length!==0){
         setLoader(true)
          await axios.post(
-          "http://localhost:9000/posts/create",
-          postdata
+          "http://localhost:9000/posts/create",{post:postdata,picture:pictureData}
           );
           setLoader(false)
           setPostData({...postdata,caption:"",picture:""})

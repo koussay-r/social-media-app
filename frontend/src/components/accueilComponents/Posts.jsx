@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs'
 import nopfp from './../../assets/noPfp.png'
 import {motion} from 'framer-motion'
@@ -17,11 +17,16 @@ export default function Posts(props) {
   const [likesnumber,setLikesNumber]=useState(props.likes)
   const [Makecomment,setMakeComment]=useState("")
   const [comments,setComments]=useState(props.comments)
+  const [postUserPfp,setPostUserPfp]=useState({
+    pfp:"",
+    picture:""
+  })
   const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
     const handlecomment=(e)=>{
     setMakeComment(e.target.value)
   }
+
   const handleAddLikes=async()=>{
     setPostLiked(!postliked)
     if(postliked){
@@ -65,6 +70,18 @@ export default function Posts(props) {
       console.log(err)
   }
   }
+  useEffect(()=>{
+    const getPostUserpfp=async()=>{
+      try{
+        const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId})
+        setPostUserPfp(res.data)
+      }
+      catch(Err){
+        console.log(Err.message)
+      }
+    }
+    getPostUserpfp()
+  },[])
   return (
     <motion.div 
     initial={"hidden"}
@@ -77,7 +94,7 @@ export default function Posts(props) {
     }} className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3 mt-4 p-3  block mx-auto md:mx-0 shadow w-full rounded-lg`}>
       <div className='flex justify-between'>
       <div className='flex gap-2'>
-        <img src={props.pfp===''?nopfp:props.pfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
+        <img src={postUserPfp===""?nopfp:postUserPfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
         <div>
          <Link to={"/profile"}> <p onClick={handleGoToProfile} className={`text-md cursor-pointer font-bold text-black/70 ${state.nightDayMode===true?"text-white":"text-black "} `}>{props.name}</p></Link>
           <p className={`'text-[12px] text-gray-500/80 font-bold ${state.nightDayMode===true?"text-[white]":"text-black "} ml-1'`}>{props.Location}</p>

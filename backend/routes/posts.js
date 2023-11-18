@@ -1,13 +1,16 @@
 const express=require("express")
 const postModel=require('./../models/postmodel.js')
 const userModel=require("./../models/CreateUserModel.js")
+const pictureModel=require("./../models/postPicturesModel.js")
 const route=express.Router()
-const cloudinary = require('cloudinary').v2;
 const dotenv=require("dotenv");
 dotenv.config()
 route.post("/create",async(req,res)=>{
   try {
-    const createPost= await postModel.create(req.body)
+    const createPost= await postModel.create(req.body.post)
+    if(req.body.picture!=""){
+      await pictureModel.create({postId:createPost._id,picture:req.body.picture})
+    }
     res.status(201).send(createPost)}
     catch(err){
       console.log(err)
@@ -61,6 +64,14 @@ route.post("/makeComment",async(req,res)=>{
     res.status(200).send(doc)
   }catch(err){
     console.log(err)
+  }
+})
+route.post("/getPostUserpfp",async(req,res)=>{
+  try{
+    const pfp=await userModel.findById({_id:req.body.PostUserId})
+    res.status(200).send(pfp.pfp)
+  }catch(err){
+    console.log(err.message)
   }
 })
 module.exports=route

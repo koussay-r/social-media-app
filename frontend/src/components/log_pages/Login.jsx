@@ -10,13 +10,13 @@ export default function Login() {
   const [UserExist,SetUserExist]=useState(true)
   const [lackData,setLackData]=useState(false)
   const [accountSaved,SetAccountSaved]=useState(localStorage.getItem("account"))
+  const [loader,setLoader]=useState(false)
   const navigate=useNavigate()
   const [UserAccount,setUserAccount]=useState({
     email:"",
     password:""
   })
   const dispatch=useDispatch()
-  const state=useSelector((state)=>state.user.value)
   const handleEmail=(e)=>{
     setUserAccount({...UserAccount,email:e.target.value})
   }
@@ -26,7 +26,9 @@ export default function Login() {
   const handleLogin=async(e)=>{
     e.preventDefault()
     try{
+      setLoader(true)
       const res=await axios.post("http://localhost:9000/createUser/login",UserAccount)
+      setLoader(false)
       if(res.data.length===0){
         SetUserExist(false)
         const timer=()=>{setTimeout(()=>{
@@ -86,7 +88,12 @@ export default function Login() {
             <input type={'text'} value={UserAccount.email} onChange={handleEmail} className=" py-5 focus:border-[#04d0fa] shadow-sm border rounded focus:bg-gray-100 border-gray-300 pl-3 w-full h-8 mt-2"/>
             <p className={`${(lackData&&UserAccount.password.length===0)?"text-red-600":"text-gray-900"} font-[600] px-[1px] bg-white w-fit translate-y-[17px] translate-x-[6px] `}>Password</p>
             <input value={UserAccount.password} onChange={handlePassword} type={'password'} className="focus:border-[#04d0fa] py-5 shadow-sm border rounded focus:bg-gray-100 border-gray-300 pl-3 w-full h-8 mt-2"/>
-            <button onClick={(UserAccount.email.length!==0&&UserAccount.password.length!==0)?handleLogin:handleLackData} className='mt-4 bg-[#04d0fa] rounded-md py-2 text-white block mx-auto w-full'>Login</button>
+            {
+              loader?
+              <div  className='mt-4 bg-[#04d0fa] rounded-md py-2 text-white text-center w-full'>Logging in...</div>
+              :
+              <button onClick={(UserAccount.email.length!==0&&UserAccount.password.length!==0)?handleLogin:handleLackData} className='mt-4 bg-[#04d0fa] rounded-md py-2 text-white block mx-auto w-full'>login</button>
+            }
               <div className='flex justify-between'>
             <Link to='/signup'><p className='mt-2 w-fit text-blue-700 hover:text-blue-400 cursor-pointer underline'>Don't have an account yet? sign up here</p></Link>
             <Link to='/findAccount'><p className='mt-2 w-fit text-blue-700 hover:text-blue-400 cursor-pointer underline'>Forgot password?</p></Link>
