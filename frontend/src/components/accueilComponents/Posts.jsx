@@ -6,6 +6,7 @@ import {FaRegComment} from 'react-icons/fa'
 import {AiFillHeart,AiOutlineHeart} from 'react-icons/ai'
 import { Divider } from '@mui/material'
 import axios from 'axios'
+import Misterious from "./../../assets/813.gif"
 import { FiSend } from 'react-icons/fi'
 import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
@@ -17,9 +18,10 @@ export default function Posts(props) {
   const [likesnumber,setLikesNumber]=useState(props.likes)
   const [Makecomment,setMakeComment]=useState("")
   const [comments,setComments]=useState(props.comments)
-  const [postUserPfp,setPostUserPfp]=useState({
-    pfp:"",
-    picture:""
+  const [postUserPfp,setPostUserPfp]=useState("")
+  const [postPicture,setPostPicture]=useState({
+    picture:"",
+    available:false
   })
   const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
@@ -72,13 +74,20 @@ export default function Posts(props) {
   }
   useEffect(()=>{
     const getPostUserpfp=async()=>{
-      try{
-        const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId})
-        setPostUserPfp(res.data)
-      }
-      catch(Err){
-        console.log(Err.message)
-      }
+        try{
+          const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id})
+          console.log(res.data.pfp)
+          setPostUserPfp(res.data.pfp)
+          if(res.data.withPicture){
+          setPostPicture({...postPicture,available:true})    
+          const res1=await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id})
+          setPostPicture({...postPicture,picture:res1.data})    
+            }
+        }
+        catch(Err){
+          console.log(Err.message)
+        }
+      
     }
     getPostUserpfp()
   },[])
@@ -104,8 +113,12 @@ export default function Posts(props) {
       </div>
       <p className={`'ml-1 mt-2 pb-3 font-[600] font-quicksand ${state.nightDayMode===true?"text-[white]":"text-black "} '`}>{props.caption}</p>
       {
-        props.picture!==""&&
-        <img src={props.picture} alt="" className='rounded-md object-cover mb-3'/>
+        (postPicture.picture!==""&&postPicture.available)?
+        <div className='w-[90%] bg-white h-[300px]'>
+          <img src={Misterious} className='mx-auto block'/>
+        </div>
+        :
+        <img src={postPicture.picture} alt="" className='rounded-md object-cover mb-3'/>
       }
       {
         likesnumber===0?

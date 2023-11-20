@@ -19,7 +19,7 @@ const postSchema=mongoose.Schema({
     userId:String,
     user:String,
     caption:String,
-    picture:String,
+    withPicture:Boolean,
     likes:Number,
     UsersLikes:[String],
     Location:String,

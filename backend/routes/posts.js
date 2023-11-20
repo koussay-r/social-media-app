@@ -67,9 +67,20 @@ route.post("/makeComment",async(req,res)=>{
   }
 })
 route.post("/getPostUserpfp",async(req,res)=>{
+  if(req.body.PostUserId){
+    try{
+      const userPfp=await userModel.findById({_id:req.body.PostUserId})
+      const checkIfPostGotaPicture=await postModel.findById({_id:req.body.PostId})
+      res.status(200).send({pfp:userPfp.pfp,withPicture:checkIfPostGotaPicture.withPicture})
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+})
+route.post("/getPostUserPicture",async(req,res)=>{
   try{
-    const pfp=await userModel.findById({_id:req.body.PostUserId})
-    res.status(200).send(pfp.pfp)
+    const pfp=await pictureModel.findOne({postId:req.body.PostId})
+    res.status(200).send(pfp.picture)
   }catch(err){
     console.log(err.message)
   }

@@ -14,6 +14,7 @@ export default function CreatePost() {
     userId: state.UserData._id,
     user:state.UserData.name,
     caption: "",
+    withPicture:false,
     likes:0,
     Location:state.UserData.Location,
     comments:[]
@@ -22,6 +23,7 @@ export default function CreatePost() {
   const handleFileInputChange = async(event) => {
     const base64=await ConvertToBase64(event.target.files[0])
     setPictureData(base64)
+    setPostData({...postdata,withPicture:true})
   };
   const handleCaption = (e) => {
     setPostData({
@@ -33,13 +35,14 @@ export default function CreatePost() {
   
   const handleUploadClick = async() => {
     console.log(postdata.picture)
-      if(postdata.caption!==""||postdata.picture.length!==0){
+      if(postdata.caption!==""||pictureData.length!==0){
         setLoader(true)
          await axios.post(
           "http://localhost:9000/posts/create",{post:postdata,picture:pictureData}
           );
           setLoader(false)
-          setPostData({...postdata,caption:"",picture:""})
+          setPostData({...postdata,caption:""})
+          setPictureData("")
           toast.success('Successfully Created Post!')
       }
       else{
@@ -47,10 +50,11 @@ export default function CreatePost() {
       }
   };
   const handleRemovePicture=()=>{
-    setPostData({...postdata,picture:""})
+    setPictureData("")
+    setPostData({...postdata,withPicture:false})
   }
   return (
-    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  transition-all duration-200 ${postdata.picture.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
+    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  transition-all duration-200 ${pictureData.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
           src={state.UserData.pfp === "" ? noPfp : state.UserData.pfp}
@@ -108,9 +112,9 @@ export default function CreatePost() {
         }
       </div>
       {
-        postdata.picture.length!==0&&
+        pictureData.length!==0&&
           <div className="w-[300px] h-[180px] mt-[3%] overflow-hidden rounded border-2 border-dotted  border-cyan-500 ">
-            <img onClick={handleRemovePicture} src={postdata.picture} className=' p-2 w-[300px] h-[180px]  object-cover hover:brightness-50 hover:cursor-pointer  mx-auto' alt='Loading'/>
+            <img onClick={handleRemovePicture} src={pictureData} className=' p-2 w-[300px] h-[180px]  object-cover hover:brightness-50 hover:cursor-pointer  mx-auto' alt='Loading'/>
           </div>
       }
     </div>
