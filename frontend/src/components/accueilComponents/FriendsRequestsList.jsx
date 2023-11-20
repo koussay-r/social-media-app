@@ -59,7 +59,7 @@ export default function FriendsRequestsList() {
                             <div key={item[0]._id} className={`pb-1 justify-between flex`}>
                                 
                   <div className='flex'>
-                <img src={item[0].pfp!==""?item[0].pfp:nopfp} alt="" className='w-[32px] cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
+                <img src={item[0].pfp!==""?item[0].pfp:nopfp} alt="" className='w-[32px] rounded-full cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
                 <div className=''>
                 <p className={`cursor-pointer ${state.nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item[0].name}</p>
                 <p className={`text-sm ${state.nightDayMode===true?"text-white":"text-black "}`}>{item[0].Occupation}</p>

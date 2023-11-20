@@ -76,7 +76,6 @@ export default function Posts(props) {
     const getPostUserpfp=async()=>{
         try{
           const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id})
-          console.log(res.data.pfp)
           setPostUserPfp(res.data.pfp)
           if(res.data.withPicture){
           setPostPicture({...postPicture,available:true})    

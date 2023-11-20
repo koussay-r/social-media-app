@@ -43,7 +43,7 @@ export default function UserInSearch(item) {
   return (
     <div key={item._id} className={`${item._id===state.UserData._id? "hidden":"block"} pb-1 justify-between flex`}>
                   <div className='flex'>
-                <img src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer mt-2 ml-1 mr-3 h-[32px]'/>
+                <img src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer rounded-full mt-2 ml-1 mr-3 h-[32px]'/>
                 <div className=''>
                 <Link to={`/profile`}><p onClick={handleGoToProfile} className={`cursor-pointer ${state.nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
                 <p className={`text-sm ${state.nightDayMode===true?"text-white":"text-black "}`}>{item.Occupation}</p>
