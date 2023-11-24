@@ -27,6 +27,9 @@ export default function Navbar() {
       if(e.target.value!==""){
         setLoader(true)
       }
+      else if(e.target.value===""){
+        setLoader(false)
+      }
       if(loader){
         document.getElementById("userInfoComponent").style.zIndex="-10"
         document.getElementById("userInfoComponent1").style.zIndex="-10"

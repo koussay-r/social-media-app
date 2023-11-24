@@ -21,7 +21,7 @@ export default function UserProfile() {
         state.posts.length!==0
         &&(state.posts.map(item=>{
           return(
-            <Posts key={item._id} comments={item.comments} picture={item.picture} currentUser={Userstate.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId} pfp={item.userPfp} likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
+            <Posts key={item._id} comments={item.comments}  currentUser={state.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId}  likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
           )
         }))
       }

@@ -4,11 +4,13 @@ import axios from "axios";
 const getInitialState = () => {
   const nightDayMode = JSON.parse(localStorage.getItem("mode"));
   const accountExistCookies = localStorage.getItem("account") === null ? false : true;
+  const accountExistSession = sessionStorage.getItem("account")=== null ? false : true;
   return {
     auth: false,
     UserData: {},
     LoadingUSerData: false,
     accountExistCookies,
+    accountExistSession,
     error:false,
     nightDayMode,
     profileUser:""
@@ -16,11 +18,19 @@ const getInitialState = () => {
 };
 export const fetchLoginData =createAsyncThunk("fetchLoginData",async()=>{
   const accountExistCookies = localStorage.getItem("account") === null ? false : true;
-  if(accountExistCookies){
+  const accountExistSession = sessionStorage.getItem("account")=== null ? false : true;
+  if(accountExistCookies&&!accountExistSession){
     const account=JSON.parse(localStorage.getItem("account"));
+    console.log("hey")
     const data = await axios.post("http://localhost:9000/createUser/login",{email:account.email,password:account.password})
-  return data.data[0]}
-})
+    console.log(data)
+    sessionStorage.setItem("account",JSON.stringify(data.data[0]));
+    return data.data[0]
+}
+else if(accountExistSession){
+  const DataAccount=JSON.parse(sessionStorage.getItem("account"))
+  return DataAccount;
+}})
 export const fetchCurrentUserData = createAsyncThunk("fetchCurrentUserData",async()=>{
   try{
     const ress=await axios.post("http://localhost:9000/createUser/CurrentUser",{_id:JSON.parse(localStorage.getItem("userID"))})
@@ -68,8 +78,9 @@ export const LoginDataSlice = createSlice({
       state.value.LoadingUSerData=true;
     });
     builder.addCase(fetchLoginData.fulfilled,(state,action)=>{
+      console.log("heyy")
       state.value.LoadingUSerData=false;
-      state.value.UserData=action.payload
+      state.value.UserData=action.payload;
       state.value.auth=true
     });
     builder.addCase(fetchLoginData.rejected,(state,action)=>{

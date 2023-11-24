@@ -38,6 +38,7 @@ export default function Login() {
         clearTimeout(timer)
       }
       else{
+        sessionStorage.setItem("account",JSON.stringify(res.data[0]))
         if(accountSaved===null){
           const cookies=confirm("do you want to allways stay loged in?");
           if(cookies&&UserAccount.email.length!==0){
@@ -53,6 +54,7 @@ export default function Login() {
       }
     }catch(err){
       toast.error(err.message+" try again !")
+      setLoader(false)
     }
   }
   const handleLackData=(e)=>{
