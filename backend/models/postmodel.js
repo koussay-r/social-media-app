@@ -7,8 +7,7 @@ const UsercommentMaker=mongoose.Schema({
 })
 
 const notifDetails=mongoose.Schema({
-    idPost:String,
-    NameReactionMaker:String,
+    idUserWhoMadeAReaction:String,
     type:Boolean,/* true if it's a love reaction false if it's a comment */
     numberOfReactions:Number,
     NumberOfComments:Number,

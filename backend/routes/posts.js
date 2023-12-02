@@ -28,6 +28,14 @@ route.put("/Likes/:symbole",async(req,res)=>{
       doc.UsersLikes.splice(indexToRemove, 1);
     }
     else{
+      if(req.body.userId!=req.body.currentUser){
+        let notifDetails = {idUserWhoMadeAReaction:body.req.userId,
+          type:true,/* true if it's a love reaction false if it's a comment */
+          numberOfReactions:doc.likes++,
+          NumberOfComments:0,
+          date:Date.now }
+          doc.notifications.push(notifDetails)
+      }
       doc.likes++;
       userLikesCount[0].likeCount++
       doc.UsersLikes.push(req.body.userId)

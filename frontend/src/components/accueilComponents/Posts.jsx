@@ -6,7 +6,6 @@ import {FaRegComment} from 'react-icons/fa'
 import {AiFillHeart,AiOutlineHeart} from 'react-icons/ai'
 import { Divider } from '@mui/material'
 import axios from 'axios'
-import Misterious from "./../../assets/813.gif"
 import { FiSend } from 'react-icons/fi'
 import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
@@ -38,7 +37,7 @@ export default function Posts(props) {
       setLikesNumber(likesnumber+1)
     } 
     try{
-      await axios.put(`http://localhost:9000/posts/Likes/${postliked?0:1}`,{_id:props._id,userId:props.userId})
+      await axios.put(`http://localhost:9000/posts/Likes/${postliked?0:1}`,{_id:props._id,userId:props.userId,currentUser:props.currentUser})
     }catch(err){
       console.log(err)
     }
@@ -57,7 +56,7 @@ export default function Posts(props) {
         toast.success('Comment added Successfully !')
       }
     }catch(err){
-      console.log(err)
+      toast.error(err+" Try again !!S")
     }}
   }
   const focusToComment=()=>{
@@ -69,16 +68,15 @@ export default function Posts(props) {
       dispatch(fetchFindUserById(props.userId))
   }
   catch(err){
-      console.log(err)
+      toast.error(err+ "try again !!")
   }
   }
   useEffect(()=>{
     const getPostUserpfp=async()=>{
         try{
           const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id})
-          console.log(res)
           setPostUserPfp(res.data.pfp)
-          if(res.data.withPicture){
+          if(props.withPicture){
           setPostPicture({...postPicture,available:true})    
           const res1=await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id})
           setPostPicture({...postPicture,picture:res1.data})    
