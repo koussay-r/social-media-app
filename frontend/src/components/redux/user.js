@@ -78,7 +78,6 @@ export const LoginDataSlice = createSlice({
       state.value.LoadingUSerData=true;
     });
     builder.addCase(fetchLoginData.fulfilled,(state,action)=>{
-      console.log("heyy")
       state.value.LoadingUSerData=false;
       state.value.UserData=action.payload;
       state.value.auth=true

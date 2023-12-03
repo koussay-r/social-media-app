@@ -19,8 +19,7 @@ export default function Posts(props) {
   const [comments,setComments]=useState(props.comments)
   const [postUserPfp,setPostUserPfp]=useState("")
   const [postPicture,setPostPicture]=useState({
-    picture:"",
-    available:false
+    picture:""
   })
   const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
@@ -77,7 +76,6 @@ export default function Posts(props) {
           const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id})
           setPostUserPfp(res.data.pfp)
           if(props.withPicture){
-          setPostPicture({...postPicture,available:true})    
           const res1=await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id})
           setPostPicture({...postPicture,picture:res1.data})    
             }
@@ -111,7 +109,7 @@ export default function Posts(props) {
       </div>
       <p className={`'ml-1 mt-2 pb-3 font-[600] font-quicksand ${state.nightDayMode===true?"text-[white]":"text-black "} '`}>{props.caption}</p>
       {
-        (postPicture.picture===""&&postPicture.available)?
+        (postPicture.picture===""&&props.withPicture)?
         <div className={`w-full ${state.nightDayMode===true? "bg-black/25" : "bg-gray-200 bg-opacity-70"} rounded-md   h-[500px]`}>
           
 <div className='pt-[38%] ' role="status">

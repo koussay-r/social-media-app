@@ -7,12 +7,7 @@ const UsercommentMaker=mongoose.Schema({
 })
 
 const notifDetails=mongoose.Schema({
-    idUserWhoMadeAReaction:String,
-    type:Boolean,/* true if it's a love reaction false if it's a comment */
-    numberOfReactions:Number,
-    NumberOfComments:Number,
-    date:Date
-
+    idUserWhoMadeAReaction:String
 })
 const postSchema=mongoose.Schema({
     userId:String,
@@ -23,7 +18,8 @@ const postSchema=mongoose.Schema({
     UsersLikes:[String],
     Location:String,
     comments:[UsercommentMaker],
-    notifications:[notifDetails]
+    ReactionNotifications:[notifDetails],
+    CommentsNotifications:[notifDetails],
 })
 const postmodel=mongoose.model("posts",postSchema,"posts");
 module.exports=postmodel

@@ -14,15 +14,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchPosts } from '../redux/postsSlice'
 import {changeNightDayMode} from '../redux/user'
 import {fetchCurrentUserData} from './../redux/user'
+import MenuIntroduction from './NotifMenu'
 export default function Navbar() {
-  const [menu,setMenu]=useState(true)
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(!show);
   const [usersSerach,setUsersSeach]=useState([])
   const [loader,setLoader]=useState(false)
+  const [showNotif,setShowNotif]=useState(false)
   const state=useSelector(state=>state.user.value)
   const dispatch=useDispatch()
+  const handleShowNotif=()=>{
+    setShowNotif(!showNotif)
+  }
   const handleSerachValue=async(e)=>{
     try{
       if(e.target.value!==""){
@@ -120,7 +123,7 @@ export default function Navbar() {
             <BsFillSunFill onClick={hanldeNightMode} className='text-white/80 mt-4 cursor-pointer' size={"21"}/>
           }
             <BiMessageDetail className={` ${state.nightDayMode===false?"bg-text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
-            <BsBellFill className={` ${state.nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
+            <MenuIntroduction/>
             <AiFillQuestionCircle className={` ${state.nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
             <AccountMenu/>
         </div>

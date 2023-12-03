@@ -28,22 +28,19 @@ route.put("/Likes/:symbole",async(req,res)=>{
       doc.UsersLikes.splice(indexToRemove, 1);
     }
     else{
+      if (!doc.UsersLikes.includes(req.body.currentUser)) {
       if(req.body.userId!=req.body.currentUser){
-        let notifDetails = {idUserWhoMadeAReaction:body.req.userId,
-          type:true,/* true if it's a love reaction false if it's a comment */
-          numberOfReactions:doc.likes++,
-          NumberOfComments:0,
-          date:Date.now }
-          doc.notifications.push(notifDetails)
+        let notifDetails = {idUserWhoMadeAReaction:req.body.userId}
+          doc.ReactionNotifications.push(notifDetails)
       }
-      doc.likes++;
-      userLikesCount[0].likeCount++
-      doc.UsersLikes.push(req.body.userId)
+        doc.likes++;
+        userLikesCount[0].likeCount++
+        doc.UsersLikes.push(req.body.currentUser)
+      }
     }
     await doc.save()
-    const ress=await userModel.findByIdAndUpdate({_id:req.body.userId},{likeCount:userLikesCount[0].likeCount})
+    await userModel.findByIdAndUpdate({_id:req.body.userId},{likeCount:userLikesCount[0].likeCount})
     res.status(200).send(doc)
-    res.status(200).send(ress)
   }catch(err){
     console.log(err)
   }
