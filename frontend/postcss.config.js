@@ -3,4 +3,9 @@ export default {
     tailwindcss: {},
     autoprefixer: {},
   },
+  resolve: {
+        alias: {
+          '@mui/material': '@mui/joy',
+        },
+      },
 }

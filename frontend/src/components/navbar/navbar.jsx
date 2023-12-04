@@ -15,6 +15,7 @@ import { fetchPosts } from '../redux/postsSlice'
 import {changeNightDayMode} from '../redux/user'
 import {fetchCurrentUserData} from './../redux/user'
 import MenuIntroduction from './NotifMenu'
+import { Tooltip } from '@mui/material'
 export default function Navbar() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(!show);
@@ -125,7 +126,9 @@ export default function Navbar() {
             <BiMessageDetail className={` ${state.nightDayMode===false?"bg-text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
             <MenuIntroduction/>
             <AiFillQuestionCircle className={` ${state.nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
+            <Tooltip title="Settings">
             <AccountMenu/>
+            </Tooltip>
         </div>
     </div>
   )

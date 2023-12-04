@@ -73,8 +73,13 @@ export default function Posts(props) {
   useEffect(()=>{
     const getPostUserpfp=async()=>{
         try{
-          const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id})
-          setPostUserPfp(res.data.pfp)
+          if(props.userId===props.currentUser){
+            setPostUserPfp(state.UserData.pfp)
+          }
+          else{
+            const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id})
+            setPostUserPfp(res.data.pfp)
+          }
           if(props.withPicture){
           const res1=await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id})
           setPostPicture({...postPicture,picture:res1.data})    

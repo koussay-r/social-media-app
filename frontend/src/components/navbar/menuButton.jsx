@@ -50,7 +50,8 @@ export default function AccountMenu() {
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
-        open={open}      
+        open={open}  
+        onClose={hanldeProfile}    
         PaperProps={{
           elevation: 0,
           sx: {
@@ -71,11 +72,16 @@ export default function AccountMenu() {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: 'background.paper',
+              bgcolor: state.nightDayMode===true? "#3a3b3c" : "white",
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
           },
+          style: {
+            backgroundColor: state.nightDayMode===true? "#3a3b3c" : "white", // Change the background color here
+            color:state.nightDayMode===true? "white" : "black",
+          },  
+          
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
