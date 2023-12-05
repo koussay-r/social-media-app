@@ -2,9 +2,18 @@ const express=require("express")
 const postModel=require('./../models/postmodel.js')
 const userModel=require("./../models/CreateUserModel.js")
 const pictureModel=require("./../models/postPicturesModel.js")
+const Pusher = require("pusher");
 const route=express.Router()
 const dotenv=require("dotenv");
+const { default: mongoose } = require("mongoose");
 dotenv.config()
+const pusher = new Pusher({
+  appId: process.env.APP_ID,
+  key: process.env.APP_KEY,
+  secret: process.env.APP_SECRET,
+  cluster: "eu",
+  useTLS: true
+});
 route.post("/create",async(req,res)=>{
   try {
     const createPost= await postModel.create(req.body.post)
@@ -30,8 +39,7 @@ route.put("/Likes/:symbole",async(req,res)=>{
     else{
       if (!doc.UsersLikes.includes(req.body.currentUser)) {
       if(req.body.userId!=req.body.currentUser){
-        let notifDetails = {idUserWhoMadeAReaction:req.body.userId}
-          doc.ReactionNotifications.push(notifDetails)
+          doc.ReactionNotifications.push(req.body.userId)
       }
         doc.likes++;
         userLikesCount[0].likeCount++
@@ -89,5 +97,7 @@ route.post("/getPostUserPicture",async(req,res)=>{
   }catch(err){
     console.log(err.message)
   }
+})
+route.post("/getNotifications",async(req,res)=>{
 })
 module.exports=route

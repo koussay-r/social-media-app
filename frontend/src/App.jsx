@@ -3,7 +3,7 @@ import {useDispatch, useSelector } from 'react-redux'
 import Login from './components/log_pages/Login'
 import { fetchLoginData} from "./components/redux/user"
 import Signup from './components/log_pages/Signup'
-import {BrowserRouter ,Route,Routes} from 'react-router-dom'
+import {BrowserRouter,Navigate ,Route,Routes} from 'react-router-dom'
 import Home from './components/Home/Home'
 import {Toaster} from 'react-hot-toast'
 import UserProfile from './components/profile/UserProfile'
@@ -49,8 +49,8 @@ export default function App() {
         (state.accountExistCookies)?<Route path='/' index element={state.auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
       }
       <Route path="/signup" element={<Signup/>}/>
-       <Route path='/home' element={state.auth&&<Home/>}/>
-       <Route path={`/profile`} element={<UserProfile/>}/>
+       <Route path='/home' element={state.auth?<Home/>:<Navigate to="/"/>}/>
+       <Route path={`/profile/:userId`} element={state.auth?<UserProfile/>:<Navigate to="/"/>}/>
        </Routes>
     </BrowserRouter> 
       </recoveryCodeContext.Provider>

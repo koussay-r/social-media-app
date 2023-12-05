@@ -9,16 +9,33 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
+import Pusher from 'pusher-js'
 export default function NotifMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const state=useSelector(state=>state.user.value);
   const open = Boolean(anchorEl);
+  const [notfis,setNotifs]=React.useState([])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  React.useEffect(()=>{
+    Pusher.logToConsole = true;
+    const pusher = new Pusher('f3f8e6d0d0271713703a', {
+      cluster: 'eu'
+    }); 
+    const channel = pusher.subscribe('notifs');
+    channel.bind('inserted', (data)=> {
+      console.log(data)
+    });
+    return ()=>{
+      channel.unbind_all()
+      channel.unsubscribe()
+    }
+    
+  },[])
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -71,6 +88,10 @@ export default function NotifMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         
       >
+        {notfis.length!=0&&
+        notfis.map(data=>{
+          return <p>{data}</p>
+        })}
         <MenuItem  onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>

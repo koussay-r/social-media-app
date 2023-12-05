@@ -5,10 +5,6 @@ const UsercommentMaker=mongoose.Schema({
     comment:String,
     picture:String
 })
-
-const notifDetails=mongoose.Schema({
-    idUserWhoMadeAReaction:String
-})
 const postSchema=mongoose.Schema({
     userId:String,
     user:String,
@@ -18,8 +14,8 @@ const postSchema=mongoose.Schema({
     UsersLikes:[String],
     Location:String,
     comments:[UsercommentMaker],
-    ReactionNotifications:[notifDetails],
-    CommentsNotifications:[notifDetails],
+    ReactionNotifications:[String],
+    CommentsNotifications:[String],
 })
 const postmodel=mongoose.model("posts",postSchema,"posts");
 module.exports=postmodel
