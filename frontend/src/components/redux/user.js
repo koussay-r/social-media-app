@@ -20,14 +20,14 @@ export const fetchLoginData =createAsyncThunk("fetchLoginData",async()=>{
   const accountExistCookies = localStorage.getItem("account") === null ? false : true;
   const accountExistSession = sessionStorage.getItem("account")=== null ? false : true;
   if(accountExistCookies&&!accountExistSession){
+    console.log("heyy")
     const account=JSON.parse(localStorage.getItem("account"));
-    console.log("hey")
     const data = await axios.post("http://localhost:9000/createUser/login",{email:account.email,password:account.password})
     console.log(data)
     sessionStorage.setItem("account",JSON.stringify(data.data[0]));
     return data.data[0]
-}
-else if(accountExistSession){
+  }
+  else if(accountExistSession){
   const DataAccount=JSON.parse(sessionStorage.getItem("account"))
   return DataAccount;
 }})
@@ -66,6 +66,10 @@ export const LoginDataSlice = createSlice({
     changeAccountExistCookies:(state,action)=>{
       state.value.accountExistCookies=!state.accountExistCookies
     },
+    changeAccountExistSession:(state,action)=>{
+      state.value.accountExistSession=!state.accountExistCookies
+    }
+    ,
     changeNightDayMode:(state,action)=>{
       state.value.nightDayMode=action.payload
     },
@@ -81,6 +85,7 @@ export const LoginDataSlice = createSlice({
       state.value.LoadingUSerData=false;
       state.value.UserData=action.payload;
       state.value.auth=true
+     
     });
     builder.addCase(fetchLoginData.rejected,(state,action)=>{
       state.value.LoadingUSerData=false;
@@ -92,5 +97,5 @@ export const LoginDataSlice = createSlice({
   }
 });
 
-export const { changeProfileUser,changeAuth,changeUserData,changeLoadingUSerData,changeAccountExistCookies,changeNightDayMode } = LoginDataSlice.actions;
+export const { changeProfileUser,changeAuth,changeAccountExistSession,changeUserData,changeLoadingUSerData,changeAccountExistCookies,changeNightDayMode } = LoginDataSlice.actions;
 export default LoginDataSlice.reducer;

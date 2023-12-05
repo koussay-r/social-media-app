@@ -69,7 +69,7 @@ return (
                 }
                 <div className=' ml-3'>
                     <Link to={`/profile`}><p onClick={HandleProfile} className={`${state.nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{state.UserData.name} {state.UserData.LastName}</p></Link> 
-                    <p className={` ${state.nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {state.UserData.friendsList.length} friends</p>
+                    <p className={` ${state.nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {state.UserData.friendsListIds.length} friends</p>
                 </div>
             </div>
         <Divider  />

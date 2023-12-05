@@ -23,6 +23,7 @@ export default function App() {
         try{
           dispatch(fetchLoginData())
           dispatch(changeAuth(true))
+          console.log(state.accountExistSession)
         }
         catch(err){
           console.log(err)
@@ -34,7 +35,7 @@ export default function App() {
   return (
     <>
     {
-      (state.LoadingUSerData===false||state.accountExistCookies===false)?
+      (!state.LoadingUSerData||!state.accountExistCookies)?
     <recoveryCodeContext.Provider value={[recoveryCode,setRecoveryCode,email,setEmail]}>
       <BrowserRouter>
     
@@ -46,7 +47,7 @@ export default function App() {
       <Route path="/findAccount" element={<FindAccount/>}/>
       <Route path='/ResetPassword' element={<ResetPassword/>}/>
       {
-        (state.accountExistCookies)?<Route path='/' index element={state.auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
+        (state.accountExistCookies||state.accountExistSession)?<Route path='/home' index element={state.auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
       }
       <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={state.auth?<Home/>:<Navigate to="/"/>}/>

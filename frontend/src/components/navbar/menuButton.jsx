@@ -6,7 +6,7 @@ import {Menu,MenuItem,Divider,ListItemIcon,IconButton} from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {changeAuth,changeAccountExistCookies} from '../redux/user'
+import {changeAuth,changeAccountExistCookies,changeAccountExistSession} from '../redux/user'
 export default function AccountMenu() {
   const navigate=useNavigate()
   const dispatch = useDispatch()
@@ -19,6 +19,7 @@ export default function AccountMenu() {
   const handleClose = () => {
     localStorage.removeItem("userID")
     dispatch(changeAccountExistCookies())
+    dispatch(changeAccountExistSession())
     dispatch(changeAuth())
     navigate("/")
     localStorage.removeItem("account")
