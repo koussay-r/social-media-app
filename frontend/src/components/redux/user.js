@@ -19,6 +19,8 @@ const getInitialState = () => {
 export const fetchLoginData =createAsyncThunk("fetchLoginData",async()=>{
   const accountExistCookies = localStorage.getItem("account") === null ? false : true;
   const accountExistSession = sessionStorage.getItem("account")=== null ? false : true;
+  console.log(accountExistCookies)
+  console.log(accountExistSession)
   if(accountExistCookies&&!accountExistSession){
     console.log("heyy")
     const account=JSON.parse(localStorage.getItem("account"));

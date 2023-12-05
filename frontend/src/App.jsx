@@ -22,8 +22,7 @@ export default function App() {
     const loginIn=async()=>{
         try{
           dispatch(fetchLoginData())
-          dispatch(changeAuth(true))
-          console.log(state.accountExistSession)
+          dispatch(changeAuth(true)) 
         }
         catch(err){
           console.log(err)
