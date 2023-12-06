@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {motion} from 'framer-motion'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { changeAuth,changeUserData } from '../redux/user'
+import { useDispatch } from 'react-redux'
+import { changeAuth,changeUserData,changeAccountExistSession } from '../redux/user'
 
 export default function Login() {
   const [UserExist,SetUserExist]=useState(true)
@@ -39,6 +39,7 @@ export default function Login() {
       }
       else{
         sessionStorage.setItem("account",JSON.stringify(res.data[0]))
+        dispatch(changeAccountExistSession(res.data[0]))
         if(accountSaved===null){
           const cookies=confirm("do you want to allways stay loged in?");
           if(cookies&&UserAccount.email.length!==0){

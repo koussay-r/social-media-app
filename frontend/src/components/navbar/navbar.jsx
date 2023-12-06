@@ -95,7 +95,7 @@ export default function Navbar() {
           </div>
           :
           (loader)&&
-          <div className={`rounded ml-5 max-h-[150px] overflow-y-auto z-[100] hidden md:block   ${state.nightDayMode===true?"bg-[#181818] border-[#04d0fa] border-t-transparent  border":"bg-white border-t-transparent border "} mt-3 w-[256px]`}>     
+          <div className={`rounded ml-5 max-h-[150px] p-5 overflow-y-auto z-[100] hidden md:block   ${state.nightDayMode===true?"bg-[#181818] border-[#04d0fa] border-t-transparent  border":"bg-white border-t-transparent border "} mt-3 w-[256px]`}>     
 <div role="status " className='z-[100]'>
     <svg aria-hidden="true" className="w-8 block mx-auto h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -126,9 +126,7 @@ export default function Navbar() {
             <BiMessageDetail className={` ${state.nightDayMode===false?"bg-text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
             <MenuIntroduction/>
             <AiFillQuestionCircle className={` ${state.nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
-            <Tooltip title="Settings">
             <AccountMenu/>
-            </Tooltip>
         </div>
     </div>
   )
