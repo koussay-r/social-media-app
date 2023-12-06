@@ -13,19 +13,16 @@ const getInitialState = () => {
     accountExistSession,
     error:false,
     nightDayMode,
-    profileUser:""
+    profileUser:{},
+    profileLoading: false,
   };
 };
 export const fetchLoginData =createAsyncThunk("fetchLoginData",async()=>{
   const accountExistCookies = localStorage.getItem("account") === null ? false : true;
   const accountExistSession = sessionStorage.getItem("account")=== null ? false : true;
-  console.log(accountExistCookies)
-  console.log(accountExistSession)
   if(accountExistCookies&&!accountExistSession){
-    console.log("heyy")
     const account=JSON.parse(localStorage.getItem("account"));
     const data = await axios.post("http://localhost:9000/createUser/login",{email:account.email,password:account.password})
-    console.log(data)
     sessionStorage.setItem("account",JSON.stringify(data.data[0]));
     return data.data[0]
   }
@@ -45,6 +42,7 @@ export const fetchCurrentUserData = createAsyncThunk("fetchCurrentUserData",asyn
 export const fetchFindUserById=createAsyncThunk("fetchFindUserById",async(itemId)=>{
   try{
     const res2=await axios.post("http://localhost:9000/Users/findUserById",{_id:itemId})
+    console.log(res2.data[0]);
     return res2.data[0]
   }catch(Err){
     console.log(Err.message);
@@ -96,6 +94,13 @@ export const LoginDataSlice = createSlice({
     builder.addCase(fetchCurrentUserData.fulfilled,(state,action)=>{
       state.value.UserData=action.payload
     })
+  builder.addCase(fetchFindUserById.fulfilled,(state,action)=>{
+    state.value.profileUser=action.payload
+    state.value.profileLoading=false
+  })
+  builder.addCase(fetchFindUserById.pending,(state,action)=>{
+    state.value.profileLoading=true
+  })
   }
 });
 

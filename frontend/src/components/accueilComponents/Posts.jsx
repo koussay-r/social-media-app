@@ -10,8 +10,7 @@ import { FiSend } from 'react-icons/fi'
 import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {fetchThisUSerPosts} from "./../redux/postsSlice"
-import {fetchFindUserById} from "./../redux/user"
+import {changePostsToNone} from "./../redux/postsSlice"
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
   const [likesnumber,setLikesNumber]=useState(props.likes)
@@ -61,15 +60,6 @@ export default function Posts(props) {
   const focusToComment=()=>{
     document.getElementById(props._id).focus()
   }
-  const handleGoToProfile=async()=>{
-    try{
-      dispatch(fetchThisUSerPosts(props.userId))
-      dispatch(fetchFindUserById(props.userId))
-  }
-  catch(err){
-      toast.error(err+ "try again !!")
-  }
-  }
   useEffect(()=>{
     const getPostUserpfp=async()=>{
         try{
@@ -92,6 +82,9 @@ export default function Posts(props) {
     }
     getPostUserpfp()
   },[])
+  const handleEmptyPosts=()=>{
+    dispatch(changePostsToNone())
+}
   return (
     <motion.div 
     initial={"hidden"}
@@ -106,7 +99,7 @@ export default function Posts(props) {
       <div className='flex gap-2'>
         <img src={postUserPfp===""?nopfp:postUserPfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
         <div>
-         <Link to={"/profile"}> <p onClick={handleGoToProfile} className={`text-md cursor-pointer font-bold text-black/70 ${state.nightDayMode===true?"text-white":"text-black "} `}>{props.name}</p></Link>
+         <Link to={`/profile/${props.userId}`}> <p onClick={handleEmptyPosts}  className={`text-md cursor-pointer font-bold text-black/70 ${state.nightDayMode===true?"text-white":"text-black "} `}>{props.name}</p></Link>
           <p className={`'text-[12px] text-gray-500/80 font-bold ${state.nightDayMode===true?"text-[white]":"text-black "} ml-1'`}>{props.Location}</p>
         </div>
       </div>

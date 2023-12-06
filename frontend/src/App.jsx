@@ -46,11 +46,11 @@ export default function App() {
       <Route path="/findAccount" element={<FindAccount/>}/>
       <Route path='/ResetPassword' element={<ResetPassword/>}/>
       {
-        (state.accountExistCookies||state.accountExistSession)?<Route path='/home' index element={state.auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
+        (state.accountExistCookies||state.accountExistSession)?<Route path='/' index element={state.auth&&<Home/>}/>:<Route path='/' index element={<Login/>}/>
       }
       <Route path="/signup" element={<Signup/>}/>
        <Route path='/home' element={state.auth?<Home/>:<Navigate to="/"/>}/>
-       <Route path={`/profile/:userId`} element={state.auth?<UserProfile/>:<Navigate to="/"/>}/>
+       <Route path={`/profile/:userId`} element={<UserProfile/>}/>
        </Routes>
     </BrowserRouter> 
       </recoveryCodeContext.Provider>

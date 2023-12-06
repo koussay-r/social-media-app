@@ -23,6 +23,11 @@ export const postsSlice=createSlice({
     initialState:{
         value: initialState() // Use a function to get the initial state
       },
+      reducers:{
+        changePostsToNone:(state,action)=>{
+          state.value.posts = [];
+        }
+      },
       extraReducers: (builder) => {
         builder.addCase(fetchPosts.fulfilled, (state, action) => {
           state.value.posts = action.payload;
@@ -32,4 +37,5 @@ export const postsSlice=createSlice({
         });
       },
 })
+export const {changePostsToNone}=postsSlice.actions
 export default postsSlice.reducer;

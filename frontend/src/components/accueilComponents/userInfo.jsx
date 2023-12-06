@@ -1,31 +1,22 @@
 import { Divider } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdWorkOutline} from 'react-icons/md'
 import { Link, useLocation  } from 'react-router-dom'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import {changeProfileUser} from "./../redux/user"
-import {fetchThisUSerPosts} from "./../redux/postsSlice"
-export default function UserInfo() {
+import {useDispatch, useSelector } from 'react-redux'
+import {changePostsToNone} from "./../redux/postsSlice"
+export default function UserInfo(props) {
     const location=useLocation ()
+    const dispatch=useDispatch()
  const [loader,SetLoader]=useState(false) 
  const state=useSelector((state)=>state.user.value)
- const dispatch=useDispatch()
- const HandleProfile=async()=>{
-     try{
-         dispatch(fetchThisUSerPosts(state.UserData._id))
-        }
-        catch(err){
-            console.log(err)
-        }
-    }
     const handleChangePfp=async(event)=>{
         const base64=await ConvertToBase64(event.target.files[0])
         try {
         SetLoader(true)
-        const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${state.UserData._id}`,{pfp:base64})
+        const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${props._id}`,{pfp:base64})
         SetLoader(false)
         if(res.message===true){
             toast.success('Your profile picture have been Successfully updated !')
@@ -35,26 +26,26 @@ export default function UserInfo() {
         }
         
     } catch (error) {
-        
+        console.log(error)
     }
 }
-useEffect(()=>{
-    dispatch(changeProfileUser(state.UserData.name))
-},[])
+const handleEmptyPosts=()=>{
+    dispatch(changePostsToNone())
+}
 return (
     <>
     {
-        state.UserData.length!==0?
+        props.UserData.length!==0?
     <div id='' className={`rounded-lg  shadow-sm  ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${state.nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
                 {
-                    (location.pathname===`/profile`&&state.UserData._id===JSON.parse(localStorage.getItem("userID")))?
+                    (location.pathname===`/profile`&&props._id===JSON.parse(localStorage.getItem("userID")))?
                     <div>
                         <label
               htmlFor="file-upload"
             >
-                        <img  src={state.UserData.pfp===""?noPfp:state.UserData.pfp} alt="no pfp" className='rounded-full cursor-pointer w-11 h-11'/>
+                        <img  src={props.pfp===""?noPfp:props.pfp} alt="no pfp" className='rounded-full cursor-pointer w-11 h-11'/>
             </label>
             <input
               id="file-upload"
@@ -65,22 +56,22 @@ return (
             />
                         </div>
                     :
-                    <img src={state.UserData.pfp===""?noPfp:state.UserData.pfp} alt="no pfp" className='rounded-full object-cover w-11 h-11'/>
+                    <img src={props.pfp===""?noPfp:props.pfp} alt="no pfp" className='rounded-full object-cover w-11 h-11'/>
                 }
                 <div className=' ml-3'>
-                    <Link to={`/profile`}><p onClick={HandleProfile} className={`${state.nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{state.UserData.name} {state.UserData.LastName}</p></Link> 
-                    <p className={` ${state.nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {state.UserData.friendsListIds.length} friends</p>
+                    <Link to={`/profile/${props._id}`}><p onClick={handleEmptyPosts} className={`${state.nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{props.name} {props.LastName}</p></Link> 
+                    <p className={` ${state.nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {props.friendsListIds.length} friends</p>
                 </div>
             </div>
         <Divider  />
             <div className='mt-2 mb-3'>
                 <div className='flex '>
                     <HiOutlineLocationMarker className='mt-1 ' size={20} color={ `${state.nightDayMode===true?"white":"rgb(0 0 0 / 0.8)"} `}  />
-                    <p className={`ml-3 font-[600] ${state.nightDayMode===true?"text-[white]":"text-gray-600/70 "}`}>{state.UserData.Location}</p>
+                    <p className={`ml-3 font-[600] ${state.nightDayMode===true?"text-[white]":"text-gray-600/70 "}`}>{props.Location}</p>
                 </div>
                 <div className='flex mt-1'>
                     <MdWorkOutline size={20} className='mt-1 ' color={ `${state.nightDayMode===true?"white":"rgb(0 0 0 / 0.8)"} `} />
-                    <p className={`ml-3 font-[600] ${state.nightDayMode===true?"text-[white]":"text-gray-600/70 "}`}>{state.UserData.Occupation}</p>
+                    <p className={`ml-3 font-[600] ${state.nightDayMode===true?"text-[white]":"text-gray-600/70 "}`}>{props.Occupation}</p>
                 </div>
             </div>
         <Divider  />
@@ -95,7 +86,7 @@ return (
                     <p>
                     Impression of your profile
                     </p>
-                    <p>{state.UserData.likeCount}</p>
+                    <p>{props.likeCount}</p>
                 </div>
             </div>
             <div>

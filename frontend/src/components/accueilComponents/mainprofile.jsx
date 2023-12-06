@@ -12,6 +12,7 @@ export default function Mainprofile() {
   const state=useSelector((state)=>state.user.value)
   const PostsState=useSelector(state=>state.posts.value)                                    
   useEffect(() => {
+    console.log(state.UserData)
     const handleFetchingPostst=()=>{
       try{
         dispatch(fetchPosts())
@@ -32,7 +33,7 @@ export default function Mainprofile() {
     <>
     <div className='md:flex block mx-auto  gap-16 md:justify-center mt-5 mw-28'>
       <div id="userInfoComponent">
-    <UserInfo/>    
+    <UserInfo  pfp={state.UserData.pfp} UserData={state.UserData} _id={state.UserData._id} Location={state.UserData.Location} likeCount={state.UserData.likeCount} friendsListIds={state.UserData.friendsListIds} LastName={state.UserData.LastName} name={state.UserData.name} Occupation={state.UserData.Occupation}  />    
       </div>
     <div  id='userInfoComponent1'  className=' w-[350px] block mx-auto pb-5 md:mx-0 md:mt-0 mt-5 md:w-[40%]'>
     <CreatePost/>
