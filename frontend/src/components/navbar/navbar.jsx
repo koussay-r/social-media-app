@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {GoSearch} from "react-icons/go"
-import {BsFillSunFill,BsBellFill} from "react-icons/bs"
+import {BsFillSunFill} from "react-icons/bs"
 import {BiMessageDetail} from "react-icons/bi"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import AccountMenu from './menuButton'
-import {BsMenuButtonWide} from 'react-icons/bs'
+import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
+import Drawer from '@mui/joy/Drawer';
+import DialogTitle from '@mui/joy/DialogTitle';
+import ModalClose from '@mui/joy/ModalClose';
 import {IoMdCloseCircleOutline} from 'react-icons/io'
 import axios from 'axios'
 import UserInSearch from './userInSearch'
@@ -15,11 +19,9 @@ import { fetchPosts } from '../redux/postsSlice'
 import {changeNightDayMode} from '../redux/user'
 import {fetchCurrentUserData} from './../redux/user'
 import MenuIntroduction from './NotifMenu'
-import { Tooltip } from '@mui/material'
 export default function Navbar() {
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(!show);
   const [usersSerach,setUsersSeach]=useState([])
+  const [open, setOpen] =useState(false);
   const [loader,setLoader]=useState(false)
   const [showNotif,setShowNotif]=useState(false)
   const state=useSelector(state=>state.user.value)
@@ -73,6 +75,7 @@ export default function Navbar() {
   localStorage.setItem("mode",JSON.stringify(!state.nightDayMode))
  }
   return (
+    <>
     <div className={`md:flex ${state.nightDayMode===true?"bg-[#242526]":"bg-white "} h-[60px] justify-between px-2 lg:px-28`}>
         <div className='flex justify-between md:px-0 px-5'>
        <Link to={"/home"} ><p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
@@ -88,10 +91,10 @@ export default function Navbar() {
           (usersSerach.length!==0&&!loader)?
           <div className={`rounded ml-5 max-h-[150px] overflow-y-auto z-[100] hidden md:block   ${state.nightDayMode===true?"bg-[#181818] border-[#04d0fa] border-t-transparent  border":"bg-white border-t-transparent border "} mt-3 w-[256px]`}>
            { usersSerach.map(item=>{
-            return(
-              <UserInSearch key={item._id} _id={item._id} pfp={item.pfp} name={item.name} Occupation={item.Occupation} friendsListIds={item.friendsListIds} freindRequest={item.freindRequest} />
-            )
-           })}
+             return(
+               <UserInSearch key={item._id} _id={item._id} pfp={item.pfp} name={item.name} Occupation={item.Occupation} friendsListIds={item.friendsListIds} freindRequest={item.freindRequest} />
+               )
+              })}
           </div>
           :
           (loader)&&
@@ -108,19 +111,15 @@ export default function Navbar() {
         }
           </div>
         <div className='block ml-6 mt-[22px] md:hidden'>
-          {
-            !show?
-            <button onClick={handleShow} >heyy</button>
-            :
-            <IoMdCloseCircleOutline color='#04d0fa' onClick={handleShow} className='cursor-pointer' size={25}/>
-          }
+          
+            <button color="danger" onClick={() => setOpen(true)} >heyy</button>
         </div>
         </div>
         <div className='md:flex hidden mb-2 gap-7'>
           {
             state.nightDayMode===false?
             <FaMoon onClick={hanldeNightMode} className='text-black/80 mt-4 cursor-pointer' size={"21"}/>:
-
+            
             <BsFillSunFill onClick={hanldeNightMode} className='text-white/80 mt-4 cursor-pointer' size={"21"}/>
           }
             <BiMessageDetail className={` ${state.nightDayMode===false?"bg-text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
@@ -129,5 +128,26 @@ export default function Navbar() {
             <AccountMenu/>
         </div>
     </div>
+        <Box bgcolor="primary" sx={{ display: 'flex' }}>
+          
+
+      <Drawer color='primary' slotProps={{
+          content: {
+            sx: {
+              bgcolor: state.nightDayMode===true?"#242526":"white ",
+              p: { md: 3, sm: 0 },
+              boxShadow: 'none',
+            },
+          },
+        }} open={open} onClose={() => setOpen(false)}>
+        <ModalClose />
+        <DialogTitle>Title</DialogTitle>
+        <div>
+          heyyy
+        </div>
+      </Drawer>
+
+    </Box>
+          </>
   )
 }
