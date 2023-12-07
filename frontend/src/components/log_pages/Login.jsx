@@ -5,12 +5,19 @@ import {motion} from 'framer-motion'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { changeAuth,changeUserData,changeAccountExistSession } from '../redux/user'
+import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
+import Modal from '@mui/joy/Modal';
+import ModalDialog from '@mui/joy/ModalDialog';
+import Typography from '@mui/joy/Typography';
 
 export default function Login() {
   const [UserExist,SetUserExist]=useState(true)
   const [lackData,setLackData]=useState(false)
   const [accountSaved,SetAccountSaved]=useState(localStorage.getItem("account"))
+  const [userData,setUserData]=useState({})
   const [loader,setLoader]=useState(false)
+  const [open, setOpen] = React.useState(false);
   const navigate=useNavigate()
   const [UserAccount,setUserAccount]=useState({
     email:"",
@@ -38,20 +45,12 @@ export default function Login() {
         clearTimeout(timer)
       }
       else{
-        sessionStorage.setItem("account",JSON.stringify(res.data[0]))
-        dispatch(changeAccountExistSession(res.data[0]))
         if(accountSaved===null){
-          const cookies=confirm("do you want to allways stay loged in?");
-          if(cookies&&UserAccount.email.length!==0){
-            const accountdata=JSON.stringify(UserAccount)      
-            localStorage.setItem("account",accountdata)
-          }
+          setOpen(true)
         }
+        setUserData(res.data[0])
         localStorage.setItem("userID",JSON.stringify(res.data[0]._id))
-        dispatch(changeAuth(true))
-        dispatch(changeUserData(res.data[0]))
-        navigate("/home")
-        setUserAccount({...UserAccount,email:"",password:""})
+        
       }
     }catch(err){
       toast.error(err.message+" try again !")
@@ -67,7 +66,28 @@ export default function Login() {
   timer()
   clearTimeout(timer)
   }
+  const handleSaveAccount=()=>{
+    sessionStorage.setItem("account",JSON.stringify(userData))
+    dispatch(changeAccountExistSession(userData))
+    const accountdata=JSON.stringify(UserAccount)      
+    localStorage.setItem("account",accountdata)
+    setUserAccount({...UserAccount,email:"",password:""})
+    dispatch(changeAuth(true))
+    dispatch(changeUserData(userData))
+    setOpen(false)
+    navigate("/home")
+  }
+  const handleNotSavingAccount=()=>{
+    sessionStorage.setItem("account",JSON.stringify(userData))
+    setUserAccount({...UserAccount,email:"",password:""})
+    dispatch(changeAccountExistSession(userData))
+    dispatch(changeAuth(true))
+    dispatch(changeUserData(userData))
+    setOpen(false)
+    navigate("/home")
+  }
   return (
+    <>
     <div className='mx-auto bg-[#e9ebee] h-[100vh] block'>
       
         <header className='text-center font-bold text-[#04d0fa] bg-white w-full pb-3 shadow-sm pt-3 text-4xl'>
@@ -103,5 +123,49 @@ export default function Login() {
               </div>
         </form>
     </div>
+    <Modal open={open} >
+        <ModalDialog
+          aria-labelledby="nested-modal-title"
+          aria-describedby="nested-modal-description"
+          sx={(theme) => ({
+            [theme.breakpoints.only('xs')]: {
+              top: 'unset',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              borderRadius: 0,
+              transform: 'none',
+              maxWidth: 'unset',
+            },
+          })}
+        >
+          <Typography id="nested-modal-title" level="h2">
+            Save Your Account
+          </Typography>
+          <Typography id="nested-modal-description" textColor="text.tertiary">
+            would you like to save your account??
+          </Typography>
+          <Box
+            sx={{
+              mt: 1,
+              display: 'flex',
+              gap: 1,
+              flexDirection: { xs: 'column', sm: 'row-reverse' },
+            }}
+          >
+            <Button variant="solid" color="primary" onClick={handleSaveAccount}>
+              Continue
+            </Button>
+            <Button
+              variant="outlined"
+              color="neutral"
+              onClick={handleNotSavingAccount}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </ModalDialog>
+      </Modal>
+    </>
   )
 }

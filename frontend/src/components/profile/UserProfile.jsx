@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import CreatePost from './../accueilComponents/CreatePost'
-import FriendsRequestsList from './../accueilComponents/FriendsRequestsList'
 import UserInfo from './../accueilComponents/userInfo'
 import Posts from './../accueilComponents/Posts'
 import Navbar from '../navbar/navbar'
@@ -34,10 +32,10 @@ export default function UserProfile() {
       <div className='md:flex block mx-auto  gap-16 md:justify-center mt-5 mw-28'>
         <div id="userInfoComponent">
      { userId!==Userstate.UserData._id?
-     !Userstate.profileLoading?
+     (!Userstate.profileLoading?
      <UserInfo  pfp={Userstate.profileUser.pfp} UserData={Userstate.profileUser} _id={Userstate.profileUser._id} Location={Userstate.profileUser.Location} likeCount={Userstate.profileUser.likeCount} friendsListIds={Userstate.profileUser.friendsListIds} LastName={Userstate.profileUser.LastName} name={Userstate.profileUser.name} Occupation={Userstate.profileUser.Occupation}/>    
      :
-     <p className='text-white text-center text-[50px]'>Loading...</p> 
+     <p className='text-white text-center text-[50px]'>Loading...</p> )
      :
       <UserInfo  pfp={Userstate.UserData.pfp} UserData={Userstate.UserData} _id={Userstate.UserData._id} Location={Userstate.UserData.Location} likeCount={Userstate.UserData.likeCount} friendsListIds={Userstate.UserData.friendsListIds} LastName={Userstate.UserData.LastName} name={Userstate.UserData.name} Occupation={Userstate.UserData.Occupation}  /> }
         </div>

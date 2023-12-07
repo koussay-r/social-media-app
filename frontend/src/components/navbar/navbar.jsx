@@ -4,12 +4,10 @@ import {BsFillSunFill} from "react-icons/bs"
 import {BiMessageDetail} from "react-icons/bi"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import AccountMenu from './menuButton'
-import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Drawer from '@mui/joy/Drawer';
 import DialogTitle from '@mui/joy/DialogTitle';
 import ModalClose from '@mui/joy/ModalClose';
-import {IoMdCloseCircleOutline} from 'react-icons/io'
 import axios from 'axios'
 import UserInSearch from './userInSearch'
 import { Link } from 'react-router-dom'
@@ -26,9 +24,6 @@ export default function Navbar() {
   const [showNotif,setShowNotif]=useState(false)
   const state=useSelector(state=>state.user.value)
   const dispatch=useDispatch()
-  const handleShowNotif=()=>{
-    setShowNotif(!showNotif)
-  }
   const handleSerachValue=async(e)=>{
     try{
       if(e.target.value!==""){
@@ -128,9 +123,6 @@ export default function Navbar() {
             <AccountMenu/>
         </div>
     </div>
-        <Box bgcolor="primary" sx={{ display: 'flex' }}>
-          
-
       <Drawer color='primary' slotProps={{
           content: {
             sx: {
@@ -146,8 +138,6 @@ export default function Navbar() {
           heyyy
         </div>
       </Drawer>
-
-    </Box>
           </>
   )
 }

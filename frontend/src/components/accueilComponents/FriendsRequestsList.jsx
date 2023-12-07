@@ -17,7 +17,7 @@ export default function FriendsRequestsList() {
                 setList(res.data)
                 setLoading(false)
             }catch(err){
-                console.log(err)
+                console.log(err.message)
             }
         }
         handleFetchList()

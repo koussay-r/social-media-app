@@ -12,7 +12,6 @@ export default function Mainprofile() {
   const state=useSelector((state)=>state.user.value)
   const PostsState=useSelector(state=>state.posts.value)                                    
   useEffect(() => {
-    console.log(state.UserData)
     const handleFetchingPostst=()=>{
       try{
         dispatch(fetchPosts())

@@ -22,7 +22,6 @@ export default function NotifMenu() {
     setAnchorEl(null);
   };
   React.useEffect(()=>{
-    Pusher.logToConsole = true;
     const pusher = new Pusher('f3f8e6d0d0271713703a', {
       cluster: 'eu'
     }); 
