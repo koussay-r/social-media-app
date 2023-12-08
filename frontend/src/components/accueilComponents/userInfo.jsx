@@ -35,7 +35,7 @@ const handleEmptyPosts=()=>{
 return (
     <>
     {
-        props.UserData.length!=0?
+        props.UserData?
     <div id='' className={`rounded-lg  shadow-sm  ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${state.nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
@@ -60,7 +60,6 @@ return (
                 }
                 <div className=' ml-3'>
                     <Link to={`/profile/${props._id}`}><p onClick={handleEmptyPosts} className={`${state.nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{props.name} {props.LastName}</p></Link> 
-                    <p className={` ${state.nightDayMode===true?"text-[white]":"text-gray-600 "} font-WorkSans font-[600] text-[11px] ml-2`}> {props.friendsListIds.length} friends</p>
                 </div>
             </div>
         <Divider  />
@@ -95,7 +94,7 @@ return (
         </div>
     </div>
     :
-    <img src={loader} alt="" className='w-[50px]'/>
+    <p className='text-[100px] text-black '>heyy</p>
     }
     </>
   )

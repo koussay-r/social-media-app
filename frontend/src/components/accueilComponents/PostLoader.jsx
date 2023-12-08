@@ -1,24 +1,28 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import Card from '@mui/joy/Card';
+import CardContent from '@mui/joy/CardContent';
+import Skeleton from '@mui/joy/Skeleton';
 
 export default function PostLoader() {
-    const state=useSelector((state)=>state.user.value)
+  const state=useSelector((state)=>state.user.value)
   return (
-    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3 mt-4 p-3 h-[300px] block mx-auto md:mx-0 shadow w-full rounded-lg`}>
-    <div className='panel-effect'>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-0`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}   fe-1`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-2`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-3`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-4`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-5`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-6`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-7`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-8`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-9`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-10`}></div>
-      <div className={`fake-effect ${state.nightDayMode===true?"bg-[#242526]":"bg-white "}  fe-11`}></div>
-    </div>
-  </div>
-  )
+    <Card
+    variant="outlined"
+      sx={{ width: 'full',height:300,padding:3,marginTop:4, backgroundColor:state.nightDayMode===true?"#242526":"white",borderColor:state.nightDayMode===true?"#242526":"white", borderRadius: 6, '--Card-radius': 6 }}
+    >
+      <CardContent orientation="horizontal">
+        <Skeleton animation="wave"  variant="rectangular" width={44} height={44} />
+        <div>
+          <Skeleton animation="wave"  variant="text" width={100} />
+          <Skeleton animation="wave"  level="body-sm" variant="text" width={200} />
+        </div>
+      </CardContent>
+      <CardContent sx={{ gap: 0.5, mt: 1 }}>
+        <Skeleton level="body-xs" animation="wave"  variant="text" width="92%" />
+        <Skeleton level="body-xs" animation="wave"  variant="text" width="99%" />
+        <Skeleton level="body-xs" animation="wave"  variant="text" width="96%" />
+      </CardContent>
+    </Card>
+  );
 }

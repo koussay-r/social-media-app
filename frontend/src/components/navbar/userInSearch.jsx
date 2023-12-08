@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import nopfp from './../../assets/noPfp.png'
 import {IoPersonAddSharp,IoPersonRemoveSharp} from 'react-icons/io5'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {  fetchCurrentUserData } from '../redux/user'
 import {changeUserData,changeProfileUser} from "./../redux/user"
-import {fetchThisUSerPosts} from "./../redux/postsSlice"
+import {changePostsToNone} from "./../redux/postsSlice"
 export default function UserInSearch(item) {
   const state=useSelector((state)=>state.user.value)
   const [changeIconSendRequest,setChangeIconSendRequest]=useState(item.freindRequest.includes(state.UserData._id))
@@ -30,22 +29,15 @@ export default function UserInSearch(item) {
       console.log(err)
     }
   }
-  const handleGoToProfile=async()=>{
-    dispatch(changeProfileUser(state.UserData.name))
-    try{
-      dispatch(fetchCurrentUserData())
-      dispatch(fetchThisUSerPosts(item._id))
-  }
-  catch(err){
-      console.log(err)
-  }
-  }
+  const handleEmptyPosts=()=>{
+    dispatch(changePostsToNone())
+}
   return (
     <div key={item._id} className={`${item._id===state.UserData._id? "hidden":"block"} pb-1 justify-between flex`}>
                   <div className='flex'>
-                <img src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer rounded-full mt-2 ml-1 mr-3 h-[32px]'/>
+                  <Link to={`/profile/${item._id}`}><img onClick={handleEmptyPosts} src={item.pfp!==""?item.pfp:nopfp} alt="" className='w-[32px] cursor-pointer rounded-full mt-2 ml-1 mr-3 h-[32px]'/></Link> 
                 <div className=''>
-                <Link to={`/profile`}><p onClick={handleGoToProfile} className={`cursor-pointer ${state.nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
+                <Link to={`/profile/${item._id}`}><p onClick={handleEmptyPosts} className={`cursor-pointer ${state.nightDayMode===true?"text-white":"text-black "} hover:text-gray-600`}>{item.name}</p></Link>
                 <p className={`text-sm ${state.nightDayMode===true?"text-white":"text-black "}`}>{item.Occupation}</p>
                 </div>
                   </div>
