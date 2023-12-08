@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdWorkOutline} from 'react-icons/md'
-import { Link, useLocation  } from 'react-router-dom'
+import { Link, useLocation, useParams  } from 'react-router-dom'
 import axios from 'axios'
 import {useDispatch, useSelector } from 'react-redux'
 import {changePostsToNone} from "./../redux/postsSlice"
 export default function UserInfo(props) {
     const location=useLocation ()
     const dispatch=useDispatch()
+    const {userId}=useParams()
  const [loader,SetLoader]=useState(false) 
  const state=useSelector((state)=>state.user.value)
     const handleChangePfp=async(event)=>{
@@ -40,7 +41,7 @@ return (
             <div className='p-3 '>
             <div className='flex mb-3'>
                 {
-                    (location.pathname===`/profile`&&props._id===JSON.parse(localStorage.getItem("userID")))?
+                    (userId===JSON.parse(localStorage.getItem("userID")))?
                     <div>
                         <label
               htmlFor="file-upload"

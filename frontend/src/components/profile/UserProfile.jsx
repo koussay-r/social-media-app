@@ -14,7 +14,7 @@ export default function UserProfile() {
     const Userstate=useSelector(state=>state.user.value)
     const { userId } = useParams();
     useEffect(()=>{
-      if(state.nightDayMode===false){
+      if(state.nightDayMode){
         document.body.style.backgroundColor="#f3f3f3"
        }else{
          document.body.style.backgroundColor="#18191a"
