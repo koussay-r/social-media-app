@@ -30,14 +30,6 @@ export const fetchLoginData =createAsyncThunk("fetchLoginData",async()=>{
   const DataAccount=JSON.parse(sessionStorage.getItem("account"))
   return DataAccount;
 }})
-export const fetchCurrentUserData = createAsyncThunk("fetchCurrentUserData",async()=>{
-  try{
-    const ress=await axios.post("http://localhost:9000/createUser/CurrentUser",{_id:JSON.parse(localStorage.getItem("userID"))})
-    return ress.data[0];
-  }catch(err){
-    console.log(err.message)
-  }
-})
 
 export const fetchFindUserById=createAsyncThunk("fetchFindUserById",async(itemId)=>{
   try{
@@ -90,9 +82,6 @@ export const LoginDataSlice = createSlice({
     builder.addCase(fetchLoginData.rejected,(state,action)=>{
       state.value.LoadingUSerData=false;
       state.value.error=true
-    })
-    builder.addCase(fetchCurrentUserData.fulfilled,(state,action)=>{
-      state.value.UserData=action.payload
     })
   builder.addCase(fetchFindUserById.fulfilled,(state,action)=>{
     state.value.profileUser=action.payload

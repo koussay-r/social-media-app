@@ -11,12 +11,20 @@ import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {changePostsToNone} from "./../redux/postsSlice"
+import Button from '@mui/joy/Button';
+import Stack from '@mui/joy/Stack';
+import Modal from '@mui/joy/Modal';
+import ModalClose from '@mui/joy/ModalClose';
+import ModalDialog from '@mui/joy/ModalDialog';
+import DialogTitle from '@mui/joy/DialogTitle';
+import DialogContent from '@mui/joy/DialogContent';
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
   const [likesnumber,setLikesNumber]=useState(props.likes)
   const [Makecomment,setMakeComment]=useState("")
   const [comments,setComments]=useState(props.comments)
   const [postUserPfp,setPostUserPfp]=useState("")
+  const [layout, setLayout] = useState(undefined);
   const [postPicture,setPostPicture]=useState({
     picture:""
   })
@@ -86,6 +94,7 @@ export default function Posts(props) {
     dispatch(changePostsToNone())
 }
   return (
+    <>
     <motion.div 
     initial={"hidden"}
     whileInView={"visible"}
@@ -94,7 +103,7 @@ export default function Posts(props) {
     variants={{
         hidden:{opacity:0,y:20},
         visible:{opacity:1,y:0}
-    }} className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3 mt-4 p-3  block mx-auto md:mx-0 shadow w-full rounded-lg`}>
+    }} className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  mt-4 p-3   block mx-auto md:mx-0 shadow w-full rounded-lg`}>
       <div className='flex justify-between'>
       <div className='flex gap-2'>
         <img src={postUserPfp===""?nopfp:postUserPfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
@@ -105,7 +114,7 @@ export default function Posts(props) {
       </div>
       <BsThreeDots size={23} className={`${state.nightDayMode===true?"text-[white]":"text-black "} mt-[10px] cursor-pointer`}/>
       </div>
-      <p className={`'ml-1 mt-2 pb-3 font-[600] font-quicksand ${state.nightDayMode===true?"text-[white]":"text-black "} '`}>{props.caption}</p>
+      <p className={`'ml-1 mt-2 pb-3 ml-4 text-[20px] font-[600] font-quicksand ${state.nightDayMode===true?"text-[white]":"text-black "} '`}>{props.caption}</p>
       {
         (postPicture.picture===""&&props.withPicture)?
         <div className={`w-full ${state.nightDayMode===true? "bg-black/25" : "bg-gray-200 bg-opacity-70"} rounded-md   h-[500px]`}>
@@ -120,7 +129,9 @@ export default function Posts(props) {
 
         </div>
         :
-        <img src={postPicture.picture} alt="" className='rounded-md object-cover mb-3'/>
+        <img src={postPicture.picture} onClick={() => {
+          setLayout('center');
+        }} alt="" className='rounded-md max-h-[700px] w-full object-cover cursor-pointer mb-3'/>
       }
       {
         likesnumber===0?
@@ -175,5 +186,9 @@ export default function Posts(props) {
       </div>
 
     </motion.div>
+      <Modal open={!!layout} onClose={() => setLayout(undefined)}>
+            <img src={postPicture.picture}  alt="" className='rounded-md h-[100vh] md:h-[700px] block mx-auto mt-[1%] md:w-[400px] w-full object-cover cursor-pointer mb-3'/>
+      </Modal>
+    </>
   )
 }

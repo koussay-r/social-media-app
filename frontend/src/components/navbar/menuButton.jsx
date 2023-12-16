@@ -21,10 +21,10 @@ export default function AccountMenu() {
     dispatch(changeAccountExistCookies())
     dispatch(changeAccountExistSession())
     dispatch(changeAuth())
-    navigate("/")
     localStorage.removeItem("account")
     sessionStorage.removeItem("account")
     document.body.style.backgroundColor="#f3f3f3"
+    navigate("/")
     window.location.reload();
     
   };

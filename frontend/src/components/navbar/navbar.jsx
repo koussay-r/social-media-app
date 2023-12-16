@@ -4,7 +4,6 @@ import {BsFillSunFill} from "react-icons/bs"
 import {BiMessageDetail} from "react-icons/bi"
 import {AiFillQuestionCircle} from "react-icons/ai"
 import AccountMenu from './menuButton'
-import Button from '@mui/joy/Button';
 import Drawer from '@mui/joy/Drawer';
 import DialogTitle from '@mui/joy/DialogTitle';
 import ModalClose from '@mui/joy/ModalClose';
@@ -13,15 +12,12 @@ import UserInSearch from './userInSearch'
 import { Link } from 'react-router-dom'
 import {FaMoon} from "react-icons/fa"
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPosts } from '../redux/postsSlice'
 import {changeNightDayMode} from '../redux/user'
-import {fetchCurrentUserData} from './../redux/user'
 import MenuIntroduction from './NotifMenu'
 export default function Navbar() {
   const [usersSerach,setUsersSeach]=useState([])
   const [open, setOpen] =useState(false);
   const [loader,setLoader]=useState(false)
-  const [showNotif,setShowNotif]=useState(false)
   const state=useSelector(state=>state.user.value)
   const dispatch=useDispatch()
   const handleSerachValue=async(e)=>{
@@ -52,14 +48,7 @@ export default function Navbar() {
       console.log(err)
     }
   }
- const handleReturnToFeed=async()=>{
-  try{
-    dispatch(fetchPosts())
-    dispatch(fetchCurrentUserData())
-  }catch(err){
-    console.log(err)
-  }
- }
+ 
  const hanldeNightMode=()=>{
    if(state.nightDayMode===true){
      document.body.style.backgroundColor="#f3f3f3"
@@ -73,7 +62,7 @@ export default function Navbar() {
     <>
     <div className={`md:flex ${state.nightDayMode===true?"bg-[#242526]":"bg-white "} h-[60px] justify-between px-2 lg:px-28`}>
         <div className='flex justify-between md:px-0 px-5'>
-       <Link to={"/home"} ><p onClick={handleReturnToFeed} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
+       <Link to={"/"} ><p  className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
             Sociopedia
         </p></Link>
           <div>

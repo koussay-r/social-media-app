@@ -22,7 +22,6 @@ export default function ResetPassword() {
   const handlesubmitRecoveryCode=(e)=>{
     e.preventDefault()
     if(recoveryCode===parseInt(input)){
-      console.log("done")
       setInput("")
       setCheckdone(true)
     }
