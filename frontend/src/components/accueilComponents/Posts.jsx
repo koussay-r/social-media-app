@@ -187,7 +187,7 @@ export default function Posts(props) {
 
     </motion.div>
       <Modal open={!!layout} onClose={() => setLayout(undefined)}>
-            <img src={postPicture.picture}  alt="" className='rounded-md h-[100vh] md:h-[700px] block mx-auto mt-[1%] md:w-[400px] w-full object-cover cursor-pointer mb-3'/>
+            <img src={postPicture.picture}  alt="" className='rounded-md max-h-[100vh] sm:max-h-[700px] block mx-auto mt-0 sm:mt-[7%] 2xl:mt-[1%] sm:w-[700px] w-full cursor-pointer mb-3'/>
       </Modal>
     </>
   )

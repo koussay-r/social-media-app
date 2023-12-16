@@ -37,7 +37,7 @@ return (
     <>
     {
         props.UserData?
-    <div id='' className={`rounded-lg  shadow-sm  ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${state.nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
+    <div id='' className={`rounded-lg mt-16 shadow-sm  ${location.pathname==='/home'?"hidden md:block":"block md:mx-0 mx-auto"} w-[350px]  ${state.nightDayMode===true?"bg-[#242526]":"bg-white border "}`}>
             <div className='p-3 '>
             <div className='flex mb-3'>
                 {

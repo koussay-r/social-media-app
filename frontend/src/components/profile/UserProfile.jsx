@@ -46,12 +46,12 @@ export default function UserProfile() {
      :
       <UserInfo  pfp={Userstate.UserData.pfp} UserData={Userstate.UserData} _id={Userstate.UserData._id} Location={Userstate.UserData.Location} likeCount={Userstate.UserData.likeCount} friendsListIds={Userstate.UserData.friendsListIds} LastName={Userstate.UserData.LastName} name={Userstate.UserData.name} Occupation={Userstate.UserData.Occupation}  /> }
         </div>
-      <div  id='userInfoComponent1'  className=' w-[350px] block mx-auto md:mx-0 md:mt-0 mt-5 md:w-[40%]'>
+      <div  id='userInfoComponent1'  className=' w-[350px] block mx-auto md:mx-0 md:mt-12  md:w-[40%]'>
       {
         state.posts.length!==0
         ?(state.posts.map(item=>{
           return(
-            <Posts key={item._id} comments={item.comments}  currentUser={Userstate.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId}  likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
+            <Posts key={item._id} withPicture={item.withPicture} comments={item.comments}  currentUser={Userstate.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId}  likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
           )
         })):
         <PostLoader/>

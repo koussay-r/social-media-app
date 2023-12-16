@@ -54,7 +54,7 @@ export default function CreatePost() {
     setPostData({...postdata,withPicture:false})
   }
   return (
-    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  ${pictureData.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
+    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} md:mt-16 px-3  ${pictureData.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
           src={state.UserData.pfp === "" ? noPfp : state.UserData.pfp}
