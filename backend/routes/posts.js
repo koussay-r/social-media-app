@@ -3,9 +3,11 @@ const postModel=require('./../models/postmodel.js')
 const userModel=require("./../models/CreateUserModel.js")
 const pictureModel=require("./../models/postPicturesModel.js")
 const Pusher = require("pusher");
+const multer = require('multer');
+const sharp = require('sharp');
 const route=express.Router()
 const dotenv=require("dotenv");
-const { default: mongoose } = require("mongoose");
+mongoose = require("mongoose");
 dotenv.config()
 const pusher = new Pusher({
   appId: process.env.APP_ID,
@@ -14,13 +16,32 @@ const pusher = new Pusher({
   cluster: "eu",
   useTLS: true
 });
-route.post("/create",async(req,res)=>{
+const fs = require('node:fs');
+const upload = multer({ dest: 'uploads/' });
+route.post("/createPostwithNoPic",async(req,res)=>{
   try {
-    const createPost= await postModel.create(req.body.post)
-    if(req.body.picture!=""){
-      await pictureModel.create({postId:createPost._id,picture:req.body.picture})
-    }
-    res.status(201).send(createPost)}
+    const createPost= await postModel.create(req.body)
+    res.status(201).send(createPost)
+  } catch (error) {
+    console.log(error);
+  }
+})
+route.post("/create",upload.single('image'),async(req,res)=>{
+  try {
+    const createPost= await postModel.create(JSON.parse(req.body.data))
+      const resizedImage = await sharp(req.file.path)
+      .resize({ width: 480 })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+      await pictureModel.create({postId:createPost._id,picture:resizedImage,contentType:'image/jpeg'})
+      fs.unlink("uploads/", (err) => {
+        if (err) {
+          console.error('Error removing file:', err);
+          return;
+        }
+        console.log('File removed successfully');
+      });
+      res.status(201).send(createPost)}
     catch(err){
       console.log(err)
     }

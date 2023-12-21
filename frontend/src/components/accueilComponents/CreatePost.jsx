@@ -19,10 +19,9 @@ export default function CreatePost() {
     Location:state.UserData.Location,
     comments:[]
   });
-  const [pictureData,setPictureData]=useState("")
+  const [pictureData,setPictureData]=useState(null)
   const handleFileInputChange = async(event) => {
-    const base64=await ConvertToBase64(event.target.files[0])
-    setPictureData(base64)
+     setPictureData(event.target.files[0])
     setPostData({...postdata,withPicture:true})
   };
   const handleCaption = (e) => {
@@ -34,15 +33,29 @@ export default function CreatePost() {
   // cloudinary
   
   const handleUploadClick = async() => {
-    console.log(postdata.picture)
-      if(postdata.caption!==""||pictureData.length!==0){
-        setLoader(true)
-         await axios.post(
-          "http://localhost:9000/posts/create",{post:postdata,picture:pictureData}
-          );
-          setLoader(false)
+      if(postdata.caption!==""||pictureData!==null){
+        if(pictureData!==null){
+          const formData = new FormData();
+          formData.append('image', pictureData);
+          formData.append('data', JSON.stringify(postdata))
+          setLoader(true)
+           await axios.post(
+            `http://localhost:9000/posts/create`,formData,{
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+            );
+            setLoader(false)
+        }
+        else{
+          setLoader(true)
+           await axios.post(
+            `http://localhost:9000/posts/createPostwithNoPic`,postdata);
+            setLoader(false)
+        }
           setPostData({...postdata,caption:""})
-          setPictureData("")
+          setPictureData(null)
           toast.success('Successfully Created Post!')
       }
       else{
@@ -54,7 +67,7 @@ export default function CreatePost() {
     setPostData({...postdata,withPicture:false})
   }
   return (
-    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} md:mt-16 px-3  ${pictureData.length!==0&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
+    <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} md:mt-16 px-3  ${pictureData!==null&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
           src={state.UserData.pfp === "" ? noPfp : state.UserData.pfp}
@@ -112,7 +125,7 @@ export default function CreatePost() {
         }
       </div>
       {
-        pictureData.length!==0&&
+        pictureData!==null&&
           <div className="w-[300px] h-[180px] mt-[3%] overflow-hidden rounded border-2 border-dotted  border-cyan-500 ">
             <img onClick={handleRemovePicture} src={pictureData} className=' p-2 w-[300px] h-[180px]  object-cover hover:brightness-50 hover:cursor-pointer  mx-auto' alt='Loading'/>
           </div>

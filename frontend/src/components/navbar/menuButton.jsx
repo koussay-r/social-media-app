@@ -4,7 +4,7 @@ import { Avatar } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import {Menu,MenuItem,Divider,ListItemIcon,IconButton} from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {changeAuth,changeAccountExistCookies,changeAccountExistSession} from '../redux/user'
 export default function AccountMenu() {
@@ -28,7 +28,7 @@ export default function AccountMenu() {
     window.location.reload();
     
   };
-  const hanldeProfile=()=>
+  const hanldecloseMenu=()=>
   {
     setAnchorEl(null);
   }
@@ -53,7 +53,7 @@ export default function AccountMenu() {
         anchorEl={anchorEl}
         id="account-menu"
         open={open}  
-        onClose={hanldeProfile}    
+        onClose={hanldecloseMenu}    
         PaperProps={{
           elevation: 0,
           sx: {
@@ -88,9 +88,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem className='flex gap-1' onClick={hanldeProfile}>
+        <Link to={`/profile/${state.UserData._id}`}>
+        <MenuItem className='flex gap-1'>
         <img src={state.UserData.pfp} className='w-[32px] rounded-full h-[32px]'/> <p>Profile</p>
         </MenuItem>
+        </Link>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
