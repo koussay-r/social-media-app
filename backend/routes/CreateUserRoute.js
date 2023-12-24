@@ -2,6 +2,9 @@ const express=require("express")
 const dotenv=require("dotenv")
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const multer=require('multer');
+const sharp = require('sharp')
+const upload= multer({dest:"/upload/"})
 const CreateUsermodel=require("./../models/CreateUserModel.js")
 const postModel=require('./../models/postmodel.js')
 dotenv.config()
@@ -84,26 +87,21 @@ CreateUserRoute.post("/CurrentUser",async(req,res)=>{
         console.log(err)
     }
 })
-CreateUserRoute.post("/updatePfp/:_id",async(req,res)=>{
+CreateUserRoute.post("/updatePfp/:_id",upload.single("pfp"),async(req,res)=>{
     try {
-        const ress=await CreateUsermodel.findOneAndUpdate({_id:req.params._id},{pfp:req.body.pfp},{new:true})
+        const resizedImage = await sharp(req.file.path)
+        .resize({ width: 480 })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+        const ress=await CreateUsermodel.findOneAndUpdate({_id:req.params._id},{pfp:resizedImage},{contentType:'image/jpeg'},{new:true})
         if(!ress){
             res.send({message:false})
         }
         else{
-            try {
-                const response =await postModel.findOne({userId:req.params._id})
-                for (let index = 0; index < response.length; index++) {
-                    response[index].userPfp=req.body.pfp
-                }
-                response.save()
-                res.status(200).send({message:true})
-            } catch (error) {
-                res.status(500).send(error.message)
-            }
+            res.status(200).send({message:true})
         }
     } catch (error) {
-        
+        console.log(error.message)
     }
 })
 module.exports=CreateUserRoute

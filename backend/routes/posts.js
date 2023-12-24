@@ -30,7 +30,7 @@ route.post("/create",upload.single('image'),async(req,res)=>{
   try {
     const createPost= await postModel.create(JSON.parse(req.body.data))
       const resizedImage = await sharp(req.file.path)
-      .resize({ width: 480 })
+      .resize({ width: 600 })
       .jpeg({ quality: 80 })
       .toBuffer();
       await pictureModel.create({postId:createPost._id,picture:resizedImage,contentType:'image/jpeg'})
@@ -98,6 +98,7 @@ route.post("/getPostUserpfp",async(req,res)=>{
     try{
       const userPfp=await userModel.findById({_id:req.body.PostUserId})
       const checkIfPostGotaPicture=await postModel.findById({_id:req.body.PostId})
+      res.set('Content-Type',userPfp.contentType )
       res.status(200).send({pfp:userPfp.pfp,withPicture:checkIfPostGotaPicture.withPicture})
     }catch(err){
       console.log(err.message)

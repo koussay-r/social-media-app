@@ -14,10 +14,15 @@ export default function UserInfo(props) {
  const [loader,SetLoader]=useState(false) 
  const state=useSelector((state)=>state.user.value)
     const handleChangePfp=async(event)=>{
-        const base64=await ConvertToBase64(event.target.files[0])
+        const formData = new FormData();
+        formData.append("pfp", event.target.files[0]);
         try {
         SetLoader(true)
-        const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${props._id}`,{pfp:base64})
+        const res=await axios.post(`http://localhost:9000/createUser/updatePfp/${props._id}`,formData,{
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
         SetLoader(false)
         if(res.message===true){
             toast.success('Your profile picture have been Successfully updated !')
