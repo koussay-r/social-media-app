@@ -79,9 +79,15 @@ export default function Posts(props) {
             setPostUserPfp(res.data.pfp)
           }
           if(props.withPicture){
-          const res1=await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id})
-          setPostPicture({...postPicture,picture:res1.data})    
-            }
+            const response = await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id}, {
+              responseType: 'blob',
+            });
+            const reader = new FileReader();
+            reader.onload = () => {
+            setPostPicture({...postPicture,picture:reader.result})    
+            };
+            reader.readAsDataURL(response.data);
+          }
         }
         catch(Err){
           console.log(Err.message)

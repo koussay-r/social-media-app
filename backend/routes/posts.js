@@ -16,8 +16,6 @@ const pusher = new Pusher({
   cluster: "eu",
   useTLS: true
 });
-const fs = require('node:fs');
-const upload = multer({ dest: 'uploads/' });
 route.post("/createPostwithNoPic",async(req,res)=>{
   try {
     const createPost= await postModel.create(req.body)
@@ -26,6 +24,8 @@ route.post("/createPostwithNoPic",async(req,res)=>{
     console.log(error);
   }
 })
+const fs = require('fs');
+const upload = multer({ dest: 'uploads/' });
 route.post("/create",upload.single('image'),async(req,res)=>{
   try {
     const createPost= await postModel.create(JSON.parse(req.body.data))
@@ -34,13 +34,6 @@ route.post("/create",upload.single('image'),async(req,res)=>{
       .jpeg({ quality: 80 })
       .toBuffer();
       await pictureModel.create({postId:createPost._id,picture:resizedImage,contentType:'image/jpeg'})
-      fs.unlink("uploads/", (err) => {
-        if (err) {
-          console.error('Error removing file:', err);
-          return;
-        }
-        console.log('File removed successfully');
-      });
       res.status(201).send(createPost)}
     catch(err){
       console.log(err)
@@ -112,11 +105,16 @@ route.post("/getPostUserpfp",async(req,res)=>{
   }
 })
 route.post("/getPostUserPicture",async(req,res)=>{
-  try{
-    const pfp=await pictureModel.findOne({postId:req.body.PostId})
-    res.status(200).send(pfp.picture)
-  }catch(err){
-    console.log(err.message)
+  try {
+    const picture=await pictureModel.findOne({postId:req.body.PostId})
+    if (!picture) {
+      return res.status(404).json({ error: 'Image not found' });
+    }
+    res.set('Content-Type', picture.contentType);
+    res.send(picture.picture);
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).json({ error: 'Failed to fetch image' });
   }
 })
 route.post("/getNotifications",async(req,res)=>{
