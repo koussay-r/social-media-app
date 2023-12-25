@@ -80,8 +80,10 @@ export default function Posts(props) {
             })
             const reader = new FileReader();
             reader.onload = () => {
-              setPostUserPfp(res.data.pfp)
+              setPostUserPfp(reader.result);
             }
+            reader.readAsDataURL(res.data);
+
           }
           if(props.withPicture){
             const response = await axios.post("http://localhost:9000/posts/getPostUserPicture",{PostId:props._id}, {

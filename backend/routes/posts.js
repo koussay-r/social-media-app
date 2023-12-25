@@ -97,9 +97,8 @@ route.post("/getPostUserpfp",async(req,res)=>{
   if(req.body.PostUserId){
     try{
       const userPfp=await userModel.findById({_id:req.body.PostUserId})
-      const checkIfPostGotaPicture=await postModel.findById({_id:req.body.PostId})
       res.set('Content-Type',userPfp.contentType )
-      res.status(200).send({pfp:userPfp.pfp,withPicture:checkIfPostGotaPicture.withPicture})
+      res.status(200).send(userPfp.pfp)
     }catch(err){
       console.log(err.message)
     }
