@@ -6,7 +6,7 @@ const multer=require('multer');
 const sharp = require('sharp')
 const upload= multer({dest:"/upload/"})
 const CreateUsermodel=require("./../models/CreateUserModel.js")
-const postModel=require('./../models/postmodel.js')
+const pfpModel = require("./../models/PicturesModel.js")
 dotenv.config()
 
 
@@ -26,7 +26,6 @@ bcrypt.hash(plainTextPassword, saltRounds, async(err, hash)=> {
                 Occupation:req.body.Occupation,
                 email:req.body.email,
                 password:hash,
-                pfp:req.body.pfp,
                 likeCount:0
               });
             res.status(201).send(ress)
@@ -93,14 +92,19 @@ CreateUserRoute.post("/updatePfp/:_id",upload.single("pfp"),async(req,res)=>{
         .resize({ width: 480 })
         .jpeg({ quality: 80 })
         .toBuffer();
-        const ress=await CreateUsermodel.findOneAndUpdate({_id:req.params._id},{pfp:resizedImage},{contentType:'image/jpeg'},{new:true})
-        if(!ress){
-            res.send({message:false})
-        }
-        else{
+        const dataFound=await pfpModel.findOne({PostOrUserId:req.params._id})
+        if(dataFound){
+            dataFound.picture=resizedImage;
+            dataFound.save()
             res.status(200).send({message:true})
         }
+        else{
+            await pfpModel.create({PostOrUserId:req.params._id,picture:resizedImage,contentType:'image/jpeg'})
+            res.status(200).send({message:true})
+            
+        }
     } catch (error) {
+        res.send({message:false})
         console.log(error.message)
     }
 })

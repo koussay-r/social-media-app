@@ -1,21 +1,13 @@
 const express=require("express")
 const postModel=require('./../models/postmodel.js')
 const userModel=require("./../models/CreateUserModel.js")
-const pictureModel=require("./../models/postPicturesModel.js")
-const Pusher = require("pusher");
+const pictureModel=require("./../models/PicturesModel.js")
 const multer = require('multer');
 const sharp = require('sharp');
 const route=express.Router()
 const dotenv=require("dotenv");
 mongoose = require("mongoose");
 dotenv.config()
-const pusher = new Pusher({
-  appId: process.env.APP_ID,
-  key: process.env.APP_KEY,
-  secret: process.env.APP_SECRET,
-  cluster: "eu",
-  useTLS: true
-});
 route.post("/createPostwithNoPic",async(req,res)=>{
   try {
     const createPost= await postModel.create(req.body)
@@ -24,7 +16,6 @@ route.post("/createPostwithNoPic",async(req,res)=>{
     console.log(error);
   }
 })
-const fs = require('fs');
 const upload = multer({ dest: 'uploads/' });
 route.post("/create",upload.single('image'),async(req,res)=>{
   try {
@@ -33,7 +24,7 @@ route.post("/create",upload.single('image'),async(req,res)=>{
       .resize({ width: 600 })
       .jpeg({ quality: 80 })
       .toBuffer();
-      await pictureModel.create({postId:createPost._id,picture:resizedImage,contentType:'image/jpeg'})
+      await pictureModel.create({PostOrUserId:createPost._id,picture:resizedImage,contentType:'image/jpeg'})
       res.status(201).send(createPost)}
     catch(err){
       console.log(err)
@@ -96,9 +87,14 @@ route.post("/makeComment",async(req,res)=>{
 route.post("/getPostUserpfp",async(req,res)=>{
   if(req.body.PostUserId){
     try{
-      const userPfp=await userModel.findById({_id:req.body.PostUserId})
-      res.set('Content-Type',userPfp.contentType )
-      res.status(200).send(userPfp.pfp)
+      const userPfp=await pictureModel.findById({PostOrUserId:req.body.PostUserId})
+      if(userPfp){
+        res.set('Content-Type',userPfp.contentType )
+        res.status(200).send(userPfp.picture)
+      }
+      else{
+        res.send(false)
+      }
     }catch(err){
       console.log(err.message)
     }
@@ -106,7 +102,7 @@ route.post("/getPostUserpfp",async(req,res)=>{
 })
 route.post("/getPostUserPicture",async(req,res)=>{
   try {
-    const picture=await pictureModel.findOne({postId:req.body.PostId})
+    const picture=await pictureModel.findOne({PostOrUserId:req.body.PostId})
     if (!picture) {
       return res.status(404).json({ error: 'Image not found' });
     }

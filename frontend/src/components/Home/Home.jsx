@@ -10,7 +10,17 @@ export default function Home() {
     if(!state.auth){
       navigate("/")
     }
-  },[])
+    else{
+      const handleGetUserPfp=async()=>{
+          try {
+              
+          } catch (error) {
+              console.log(error.message)
+          }
+      }
+      handleGetUserPfp()
+    }
+},[])
   return (
     <>
        <Navbar/>

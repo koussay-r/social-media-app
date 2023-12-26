@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import noPfp from './../../assets/noPfp.png'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdWorkOutline} from 'react-icons/md'

@@ -12,14 +12,12 @@ const [CreateUser,SetCreateUser]=useState({
     Occupation:"",
     email:"",
     password:"",
-    pfp:"",
     likeCount:0
 })
 const [userCreated,SetUserCreated]=useState({
     succes:false,
     failure:false,
     action:null,
-
 })
 const handleLackData=(e)=>{
     e.preventDefault()

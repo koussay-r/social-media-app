@@ -11,8 +11,6 @@ const CreateUserSchema=mongoose.Schema(({
     Occupation:String,
     email:String,
     password:String,
-    pfp:Buffer,
-    contentType:String,
     likeCount:Number,
     friendsList:[friendListSchema],
     friendsListIds:[String],

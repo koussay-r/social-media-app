@@ -75,7 +75,7 @@ export default function Posts(props) {
             setPostUserPfp(state.UserData.pfp)
           }
           else{
-            const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId,PostId:props._id},{
+            const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId},{
               responseType: 'blob',
             })
             const reader = new FileReader();
