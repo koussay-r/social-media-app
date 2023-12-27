@@ -11,13 +11,7 @@ import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {changePostsToNone} from "./../redux/postsSlice"
-import Button from '@mui/joy/Button';
-import Stack from '@mui/joy/Stack';
 import Modal from '@mui/joy/Modal';
-import ModalClose from '@mui/joy/ModalClose';
-import ModalDialog from '@mui/joy/ModalDialog';
-import DialogTitle from '@mui/joy/DialogTitle';
-import DialogContent from '@mui/joy/DialogContent';
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
   const [likesnumber,setLikesNumber]=useState(props.likes)
@@ -71,18 +65,18 @@ export default function Posts(props) {
   useEffect(()=>{
     const getPostUserpfp=async()=>{
         try{
-          if(props.userId===props.currentUser){
+          if(props.userId!==props.currentUser){
             setPostUserPfp(state.UserData.pfp)
           }
           else{
-            const res=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId},{
+            const response=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId},{
               responseType: 'blob',
             })
             const reader = new FileReader();
             reader.onload = () => {
               setPostUserPfp(reader.result);
             }
-            reader.readAsDataURL(res.data);
+            reader.readAsDataURL(response.data);
 
           }
           if(props.withPicture){
@@ -191,7 +185,7 @@ export default function Posts(props) {
         <form onSubmit={hanldeMakeComment}>
 
         <div className='flex mt-1'>
-        <img src={state.UserData.pfp?state.UserData.pfp:nopfp} alt="" className='rounded-full mt-[7px] w-7 h-7'/>
+        <img src={!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp} alt="" className='rounded-full mt-[7px] w-7 h-7'/>
         <input id={props._id} value={Makecomment} onChange={handlecomment} type="text" placeholder='Write a Comment !' className={`w-full rounded-xl h-7 ${state.nightDayMode===true?"bg-[#3a3b3c] text-white":"bg-gray-200 border border-gray-500 text-black "}  focus:border-transparent pl-3 mt-2 mx-2`}/>
         <FiSend onClick={hanldeMakeComment} size={22} color={"#04d0fa"} className='mt-[12px] cursor-pointer'/>
         </div>

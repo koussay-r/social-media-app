@@ -1,10 +1,10 @@
 import { Divider } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import noPfp from './../../assets/noPfp.png'
+import React, {  useState } from 'react'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdWorkOutline} from 'react-icons/md'
 import { Link, useLocation, useParams  } from 'react-router-dom'
 import axios from 'axios'
+import nopfp from "./../../assets/noPfp.png"
 import {useDispatch, useSelector } from 'react-redux'
 import {changePostsToNone} from "./../redux/postsSlice"
 export default function UserInfo(props) {
@@ -51,7 +51,7 @@ return (
                         <label
               htmlFor="file-upload"
             >
-                        <img  src={props.pfp===""?noPfp:props.pfp} alt="no pfp" className='rounded-full cursor-pointer w-11 h-11'/>
+                        <img  src={!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp} alt="no pfp" className='rounded-full cursor-pointer w-11 h-11'/>
             </label>
             <input
               id="file-upload"
@@ -62,7 +62,7 @@ return (
             />
                         </div>
                     :
-                    <img src={props.pfp===""?noPfp:props.pfp} alt="no pfp" className='rounded-full object-cover w-11 h-11'/>
+                    <img src={!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp} alt="no pfp" className='rounded-full object-cover w-11 h-11'/>
                 }
                 <div className=' ml-3'>
                     <Link to={`/profile/${props._id}`}><p onClick={handleEmptyPosts} className={`${state.nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{props.name} {props.LastName}</p></Link> 

@@ -109,7 +109,7 @@ export default function Navbar() {
             <BiMessageDetail className={` ${state.nightDayMode===false?"bg-text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
             <MenuIntroduction/>
             <AiFillQuestionCircle className={` ${state.nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
-            <AccountMenu/>
+            <AccountMenu />
         </div>
     </div>
       <Drawer color='primary' slotProps={{

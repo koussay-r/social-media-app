@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Box } from '@mui/system';
-import { Avatar } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import {Menu,MenuItem,Divider,ListItemIcon,IconButton} from '@mui/material';
 import { BiLogOut } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import nopfp from "./../../assets/noPfp.png"
 import {changeAuth,changeAccountExistCookies,changeAccountExistSession} from '../redux/user'
 export default function AccountMenu() {
   const navigate=useNavigate()
@@ -45,7 +45,7 @@ export default function AccountMenu() {
             aria-expanded={open ? 'true' : undefined}
           >
             
-            <img src={state.UserData.pfp} className='w-[32px] rounded-full h-[32px]'/>
+            <img src={!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp} className='w-[32px] rounded-full h-[32px]'/>
           </IconButton>
         </Tooltip>
       </Box>
@@ -90,7 +90,7 @@ export default function AccountMenu() {
       >
         <Link to={`/profile/${state.UserData._id}`}>
         <MenuItem className='flex gap-1'>
-        <img src={state.UserData.pfp} className='w-[32px] rounded-full h-[32px]'/> <p>Profile</p>
+        <img src={!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp} className='w-[32px] rounded-full h-[32px]'/> <p>Profile</p>
         </MenuItem>
         </Link>
         <Divider />

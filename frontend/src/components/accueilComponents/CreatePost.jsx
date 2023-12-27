@@ -1,6 +1,6 @@
 import { Divider } from "@mui/material";
 import React, { useState } from "react";
-import noPfp from "./../../assets/noPfp.png";
+import nopfp from "./../../assets/noPfp.png";
 import { FiImage } from "react-icons/fi";
 import { MdOutlineKeyboardVoice, MdAttachFile } from "react-icons/md";
 import { AiFillAudio } from "react-icons/ai";
@@ -70,7 +70,7 @@ export default function CreatePost() {
     <div className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} md:mt-16 px-3  ${pictureData!==null&&"h-[350px] overflow-hidden"}  block mx-auto md:mx-0 shadow-sm w-full rounded-lg`}>
       <div className="flex gap-5 p-3">
         <img
-          src={state.UserData.pfp === "" ? noPfp : state.UserData.pfp}
+          src={!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp}
           alt=""
           className="rounded-full object-cover w-11 h-11"
         />

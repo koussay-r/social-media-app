@@ -3,6 +3,7 @@ import axios from "axios";
 const initialState=()=>{
     return({
         posts: [],
+        loadingPosts: false,
     })
 }
 
@@ -21,7 +22,7 @@ export const fetchThisUSerPosts=createAsyncThunk("fetchThisUSerPosts",async(_id)
 export const postsSlice=createSlice({
     name:"postsSlice",
     initialState:{
-        value: initialState() // Use a function to get the initial state
+        value: initialState() 
       },
       reducers:{
         changePostsToNone:(state,action)=>{
@@ -29,11 +30,19 @@ export const postsSlice=createSlice({
         }
       },
       extraReducers: (builder) => {
+        builder.addCase(fetchPosts.pending,(state,action)=>{
+          state.value.loadingPosts = true
+        })
+        builder.addCase(fetchThisUSerPosts.pending,(state,action)=>{
+          state.value.loadingPosts = true
+        })
         builder.addCase(fetchPosts.fulfilled, (state, action) => {
           state.value.posts = action.payload;
+          state.value.loadingPosts = false;
         });
         builder.addCase(fetchThisUSerPosts.fulfilled, (state, action) => {
-          state.value.posts = action.payload; // Update a different field for user-specific posts
+          state.value.posts = action.payload;
+          state.value.loadingPosts = false;
         });
       },
 })

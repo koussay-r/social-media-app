@@ -85,20 +85,16 @@ route.post("/makeComment",async(req,res)=>{
   }
 })
 route.post("/getPostUserpfp",async(req,res)=>{
-  if(req.body.PostUserId){
     try{
-      const userPfp=await pictureModel.findById({PostOrUserId:req.body.PostUserId})
+      const userPfp=await pictureModel.findOne({PostOrUserId:req.body.PostUserId})  
       if(userPfp){
         res.set('Content-Type',userPfp.contentType )
         res.status(200).send(userPfp.picture)
       }
-      else{
-        res.send(false)
-      }
     }catch(err){
       console.log(err.message)
     }
-  }
+  
 })
 route.post("/getPostUserPicture",async(req,res)=>{
   try {
@@ -114,5 +110,16 @@ route.post("/getPostUserPicture",async(req,res)=>{
   }
 })
 route.post("/getNotifications",async(req,res)=>{
+})
+route.post("/deletePost",async(req,res)=>{
+  try {
+    await postModel.findOneAndDelete({_id:req.body._id})
+    if(req.body.withPicture){
+      await pictureModel.findOneAndDelete({PostOrUserId:req.body._id})
+    }
+    res.status(204).send("The post has been deleted successfully")
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 })
 module.exports=route
