@@ -11,6 +11,15 @@ import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {changePostsToNone} from "./../redux/postsSlice"
+import Menu from '@mui/joy/Menu';
+import MenuItem from '@mui/joy/MenuItem';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
+import ListDivider from '@mui/joy/ListDivider';
+import MoreVert from '@mui/icons-material/MoreVert';
+import Edit from '@mui/icons-material/Edit';
+import DeleteForever from '@mui/icons-material/DeleteForever';
+import MenuButton from '@mui/joy/MenuButton';
+import Dropdown from '@mui/joy/Dropdown';
 import Modal from '@mui/joy/Modal';
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
@@ -100,6 +109,19 @@ export default function Posts(props) {
   const handleEmptyPosts=()=>{
     dispatch(changePostsToNone())
 }
+const handleDeletepost=()=>{
+  toast.promise(
+    axios.post("http://localhost:9000/posts/deletePost", {_id: props._id,withPicture: props.withPicture,}),
+    {
+      loading: 'Deleting...',
+      success: (response) => toast.success(response.data.message), 
+      error: (error) => {
+        console.log(error.message);
+        toast.error('Something went wrong! Please try again.'); 
+      },
+    }
+  );
+}
   return (
     <>
     <motion.div 
@@ -119,7 +141,27 @@ export default function Posts(props) {
           <p className={`'text-[12px] text-gray-500/80 font-bold ${state.nightDayMode===true?"text-[white]":"text-black "} ml-1'`}>{props.Location}</p>
         </div>
       </div>
+      <Dropdown>
+      <MenuButton
+      >
       <BsThreeDots size={23} className={`${state.nightDayMode===true?"text-[white]":"text-black "} mt-[10px] cursor-pointer`}/>
+      </MenuButton>
+      <Menu placement="bottom-end">
+        <MenuItem>
+          <ListItemDecorator>
+            <Edit />
+          </ListItemDecorator>{' '}
+          Edit post
+        </MenuItem>
+        <ListDivider />
+        <MenuItem variant="soft" onClick={handleDeletepost} color="danger">
+          <ListItemDecorator sx={{ color: 'inherit' }}>
+            <DeleteForever />
+          </ListItemDecorator>{' '}
+          Delete
+        </MenuItem>
+      </Menu>
+    </Dropdown>
       </div>
       <p className={`'ml-1 mt-2 pb-3 ml-4 text-[20px] font-[600] font-quicksand ${state.nightDayMode===true?"text-[white]":"text-black "} '`}>{props.caption}</p>
       {

@@ -12,11 +12,6 @@ export default function Mainprofile(props) {
   const state=useSelector((state)=>state.user.value)
   const PostsState=useSelector(state=>state.posts.value)                                    
   useEffect(() => {
-    if(state.nightDayMode===false){
-      document.body.style.backgroundColor="#f3f3f3"
-     }else{
-       document.body.style.backgroundColor="#18191a"
-     }
     const handleFetchingPostst=()=>{
       try{
         dispatch(fetchPosts())
@@ -25,7 +20,14 @@ export default function Mainprofile(props) {
       }
     }
     handleFetchingPostst();
-  },[state.UserData,state.nightDayMode])
+  },[state.UserData])
+  useEffect(()=>{
+    if(state.nightDayMode===false){
+      document.body.style.backgroundColor="#f3f3f3"
+     }else{
+       document.body.style.backgroundColor="#18191a"
+     }
+  },[state.nightDayMode])
   return (
     <>
     <div className='md:flex block mx-auto  gap-16 md:justify-center mt-5 mw-28'>

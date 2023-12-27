@@ -117,7 +117,7 @@ route.post("/deletePost",async(req,res)=>{
     if(req.body.withPicture){
       await pictureModel.findOneAndDelete({PostOrUserId:req.body._id})
     }
-    res.status(204).send("The post has been deleted successfully")
+    res.status(200).send({message:"The post has been deleted successfully"})
   } catch (error) {
     res.status(404).send(error.message);
   }
