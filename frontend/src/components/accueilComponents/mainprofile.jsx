@@ -33,6 +33,9 @@ export default function Mainprofile(props) {
     <div className='md:flex block mx-auto  gap-16 md:justify-center mt-5 mw-28'>
       <div id="userInfoComponent">
     <UserInfo  pfp={props.pfp} UserData={state.UserData} _id={state.UserData._id} Location={state.UserData.Location} likeCount={state.UserData.likeCount} friendsListIds={state.UserData.friendsListIds} LastName={state.UserData.LastName} name={state.UserData.name} Occupation={state.UserData.Occupation}  />    
+      <div >
+      <FriendsRequestsList/>
+      </div>
       </div>
     <div  id='userInfoComponent1'  className=' w-[350px] block mx-auto pb-5 md:mx-0 md:mt-0 mt-5 md:w-[40%]'>
     <CreatePost pfp={props.pfp}/>
@@ -48,7 +51,7 @@ export default function Mainprofile(props) {
       ))
     }
     </div>
-    <div>
+    <div >
       <FriendsRequestsList/>
     </div>
     </div>
