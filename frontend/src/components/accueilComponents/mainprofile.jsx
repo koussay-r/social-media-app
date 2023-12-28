@@ -40,7 +40,7 @@ export default function Mainprofile(props) {
       !PostsState.loadingPosts
       ?(PostsState.posts.map(item=>{
         return(
-          <Posts key={item._id} withPicture={item.withPicture} comments={item.comments}  currentUser={state.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId}  likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
+          <Posts key={item._id}  withPicture={item.withPicture} comments={item.comments}  currentUser={state.UserData._id} UsersLikes={item.UsersLikes} userId={item.userId}  likes={item.likes} _id={item._id} caption={item.caption} Location={item.Location} name={item.user}/>
         )
       })):
       loader.map(item => (

@@ -66,6 +66,7 @@ return (
                 }
                 <div className=' ml-3'>
                     <Link to={`/profile/${props._id}`}><p onClick={handleEmptyPosts} className={`${state.nightDayMode===true?"text-[white]":"text-black/80 "} hover:text-gray-600 cursor-pointer font-[600]`}>{props.name} {props.LastName}</p></Link> 
+                   
                 </div>
             </div>
         <Divider  />

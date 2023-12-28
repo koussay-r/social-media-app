@@ -75,7 +75,7 @@ export default function Posts(props) {
     const getPostUserpfp=async()=>{
         try{
           if(props.userId===props.currentUser){
-            setPostUserPfp(!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp)
+            setPostUserPfp()
           }
           else{
             const response=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId},{
@@ -135,7 +135,7 @@ const handleDeletepost=()=>{
     }} className={`${state.nightDayMode===true?"bg-[#242526]":"bg-white "} px-3  mt-4 p-3   block mx-auto md:mx-0 shadow w-full rounded-lg`}>
       <div className='flex justify-between'>
       <div className='flex gap-2'>
-        <img src={postUserPfp===""?nopfp:postUserPfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
+        <img src={props.userId===props.currentUser?(!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp):postUserPfp===""?nopfp:postUserPfp} alt="" className='rounded-full mt-[4px] w-10 h-10'/>
         <div>
          <Link to={`/profile/${props.userId}`}> <p onClick={handleEmptyPosts}  className={`text-md cursor-pointer font-bold text-black/70 ${state.nightDayMode===true?"text-white":"text-black "} `}>{props.name}</p></Link>
           <p className={`'text-[12px] text-gray-500/80 font-bold ${state.nightDayMode===true?"text-[white]":"text-black "} ml-1'`}>{props.Location}</p>

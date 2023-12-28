@@ -40,33 +40,20 @@ export const fetchLoginData = createAsyncThunk("fetchLoginData", async () => {
   }
 });
 
-export const fetchFindUserById = createAsyncThunk(
-  "fetchFindUserById",
-  async (itemId) => {
+export const fetchFindUserById = createAsyncThunk("fetchFindUserById",async (itemId) => {
     try {
-      const res2 = await axios.post(
-        "http://localhost:9000/Users/findUserById",
-        { _id: itemId }
-      );
+      const res2 = await axios.post("http://localhost:9000/Users/findUserById",{ _id: itemId });
       return res2.data[0];
     } catch (Err) {
       console.log(Err.message);
     }
   }
 );
-export const fetchGetUserPfp = createAsyncThunk(
-  'fetchGetUserPfp',
-  async (id) => {
+export const fetchGetUserPfp = createAsyncThunk('fetchGetUserPfp',async (id) => {
     try {
-      const res = await axios.post(
-        'http://localhost:9000/posts/getPostUserpfp',
-        { PostUserId: id },
-        {
-          responseType: 'blob',
-        }
+      const res = await axios.post('http://localhost:9000/posts/getPostUserpfp',{ PostUserId: id },{  responseType: 'blob',}
       );
-
-      return new Promise((resolve, reject) => {
+      const profPic=new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(res.data);
         reader.onload = () => {
@@ -75,11 +62,18 @@ export const fetchGetUserPfp = createAsyncThunk(
         reader.onerror = (error) => {
           reject(error);
         };
+      })
+      profPic.then((result) => {
+        sessionStorage.setItem("profilePic", result);
+      }).catch((error) => {
+        console.error('Error occurred while processing the image:', error);
       });
+      return profPic
     } catch (error) {
       console.log(error.message);
       throw error; // Re-throw the error to handle it in Redux Toolkit
     }
+  
   }
 );
 export const LoginDataSlice = createSlice({

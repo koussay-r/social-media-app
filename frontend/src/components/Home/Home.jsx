@@ -9,13 +9,18 @@ export default function Home() {
   const navigate=useNavigate()
   const state=useSelector((state)=>state.user.value)
   const dispatch=useDispatch()
-  const [Userpfp,setUserPfp]=useState('')
   useEffect(()=>{
     if(!state.auth){
       navigate("/")
     }
     else{
-      dispatch(fetchGetUserPfp(state.UserData._id))
+      const profilePicCookiesExsit=sessionStorage.getItem("profilePic") === null ? false : true;
+      if(!profilePicCookiesExsit){
+        dispatch(fetchGetUserPfp(state.UserData._id))
+      }
+      else{
+        dispatch(LoadUserPfp(sessionStorage.getItem("profilePic")))
+      }
     }
 },[])
   return (

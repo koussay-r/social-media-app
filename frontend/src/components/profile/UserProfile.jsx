@@ -6,7 +6,8 @@ import UserinfoLoader from "./../accueilComponents/UserinfLoader"
 import {fetchThisUSerPosts} from "./../redux/postsSlice"
 import {fetchFindUserById} from "./../redux/user"
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
+import {fetchGetUserPfp,LoadUserPfp} from "./../redux/user"
 import PostLoader from '../accueilComponents/PostLoader'
 export default function UserProfile() {
     const state=useSelector((state)=>state.posts.value)
@@ -22,9 +23,7 @@ export default function UserProfile() {
       const handleFindProfile=()=>{
         try {
           if(userId!==Userstate.UserData._id){
-            console.log(Userstate.profileLoading)
             dispatch(fetchFindUserById(userId))
-            console.log(Userstate.profileLoading)
           }
           dispatch(fetchThisUSerPosts(userId))
         } catch (error) {
@@ -33,6 +32,17 @@ export default function UserProfile() {
       }
       handleFindProfile()
     },[state.nightDayMode])
+    useEffect(()=>{
+        const profilePicCookiesExsit=sessionStorage.getItem("profilePic") === null ? false : true;
+        console.log(profilePicCookiesExsit)
+        if(!profilePicCookiesExsit){
+          dispatch(fetchGetUserPfp(userId))
+        }
+        else{
+          dispatch(LoadUserPfp(sessionStorage.getItem("profilePic")))
+        }
+      
+  },[])
     return (
         <>
         <Navbar/>
