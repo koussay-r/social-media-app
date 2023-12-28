@@ -76,7 +76,7 @@ export default function Navbar() {
           <div className={`rounded ml-5 max-h-[150px] overflow-y-auto z-[100] hidden md:block   ${state.nightDayMode===true?"bg-[#181818] border-[#04d0fa] border-t-transparent  border":"bg-white border-t-transparent border "} mt-3 w-[256px]`}>
            { usersSerach.map(item=>{
              return(
-               <UserInSearch key={item._id} _id={item._id} pfp={item.pfp} name={item.name} Occupation={item.Occupation} friendsListIds={item.friendsListIds} freindRequest={item.freindRequest} />
+               <UserInSearch key={item._id} _id={item._id} name={item.name} Occupation={item.Occupation} friendsListIds={item.friendsListIds} freindRequest={item.freindRequest} />
                )
               })}
           </div>

@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose=require("mongoose")
 const userModel = require("./../models/CreateUserModel.js");
 const route = express.Router();
 const dotenv=require("dotenv")

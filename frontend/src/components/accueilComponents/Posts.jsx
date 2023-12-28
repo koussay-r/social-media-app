@@ -74,8 +74,8 @@ export default function Posts(props) {
   useEffect(()=>{
     const getPostUserpfp=async()=>{
         try{
-          if(props.userId!==props.currentUser){
-            setPostUserPfp(state.UserData.pfp)
+          if(props.userId===props.currentUser){
+            setPostUserPfp(!state.loadingUserPfp?(state.UserPfp.length!=0?state.UserPfp:nopfp):nopfp)
           }
           else{
             const response=await axios.post("http://localhost:9000/posts/getPostUserpfp",{PostUserId:props.userId},{
