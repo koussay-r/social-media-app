@@ -4,7 +4,7 @@ import {IoPersonAddSharp,IoPersonRemoveSharp} from 'react-icons/io5'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {changeUserData,changeProfileUser} from "./../redux/user"
+import {changeUserData} from "./../redux/user"
 import {changePostsToNone} from "./../redux/postsSlice"
 export default function UserInSearch(item) {
   const state=useSelector((state)=>state.user.value)

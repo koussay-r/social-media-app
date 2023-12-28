@@ -1,4 +1,3 @@
-import {BsBellFill} from "react-icons/bs"
 import { useSelector } from 'react-redux';
 import * as React from 'react';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -9,7 +8,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
-import Pusher from 'pusher-js'
 export default function NotifMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const state=useSelector(state=>state.user.value);
@@ -21,20 +19,6 @@ export default function NotifMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  React.useEffect(()=>{
-    const pusher = new Pusher('f3f8e6d0d0271713703a', {
-      cluster: 'eu'
-    }); 
-    const channel = pusher.subscribe('notifs');
-    channel.bind('inserted', (data)=> {
-      console.log(data)
-    });
-    return ()=>{
-      channel.unbind_all()
-      channel.unsubscribe()
-    }
-    
-  },[])
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

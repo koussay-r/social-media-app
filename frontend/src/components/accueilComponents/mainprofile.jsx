@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import CreatePost from './CreatePost'
 import FriendsRequestsList from './FriendsRequestsList'
 import UserInfo from './userInfo'

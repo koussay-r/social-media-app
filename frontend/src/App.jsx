@@ -34,7 +34,7 @@ export default function App() {
   return (
     <>
     {
-      (!state.LoadingUSerData&&!state.profileLoading)?
+      (!state.LoadingUSerData)?
     <recoveryCodeContext.Provider value={[recoveryCode,setRecoveryCode,email,setEmail]}>
       <BrowserRouter>
     

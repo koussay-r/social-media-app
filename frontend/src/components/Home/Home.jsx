@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../navbar/navbar'
 import {LoadUserPfp} from "./../redux/user"
 import Mainprofile from '../accueilComponents/mainprofile'

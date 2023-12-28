@@ -99,7 +99,7 @@ export default function Navbar() {
             <button color="danger" onClick={() => setOpen(true)} >heyy</button>
         </div>
         </div>
-        <div className='md:flex hidden mb-2 gap-7'>
+        <div className={`md:flex  hidden mb-2 gap-7`}>
           {
             state.nightDayMode===false?
             <FaMoon onClick={hanldeNightMode} className='text-black/80 mt-4 cursor-pointer' size={"21"}/>:
@@ -111,6 +111,7 @@ export default function Navbar() {
             <AiFillQuestionCircle className={` ${state.nightDayMode===false?"text-black/80":"text-white "}  mt-4 cursor-pointer`} size={"21"}/>
             <AccountMenu />
         </div>
+        
     </div>
       <Drawer color='primary' slotProps={{
           content: {
