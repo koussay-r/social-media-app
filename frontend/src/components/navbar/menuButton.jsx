@@ -23,6 +23,7 @@ export default function AccountMenu() {
     dispatch(changeAuth())
     localStorage.removeItem("account")
     sessionStorage.removeItem("account")
+    sessionStorage.removeItem("profilePic")
     document.body.style.backgroundColor="#f3f3f3"
     navigate("/")
     window.location.reload();
