@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import CreatePost from './CreatePost'
+import CreatePost from './PostComponents/CreatePost'
 import FriendsRequestsList from './FriendsRequestsList'
 import UserInfo from './userInfo'
-import Posts from './Posts'
-import PostLoader from './PostLoader'
+import Posts from './PostComponents/Posts'
+import PostLoader from './PostComponents/PostLoader'
 import { useDispatch, useSelector } from 'react-redux'
 import {fetchPosts} from "./../redux/postsSlice"
 export default function Mainprofile(props) {

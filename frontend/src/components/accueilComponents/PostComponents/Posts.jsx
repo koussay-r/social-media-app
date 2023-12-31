@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs'
-import nopfp from './../../assets/noPfp.png'
+import nopfp from './../../../assets/noPfp.png'
 import {motion} from 'framer-motion'
 import {FaRegComment} from 'react-icons/fa'
 import {AiFillHeart,AiOutlineHeart} from 'react-icons/ai'
@@ -10,7 +10,7 @@ import { FiSend } from 'react-icons/fi'
 import { toast } from "react-hot-toast";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {changePostsToNone} from "./../redux/postsSlice"
+import {changePostsToNone} from "./../../redux/postsSlice"
 import Menu from '@mui/joy/Menu';
 import MenuItem from '@mui/joy/MenuItem';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
@@ -20,12 +20,14 @@ import DeleteForever from '@mui/icons-material/DeleteForever';
 import MenuButton from '@mui/joy/MenuButton';
 import Dropdown from '@mui/joy/Dropdown';
 import Modal from '@mui/joy/Modal';
+import ReactorsModal from './ReactorsModal'
 export default function Posts(props) {
   const [postliked,setPostLiked]=useState(props.UsersLikes.includes(props.currentUser))
   const [likesnumber,setLikesNumber]=useState(props.likes)
   const [Makecomment,setMakeComment]=useState("")
   const [comments,setComments]=useState(props.comments)
   const [postUserPfp,setPostUserPfp]=useState("")
+  const [openReactorsModal, setOpenReactorsModal] = useState(false);
   const [layout, setLayout] = useState(undefined);
   const [postPicture,setPostPicture]=useState({
     picture:""
@@ -53,15 +55,15 @@ export default function Posts(props) {
   const hanldeMakeComment=async(e)=>{
     e.preventDefault()
     if(Makecomment===""){
-      toast.error("make a Comment !!")
+      toast.error("Make a Comment !!")
     }
     else{
     comments.push(Makecomment)
     setMakeComment("")
     try{
       if(Makecomment!==""){
-        await axios.post("http://localhost:9000/posts/makeComment",{_id:props._id,userId:state.UserData._id,name:state.UserData.name,comment:Makecomment,picture:state.UserData.pfp})
-        toast.success('Comment added Successfully !')
+        await axios.post("http://localhost:9000/posts/makeComment",{_id:props._id,userId:state.UserData._id,name:state.UserData.name,comment:Makecomment})
+        toast.success('Comment has been added Successfully !')
       }
     }catch(err){
       toast.error(err+" Try again !!S")
@@ -120,6 +122,9 @@ const handleDeletepost=()=>{
       },
     }
   );
+}
+const handleOpenReactorsModal=()=>{
+  setOpenReactorsModal(!openReactorsModal)
 }
   return (
     <>
@@ -185,7 +190,7 @@ const handleDeletepost=()=>{
         likesnumber===0?
         <p className={`'flex text-md font-semibold ${state.nightDayMode===true?"text-[white]":"text-black "} pb-2'`}>Be the First to like this Post !</p>
         :
-        <p className={`flex text-sm pb-1 ${state.nightDayMode===true?"text-[white]":"text-black "} `}><AiFillHeart className='mt-[2px] mr-[2px] text-red-500' size={19}  />{likesnumber} users Loved this post</p>
+        <p onClick={handleOpenReactorsModal} className={`flex cursor-pointer text-sm pb-1 ${state.nightDayMode===true?"text-[white]":"text-black "} `}><AiFillHeart className='mt-[2px] mr-[2px] text-red-500' size={19}  />{likesnumber} users Loved this post</p>
 
       }
       <Divider/>
@@ -237,6 +242,9 @@ const handleDeletepost=()=>{
       <Modal open={!!layout} onClose={() => setLayout(undefined)}>
             <img src={postPicture.picture}  alt="" className='rounded-md max-h-[100vh] sm:max-h-[700px] block mx-auto mt-0 sm:mt-[7%] 2xl:mt-[1%] sm:w-[700px] w-full cursor-pointer mb-3'/>
       </Modal>
+      { openReactorsModal&&
+        <ReactorsModal openReactorsModal={openReactorsModal} handleOpenReactorsModal={handleOpenReactorsModal} />}
+      
     </>
   )
 }

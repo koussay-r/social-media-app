@@ -122,4 +122,13 @@ route.post("/deletePost",async(req,res)=>{
     res.status(404).send(error.message);
   }
 })
+route.post("/getReactors/:id",async(req,res)=>{
+  try {
+    const response=await postModel.findOne({_id:req.params.id})
+    res.send(response.UsersLikes)
+  } catch (error) {
+    console.log(error.message)
+    res.status(404).send({message:false})
+  }
+})
 module.exports=route

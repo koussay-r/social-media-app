@@ -1,6 +1,6 @@
 import { Divider } from "@mui/material";
 import React, { useState } from "react";
-import nopfp from "./../../assets/noPfp.png";
+import nopfp from "./../../../assets/noPfp.png";
 import { FiImage } from "react-icons/fi";
 import { MdOutlineKeyboardVoice, MdAttachFile } from "react-icons/md";
 import { AiFillAudio } from "react-icons/ai";

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import UserInfo from './../accueilComponents/userInfo'
-import Posts from './../accueilComponents/Posts'
+import Posts from './../accueilComponents/PostComponents/Posts'
 import Navbar from '../navbar/navbar'
 import UserinfoLoader from "./../accueilComponents/UserinfLoader"
 import {fetchThisUSerPosts} from "./../redux/postsSlice"
@@ -8,7 +8,7 @@ import {fetchFindUserById} from "./../redux/user"
 import { useDispatch, useSelector } from 'react-redux'
 import {  useNavigate, useParams } from 'react-router-dom'
 import {fetchGetUserPfp} from "./../redux/user"
-import PostLoader from '../accueilComponents/PostLoader'
+import PostLoader from '../accueilComponents/PostComponents/PostLoader'
 export default function UserProfile() {
     const state=useSelector((state)=>state.posts.value)
     const dispatch=useDispatch()
