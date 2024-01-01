@@ -8,7 +8,7 @@ export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal
     const handleOpen=()=>{
         handleOpenReactorsModal()
     }
-    const [postReactorsFetchingCount,setPostReactorsFetchingCount]=useState(10)
+    const [postReactorsFetchingCount,setPostReactorsFetchingCount]=useState(0)
     useEffect(()=>{
         const handleGetPostReactors=async()=>{
             try {
@@ -18,7 +18,7 @@ export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal
                 toastr.error(error.message)
             }
         }
-        handleGetPostReactors()
+        
     },[postReactorsFetchingCount])
   return (
     <React.Fragment>

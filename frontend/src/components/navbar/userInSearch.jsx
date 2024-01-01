@@ -14,7 +14,6 @@ export default function UserInSearch(item) {
   const hanldeSendRequest=async(idUserSentto)=>{
     setChangeIconSendRequest(!changeIconSendRequest)
     dispatch(changeUserData(state.UserData))
-
     try{
       await axios.put("http://localhost:9000/Users/sendRequest",{_id:state.UserData._id,UserSentToId:idUserSentto})
     }catch(err){
