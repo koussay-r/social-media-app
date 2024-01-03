@@ -3,6 +3,7 @@ import Modal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
+import { toast } from "react-hot-toast";
 import axios from 'axios';
 export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal,id}) {
     const handleOpen=()=>{
@@ -10,15 +11,17 @@ export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal
     }
     const [postReactorsFetchingCount,setPostReactorsFetchingCount]=useState(0)
     useEffect(()=>{
+
         const handleGetPostReactors=async()=>{
             try {
-                const response=await axios.post(`http://localhost:9000:/posts/getReactors/${id}`,postReactorsFetchingCount)
-            } catch (error) {
+                const response=await axios.post(`http://localhost:9000/posts/getReactors/${id}`,{postReactorsFetchingCount:postReactorsFetchingCount})
+                console.log(response)
+              } catch (error) {
                 console.log(error.message);
-                toastr.error(error.message)
+                toast.error(error.message)
             }
         }
-        
+        handleGetPostReactors()
     },[postReactorsFetchingCount])
   return (
     <React.Fragment>

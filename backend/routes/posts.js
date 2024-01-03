@@ -123,17 +123,16 @@ route.post("/deletePost",async(req,res)=>{
   }
 })
 route.post("/getReactors/:id",async(req,res)=>{
-  const userData={_id:"",
-  name:""
-}
   const usersfound=[]
   try {
       const response=await postModel.findOne({_id:req.params.id})
       let index = req.body.postReactorsFetchingCount
       while(index<response.UsersLikes.length&&index<req.body.postReactorsFetchingCount+10){
         const element = await userModel.findOne({_id:response.UsersLikes[index]})
-        userData._id=element._id
-        userData.name=element.userData
+        const userData = {
+          _id: element._id,
+          name: element.name,
+        };
         usersfound.push(userData)
         index++
       }
