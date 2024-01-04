@@ -9,18 +9,21 @@ export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal
     const handleOpen=()=>{
         handleOpenReactorsModal()
     }
+    const [reactorsArray,setReactorsArray]=useState([])
     const [postReactorsFetchingCount,setPostReactorsFetchingCount]=useState(0)
     useEffect(()=>{
 
         const handleGetPostReactors=async()=>{
             try {
                 const response=await axios.post(`http://localhost:9000/posts/getReactors/${id}`,{postReactorsFetchingCount:postReactorsFetchingCount})
-                console.log(response)
+                setReactorsArray([...reactorsArray, response.data]);
               } catch (error) {
                 console.log(error.message);
-                toast.error(error.message)
+                toast.error("something went wrong!! try again")
+                handleOpenReactorsModal()
             }
-        }
+            console.log(reactorsArray)
+          }
         handleGetPostReactors()
     },[postReactorsFetchingCount])
   return (
