@@ -29,6 +29,7 @@ export default function Posts(props) {
   const [postUserPfp,setPostUserPfp]=useState("")
   const [openReactorsModal, setOpenReactorsModal] = useState(false);
   const [layout, setLayout] = useState(undefined);
+  const [reactorsArray,setReactorsArray]=useState([])
   const [postPicture,setPostPicture]=useState({
     picture:""
   })
@@ -243,7 +244,7 @@ const handleOpenReactorsModal=()=>{
             <img src={postPicture.picture}  alt="" className='rounded-md max-h-[100vh] sm:max-h-[700px] block mx-auto mt-0 sm:mt-[7%] 2xl:mt-[1%] sm:w-[700px] w-full cursor-pointer mb-3'/>
       </Modal>
       { openReactorsModal&&
-        <ReactorsModal openReactorsModal={openReactorsModal} id={props._id} handleOpenReactorsModal={handleOpenReactorsModal} />}
+        <ReactorsModal setReactorsArray={setReactorsArray} reactorsArray={reactorsArray} openReactorsModal={openReactorsModal} id={props._id} handleOpenReactorsModal={handleOpenReactorsModal} />}
       
     </>
   )

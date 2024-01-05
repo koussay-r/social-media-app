@@ -5,24 +5,23 @@ import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
 import { toast } from "react-hot-toast";
 import axios from 'axios';
-export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal,id}) {
+export default function ReactorsModal({reactorsArray,setReactorsArray,handleOpenReactorsModal,openReactorsModal,id}) {
     const handleOpen=()=>{
         handleOpenReactorsModal()
     }
-    const [reactorsArray,setReactorsArray]=useState([])
     const [postReactorsFetchingCount,setPostReactorsFetchingCount]=useState(0)
     useEffect(()=>{
 
         const handleGetPostReactors=async()=>{
             try {
                 const response=await axios.post(`http://localhost:9000/posts/getReactors/${id}`,{postReactorsFetchingCount:postReactorsFetchingCount})
-                setReactorsArray([...reactorsArray, response.data]);
+                setReactorsArray([...reactorsArray,...response.data]);
+                console.log(reactorsArray)
               } catch (error) {
                 console.log(error.message);
                 toast.error("something went wrong!! try again")
                 handleOpenReactorsModal()
             }
-            console.log(reactorsArray)
           }
         handleGetPostReactors()
     },[postReactorsFetchingCount])
@@ -45,20 +44,13 @@ export default function ReactorsModal({handleOpenReactorsModal,openReactorsModal
         }}
       >
         <ModalClose variant="plain" sx={{ m: 1 }} />
-        <Typography
-          component="h2"
-          id="modal-title"
-          level="h4"
-          textColor="inherit"
-          fontWeight="lg"
-          mb={1}
-        >
-          This is the modal title
-        </Typography>
-        <Typography id="modal-desc" textColor="text.tertiary">
-          Make sure to use <code>aria-labelledby</code> on the modal dialog with an
-          optional <code>aria-describedby</code> attribute.
-        </Typography>
+        {
+      reactorsArray.length === 0?
+      <p>loading...</p>:
+      reactorsArray.map(item=>{
+        return <p>{item.name}</p>
+      })
+     }
       </Sheet>
     </Modal>
   </React.Fragment>
