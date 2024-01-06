@@ -132,6 +132,9 @@ route.post("/getReactors/:id",async(req,res)=>{
         const userData = {
           _id: element._id,
           name: element.name,
+          Occupation: element.Occupation,
+          friendsListIds: element.friendsListIds,
+          freindRequest:element.freindRequest
         };
         usersfound.push(userData)
         index++

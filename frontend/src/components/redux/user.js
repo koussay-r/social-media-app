@@ -71,7 +71,7 @@ export const fetchGetUserPfp = createAsyncThunk('fetchGetUserPfp',async (id) => 
       return profPic
     } catch (error) {
       console.log(error.message);
-      throw error; // Re-throw the error to handle it in Redux Toolkit
+      throw error; 
     }
   
   }
@@ -79,7 +79,7 @@ export const fetchGetUserPfp = createAsyncThunk('fetchGetUserPfp',async (id) => 
 export const LoginDataSlice = createSlice({
   name: "loginData",
   initialState: {
-    value: getInitialState(), // Use a function to get the initial state
+    value: getInitialState(), 
   },
   reducers: {
     changeAuth: (state, action) => {

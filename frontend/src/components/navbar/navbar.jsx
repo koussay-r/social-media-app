@@ -58,11 +58,14 @@ export default function Navbar() {
     dispatch(changeNightDayMode(!state.nightDayMode))
   localStorage.setItem("mode",JSON.stringify(!state.nightDayMode))
  }
+ const handleGoProfile=()=>{
+  sessionStorage.removeItem("profilePic")
+ }
   return (
     <>
     <div className={`md:flex z-[20] fixed right-0 left-0 top-0  ${state.nightDayMode===true?"bg-[#242526]":"bg-white "} h-[60px] justify-between px-2 lg:px-28`}>
         <div className='flex justify-between md:px-0 px-5'>
-       <Link to={"/"} ><p  className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
+       <Link to={"/"} ><p onClick={handleGoProfile} className='font-bold cursor-pointer text-center md:text-start text-[#04d0fa] pb-3 text-4xl pt-3 md:text-2xl'>
             Sociopedia
         </p></Link>
           <div>
