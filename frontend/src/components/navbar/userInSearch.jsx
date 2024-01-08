@@ -50,7 +50,7 @@ useEffect(()=>{
   handleGetUserPfp()
 },[])
   return (
-    <div  className={`${item._id===state.UserData._id? "hidden":"block"} pb-1 justify-between flex`}>
+    <div  className={` pb-1 justify-between flex`}>
                   <div className='flex'>
                   <Link to={`/profile/${item._id}`}><img onClick={handleEmptyPosts} src={UserPfp!==""?UserPfp:nopfp} alt="" className='w-[32px] cursor-pointer rounded-full mt-2 ml-1 mr-3 h-[32px]'/></Link> 
                 <div className=''>

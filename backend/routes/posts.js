@@ -127,16 +127,18 @@ route.post("/getReactors/:id",async(req,res)=>{
   try {
       const response=await postModel.findOne({_id:req.params.id})
       let index = req.body.postReactorsFetchingCount
-      while(index<response.UsersLikes.length&&index<req.body.postReactorsFetchingCount+10){
-        const element = await userModel.findOne({_id:response.UsersLikes[index]})
-        const userData = {
-          _id: element._id,
-          name: element.name,
-          Occupation: element.Occupation,
-          friendsListIds: element.friendsListIds,
-          freindRequest:element.freindRequest
-        };
-        usersfound.push(userData)
+      while(index<response.UsersLikes.length&&index<req.body.postReactorsFetchingCount+14){
+        if(req.body.currentUser!=response.UsersLikes[index]){
+          const element = await userModel.findOne({_id:response.UsersLikes[index]})
+          const userData = {
+            _id: element._id,
+            name: element.name,
+            Occupation: element.Occupation,
+            friendsListIds: element.friendsListIds,
+            freindRequest:element.freindRequest
+          };
+          usersfound.push(userData)
+        }
         index++
       }
     res.status(200).send(usersfound)
