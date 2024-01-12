@@ -21,6 +21,8 @@ export default function UserProfile() {
       }else{
         document.body.style.backgroundColor="#18191a"
       }
+    },[state.nightDayMode])
+    useEffect(()=>{
       const handleFindProfile=()=>{
         try {
           if(userId!==Userstate.UserData._id){
@@ -37,7 +39,7 @@ export default function UserProfile() {
         console.log("heyy")
         navigate("/")
       }
-    },[state.nightDayMode])
+    },[])
     useEffect(()=>{    
           dispatch(fetchGetUserPfp(userId))
   },[])
